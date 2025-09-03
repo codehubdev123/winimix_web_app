@@ -1,4 +1,5 @@
 "use client";
+import { Phone } from "lucide-react";
 import React, { useState, useRef, useEffect } from "react";
 
 const TopNavbar = () => {
@@ -55,11 +56,12 @@ const TopNavbar = () => {
   };
 
   return (
-    <div className="bg-amber-100 text-gray-600 text-xs border-b border-gray-200 relative z-[999]">
+    <div className="bg-primary/30 text-font text-xs border-b border-primary relative z-[999]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-8">
           {/* Left side - Phone number */}
           <div className="flex items-center">
+            <Phone className="w-3 h-3 mr-1 rtl:mr-0 rtl:ml-1" />
             <svg
               className="w-3 h-3 mr-1 rtl:mr-0 rtl:ml-1"
               fill="none"
@@ -77,7 +79,7 @@ const TopNavbar = () => {
             <span className="hidden sm:inline">Customer Service: </span>
             <a
               href="tel:+966112345678"
-              className="ml-1 rtl:ml-2 rtl:mr-1 hover:text-amber-700 transition-colors duration-200"
+              className="ml-1 rtl:ml-2 rtl:mr-1 hover:text-secondary  transition-colors duration-200"
             >
               +966 11 234 5678
             </a>
@@ -92,7 +94,7 @@ const TopNavbar = () => {
                   setIsLanguageDropdownOpen(!isLanguageDropdownOpen);
                   setIsCountryDropdownOpen(false);
                 }}
-                className="flex items-center hover:text-amber-700 transition-colors duration-200"
+                className="flex items-center hover:text-secondary transition-colors duration-200"
               >
                 <span>{selectedLanguage}</span>
                 <svg
