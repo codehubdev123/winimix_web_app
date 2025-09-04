@@ -59,7 +59,7 @@ export default function ImageZoom({
         {/* Zoom Lens (visible on hover) */}
         {showZoom && (
           <div
-            className="absolute pointer-events-none border-2 border-gray-300 bg-amber-600/50 bg-opacity-20 rounded-full"
+            className="absolute pointer-events-none border-2 border-gray-300 bg-secondary/50 bg-opacity-20 rounded-full"
             style={{
               width: "150px",
               height: "150px",
