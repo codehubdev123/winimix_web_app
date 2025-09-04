@@ -114,7 +114,7 @@ const Slider = () => {
 
       {/* Custom Navigation */}
       <div className="absolute inset-y-0 left-0 flex items-center z-10">
-        <button className="custom-prev bg-white/20 hover:bg-white/30 text-white p-3 rounded-l-lg transition-all duration-300 ml-4">
+        <button className="custom-prev cursor-pointer bg-white/20 hover:bg-white/30 text-white p-3 rounded-l-lg transition-all duration-300 ml-4">
           <svg
             className="w-6 h-6 "
             fill="none"
@@ -133,7 +133,7 @@ const Slider = () => {
       </div>
 
       <div className="absolute inset-y-0 right-0 flex items-center z-10">
-        <button className="custom-next bg-white/20 hover:bg-white/30 text-white p-3 rounded-r-lg transition-all duration-300 mr-4">
+        <button className="custom-next cursor-pointer bg-white/20 hover:bg-white/30 text-white p-3 rounded-r-lg transition-all duration-300 mr-4">
           <svg
             className="w-6 h-6 "
             fill="none"
