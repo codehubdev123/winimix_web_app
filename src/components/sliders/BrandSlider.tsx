@@ -1,0 +1,159 @@
+"use client";
+import React, { useRef } from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay, Navigation } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/navigation";
+import Link from "next/link";
+
+const BrandSlider = () => {
+  const swiperRef = useRef(null);
+
+  // Sample brand data
+  const brands = [
+    {
+      id: 1,
+      name: "Nike",
+      logo: "https://cdn.worldvectorlogo.com/logos/nike-6.svg",
+      url: "#",
+    },
+    {
+      id: 2,
+      name: "Apple",
+      logo: "https://cdn.worldvectorlogo.com/logos/apple-13.svg",
+      url: "#",
+    },
+    {
+      id: 3,
+      name: "Samsung",
+      logo: "https://cdn.worldvectorlogo.com/logos/samsung-2.svg",
+      url: "#",
+    },
+    {
+      id: 4,
+      name: "Adidas",
+      logo: "https://cdn.worldvectorlogo.com/logos/adidas-2.svg",
+      url: "#",
+    },
+    {
+      id: 5,
+      name: "Sony",
+      logo: "https://cdn.worldvectorlogo.com/logos/sony-2.svg",
+      url: "#",
+    },
+    {
+      id: 6,
+      name: "Microsoft",
+      logo: "https://cdn.worldvectorlogo.com/logos/microsoft-5.svg",
+      url: "#",
+    },
+    {
+      id: 7,
+      name: "LG",
+      logo: "https://cdn.worldvectorlogo.com/logos/lg-electronics-1.svg",
+      url: "#",
+    },
+    {
+      id: 8,
+      name: "Puma",
+      logo: "https://cdn.worldvectorlogo.com/logos/puma-logo.svg",
+      url: "#",
+    },
+    {
+      id: 9,
+      name: "Canon",
+      logo: "https://cdn.worldvectorlogo.com/logos/canon-2.svg",
+      url: "#",
+    },
+    {
+      id: 10,
+      name: "Dell",
+      logo: "https://cdn.worldvectorlogo.com/logos/dell-1.svg",
+      url: "#",
+    },
+  ];
+
+  return (
+    <div className="w-full py-16 px-4 bg-gray-100">
+      <div className="max-w-7xl mx-auto">
+        <div className="flex justify-between items-center mb-6 px-2">
+          <h2 className="text-2xl md:text-3xl font-bold text-title">
+            Shop by Brands
+          </h2>
+          <div className="flex space-x-2 rtl:space-x-reverse">
+            <Link
+              href="/brands"
+              className="text-sm text-secondary hover:underline"
+            >
+              All Brands
+            </Link>
+          </div>
+        </div>
+        {/* <h2 className="text-2xl md:text-3xl font-bold text-center mb-10 text-gray-900"> */}
+        {/*   Shop by Brand */}
+        {/* </h2> */}
+
+        <Swiper
+          modules={[Autoplay, Navigation]}
+          spaceBetween={30}
+          slidesPerView={2}
+          breakpoints={{
+            480: {
+              slidesPerView: 3,
+            },
+            640: {
+              slidesPerView: 4,
+            },
+            768: {
+              slidesPerView: 5,
+            },
+            1024: {
+              slidesPerView: 6,
+            },
+            1280: {
+              slidesPerView: 7,
+            },
+          }}
+          autoplay={{
+            delay: 2500,
+            disableOnInteraction: false,
+            pauseOnMouseEnter: true,
+          }}
+          loop={true}
+          className="brands-swiper"
+          dir="ltr"
+        >
+          {brands.map((brand) => (
+            <SwiperSlide key={brand.id}>
+              <div className="group relative bg-white rounded-xl shadow-sm hover:shadow-lg transition-all duration-500 p-6 h-40 flex items-center justify-center border border-gray-100 hover:border-amber-200">
+                {/* Background effect on hover */}
+                <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-white opacity-0 group-hover:opacity-100 rounded-xl transition-opacity duration-500"></div>
+
+                {/* Logo */}
+                <div className="relative z-10 transform transition-all duration-500 group-hover:scale-110">
+                  <img
+                    src={brand.logo}
+                    alt={brand.name}
+                    className="h-16 mx-auto object-contain grayscale group-hover:grayscale-0 transition-all duration-500"
+                  />
+                </div>
+
+                {/* Brand name overlay on hover */}
+                <div className="absolute bottom-0 left-0 right-0 bg-primary text-white text-sm font-medium py-2 text-center rounded-b-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  {brand.name}
+                </div>
+
+                {/* Shine effect on hover */}
+                <div className="absolute inset-0 overflow-hidden rounded-xl">
+                  <div className="absolute top-0 left-0 w-full h-full transform -skew-x-12 transition-all duration-700 group-hover:translate-x-full group-hover:opacity-50 bg-gradient-to-r from-transparent via-white/30 to-transparent"></div>
+                </div>
+              </div>
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      </div>
+    </div>
+  );
+};
+
+export default BrandSlider;

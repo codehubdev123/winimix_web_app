@@ -3,7 +3,7 @@ import React, { useRef } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Navigation, Pagination } from "swiper/modules";
 
-const Slider = () => {
+const HomeSlider = () => {
   const swiperRef = useRef(null);
 
   // Sample e-commerce slider data
@@ -193,4 +193,4 @@ const Slider = () => {
   );
 };
 
-export default Slider;
+export default HomeSlider;
