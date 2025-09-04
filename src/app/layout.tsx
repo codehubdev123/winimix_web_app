@@ -6,6 +6,7 @@ import { LocaleProvider } from "@/contexts/LocaleContext";
 import Navbar from "@/components/navbars/Navbar";
 import Footer from "@/components/footers/Footer";
 import NewsLetter from "@/components/newsletters/NewsLetter";
+import { CartProvider } from "@/contexts/CartContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -40,11 +41,13 @@ export default function RootLayout({
         suppressHydrationWarning
       >
         <LocaleProvider>
-          <TopNavbar />
-          <Navbar />
-          {children}
-          <NewsLetter />
-          <Footer />
+          <CartProvider>
+            <TopNavbar />
+            <Navbar />
+            {children}
+            <NewsLetter />
+            <Footer />
+          </CartProvider>
         </LocaleProvider>
       </body>
     </html>
