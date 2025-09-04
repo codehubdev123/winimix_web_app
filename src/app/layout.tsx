@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono, Tajawal } from "next/font/google";
 import "./globals.css";
 import TopNavbar from "@/components/navbars/TopNavbar";
+import { LocaleProvider } from "@/contexts/LocaleContext";
+import Navbar from "@/components/navbars/Navbar";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -35,8 +37,11 @@ export default function RootLayout({
         className={`${tajawal.variable}  ${geistSans.variable} ${geistMono.variable} antialiased`}
         suppressHydrationWarning
       >
-        <TopNavbar />
-        {children}
+        <LocaleProvider>
+          <TopNavbar />
+          <Navbar />
+          {children}
+        </LocaleProvider>
       </body>
     </html>
   );
