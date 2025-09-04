@@ -34,7 +34,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${tajawal.variable}  ${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${tajawal.variable}  ${geistSans.variable} ${geistMono.variable} antialiased bg-gray-50`}
         suppressHydrationWarning
       >
         <LocaleProvider>
