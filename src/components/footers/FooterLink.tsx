@@ -1,8 +1,10 @@
 "use client";
+
 type Props = {
   url?: string;
   children: React.ReactNode;
 };
+
 const FooterLink = ({ url = "#", children }: Props) => {
   return (
     <li>
