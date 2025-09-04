@@ -22,7 +22,7 @@ const CategoriesPage = () => {
       title: "Fashion",
       subtitle: "Trending Styles",
       image:
-        "https://images.unsplash.com/photo-1483985988355-763728e1935b?ixlib=rb-4.0.3&ixid=M3wxMjA3f极B8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
+        "https://media.istockphoto.com/id/955641488/photo/clothes-shop-costume-dress-fashion-store-style-concept.jpg?s=2048x2048&w=is&k=20&c=8CBZ5nB9gJO1Y5rfsYx-xR4Lkb8TCHQz8BpHT5rm31c=",
       productCount: 512,
     },
     {
@@ -46,7 +46,7 @@ const CategoriesPage = () => {
       title: "Sports",
       subtitle: "Equipment & Apparel",
       image:
-        "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
+        "https://images.unsplash.com/photo-1558365849-6ebd8b0454b2?q=80&w=688&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       productCount: 276,
     },
     {

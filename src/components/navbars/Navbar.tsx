@@ -38,7 +38,7 @@ const Navbar = () => {
       name: "Fashion",
       icon: "👕",
       image:
-        "https://images.unsplash.com/photo-1483985988355-763728e1935b?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80",
+        "https://media.istockphoto.com/id/955641488/photo/clothes-shop-costume-dress-fashion-store-style-concept.jpg?s=2048x2048&w=is&k=20&c=8CBZ5nB9gJO1Y5rfsYx-xR4Lkb8TCHQz8BpHT5rm31c=",
       subcategories: [
         { name: "Men's Clothing", href: "#" },
         { name: "Women's Clothing", href: "#" },
