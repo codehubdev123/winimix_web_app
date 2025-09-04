@@ -5,6 +5,7 @@ import TopNavbar from "@/components/navbars/TopNavbar";
 import { LocaleProvider } from "@/contexts/LocaleContext";
 import Navbar from "@/components/navbars/Navbar";
 import Footer from "@/components/footers/Footer";
+import NewsLetter from "@/components/newsletters/NewsLetter";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -42,6 +43,7 @@ export default function RootLayout({
           <TopNavbar />
           <Navbar />
           {children}
+          <NewsLetter />
           <Footer />
         </LocaleProvider>
       </body>
