@@ -21,7 +21,7 @@ export default function Footer() {
           {/* Company Info */}
           <div>
             <div className="flex items-center space-x-2 rtl:space-x-reverse mb-4">
-              <div className="bg-white text-secondary p-2 rounded-lg">
+              <div className="bg-white text-primary p-2 rounded-lg">
                 <div className="w-8 h-8 flex items-center justify-center font-bold text-xl">
                   WM
                 </div>
