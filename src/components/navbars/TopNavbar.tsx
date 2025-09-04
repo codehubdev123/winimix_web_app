@@ -109,7 +109,7 @@ const TopNavbar = () => {
                     <button
                       key={language.code}
                       onClick={() => handleLanguageSelect(language)}
-                      className={`block w-full text-left px-4 py-2 text-sm hover:bg-amber-200 transition-colors duration-200 ${selectedLanguage === language.code ? "text-amber-700" : "text-gray-700"}`}
+                      className={`block w-full text-left px-4 py-2 text-sm hover:bg-primary hover:text-white transition-colors duration-200 ${selectedLanguage === language.code ? "text-secondary" : "text-gray-700"}`}
                     >
                       {language.name}
                     </button>
@@ -125,7 +125,7 @@ const TopNavbar = () => {
                   setIsCountryDropdownOpen(!isCountryDropdownOpen);
                   setIsLanguageDropdownOpen(false);
                 }}
-                className="flex items-center hover:text-amber-700 transition-colors duration-200"
+                className="flex items-center hover:text-secondary transition-colors duration-200"
               >
                 <span className="mr-1 rtl:mr-2 rtl:ml-1">
                   {selectedCountry.flag}
@@ -154,7 +154,7 @@ const TopNavbar = () => {
                     <button
                       key={country.code}
                       onClick={() => handleCountrySelect(country)}
-                      className={`block w-full text-left px-4 py-2 text-sm hover:bg-amber-200 transition-colors duration-200 ${selectedCountry.code === country.code ? "text-amber-700" : "text-gray-700"}`}
+                      className={`block w-full text-left px-4 py-2 text-sm hover:bg-primary hover:text-white transition-colors duration-200 ${selectedCountry.code === country.code ? "text-secondary" : "text-gray-700"}`}
                     >
                       <span className="mr-2 rtl:mr-2 rtl:ml-2">
                         {country.flag}
