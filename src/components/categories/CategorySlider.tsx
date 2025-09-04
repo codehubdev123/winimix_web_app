@@ -153,7 +153,7 @@ const CategorySlider = () => {
 
                 {/* Hover Effect Indicator */}
                 <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <div className="bg-primary text-white text-xs font-bold py-2 px-4 rounded-full">
+                  <div className="bg-secondary text-white text-xs font-bold py-2 px-4 rounded-full">
                     Shop Now
                   </div>
                 </div>
