@@ -384,7 +384,7 @@ const Navbar = () => {
 
         {/* Mobile Menu */}
         {isMenuOpen && (
-          <div className="md:hidden bg-white border-t border-amber-700">
+          <div className="md:hidden bg-white border-t border-primary">
             <div className="px-2 pt-2 pb-3 space-y-1">
               {categories.map((category) => (
                 <div key={category.id} className="relative">

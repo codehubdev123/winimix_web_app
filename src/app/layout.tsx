@@ -7,6 +7,9 @@ import Navbar from "@/components/navbars/Navbar";
 import Footer from "@/components/footers/Footer";
 import NewsLetter from "@/components/newsletters/NewsLetter";
 import { CartProvider } from "@/contexts/CartContext";
+import Header from "@/components/Header";
+import { ThemeProvider } from "@/contexts/ThemeContext";
+import TopHeader from "@/components/headers/TopHeader";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -40,15 +43,19 @@ export default function RootLayout({
         className={`${tajawal.variable}  ${geistSans.variable} ${geistMono.variable} antialiased bg-gray-50`}
         suppressHydrationWarning
       >
-        <LocaleProvider>
-          <CartProvider>
-            <TopNavbar />
-            <Navbar />
-            {children}
-            <NewsLetter />
-            <Footer />
-          </CartProvider>
-        </LocaleProvider>
+        <ThemeProvider>
+          <LocaleProvider>
+            <CartProvider>
+              <TopHeader />
+              <Header />
+              <TopNavbar />
+              <Navbar />
+              {children}
+              <NewsLetter />
+              <Footer />
+            </CartProvider>
+          </LocaleProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

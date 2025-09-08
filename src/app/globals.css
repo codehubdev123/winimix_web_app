@@ -7,6 +7,7 @@
   --background: #ffffff;
   --foreground: #171717;
 }
+@custom-variant dark (&:where(.dark, .dark *));
 
 @theme inline {
   --color-background: var(--background);
@@ -15,8 +16,14 @@
   --font-mono: var(--font-geist-mono);
   --color-primary: #c8aa65;
   --color-secondary: #a1752d;
+  --color-hover: #a1752d;
   --color-title: #030712;
   --color-font: #030712;
+  --color-primary-dark: #181d25;
+  --color-secondary-dark: #444444;
+  --color-title-dark: #ffffff;
+  --color-font-dark: #ffffff;
+  --color-hover-dark: #a1752d;
   /* --color-primary: #0044ff; */
   /* --color-secondary: #0088ff; */
 }
