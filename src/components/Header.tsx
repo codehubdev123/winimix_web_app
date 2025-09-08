@@ -368,29 +368,6 @@ const ECommerceHero = () => {
         </div>
       </header>
 
-      {/* Categories Toggle in Navbar for larger screens */}
-      <div className="bg-primary hidden lg:block">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center py-2">
-            <button
-              onClick={toggleCategoriesCollapse}
-              className="text-white font-medium flex items-center"
-            >
-              <i className={`fas fa-bars ${isRTL ? "ml-2" : "mr-2"}`}></i>
-              {categoriesCollapsed ? "Show Categories" : "Hide Categories"}
-              <i
-                className={`fas ${categoriesCollapsed ? "fa-chevron-down" : "fa-chevron-up"} ${isRTL ? "mr-2" : "ml-2"}`}
-              ></i>
-            </button>
-
-            <div className="text-white text-sm">
-              <span className="hidden md:inline">Summer Sale: </span>
-              <span>Up to 50% off!</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
       {/* Language Toggle for Demo */}
       {/* <div className="flex justify-end p-4"> */}
       {/*   <button */}
