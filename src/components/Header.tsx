@@ -312,11 +312,11 @@ const ECommerceHero = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Navbar with Categories Toggle (only on larger screens) */}
-      <header className="bg-pink-100 shadow-sm hidden lg:block ">
+      <header className="bg-primary shadow-sm hidden lg:block ">
         <div className="max-w-7xl mx-auto px-5">
           <div className="flex justify-between items-center gap-6 h-[48px]">
             <div
-              className="flex items-center justify-between bg-red-600 w-1/4  font-medium px-[24px] py-[12px] cursor-pointer"
+              className="flex items-center justify-between bg-secondary w-1/4  font-medium px-[24px] py-[12px] cursor-pointer rounded-t-[8px]"
               onClick={toggleCategoriesCollapse}
             >
               <div className="flex gap-2 items-center">
@@ -327,7 +327,7 @@ const ECommerceHero = () => {
                   alt="categories"
                 />
 
-                <h1 className="flex h-full justify-center items-center">
+                <h1 className="flex h-full justify-center items-center text-white">
                   Categories
                 </h1>
               </div>
@@ -344,22 +344,16 @@ const ECommerceHero = () => {
             </div>
 
             <div className="flex items-center justify-between flex-1">
-              <nav className="flex text-left space-x-8 bg-yellow-600 dark:bg-blue-700 flex-1">
-                <a href="#" className="text-gray-700 hover:text-primary">
-                  Best Sellers
-                </a>
-                <a href="#" className="text-gray-700 hover:text-primary">
-                  Best Sellers
-                </a>
-                <a href="#" className="text-gray-700 hover:text-primary">
-                  Best Sellers
-                </a>
-                <a href="#" className="text-gray-700 hover:text-primary">
-                  Best Sellers
-                </a>
-                <a href="#" className="text-gray-700 hover:text-primary">
-                  Best Sellers
-                </a>
+              <nav className="flex text-left space-x-8  flex-1">
+                {Array.from({ length: 5 }).map((_, index) => (
+                  <a
+                    key={index}
+                    href="#"
+                    className="text-gray-700 hover:underline text-white px-4 py-2"
+                  >
+                    Best Sellers
+                  </a>
+                ))}
               </nav>
 
               <div className="flex items-center space-x-4">right</div>
