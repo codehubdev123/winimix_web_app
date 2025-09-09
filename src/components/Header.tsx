@@ -4,6 +4,7 @@ import { useTheme } from "@/contexts/ThemeContext";
 import { useState, useEffect, useRef } from "react";
 import { cn } from "./utils/utils";
 import { useLocale } from "@/contexts/LocaleContext";
+import { ChevronRight, MonitorCheck } from "lucide-react";
 
 const ECommerceHero = () => {
   const { theme, setTheme, isDark } = useTheme();
@@ -143,11 +144,181 @@ const ECommerceHero = () => {
       image:
         "https://images.unsplash.com/photo-1596462502278-27bfdc403348?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&q=80",
     },
+    {
+      id: 5,
+      name: "Beauty",
+      icon: "fa-spa",
+      subcategories: [
+        "Skincare",
+        "Makeup",
+        "Haircare",
+        "Fragrance",
+        "Body Care",
+        "Men's Grooming",
+      ],
+      brands: ["L'Oreal", "Maybelline", "Nivea", "Dove", "Neutrogena", "Olay"],
+      image:
+        "https://images.unsplash.com/photo-1596462502276-27bfdc403348?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&q=80",
+    },
+
+    {
+      id: 6,
+      name: "Beauty",
+      icon: "fa-spa",
+      subcategories: [
+        "Skincare",
+        "Makeup",
+        "Haircare",
+        "Fragrance",
+        "Body Care",
+        "Men's Grooming",
+      ],
+      brands: ["L'Oreal", "Maybelline", "Nivea", "Dove", "Neutrogena", "Olay"],
+      image:
+        "https://images.unsplash.com/photo-1596462502278-27bfdc403348?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&q=80",
+    },
+
+    {
+      id: 7,
+      name: "Beauty",
+      icon: "fa-spa",
+      subcategories: [
+        "Skincare",
+        "Makeup",
+        "Haircare",
+        "Fragrance",
+        "Body Care",
+        "Men's Grooming",
+      ],
+      brands: ["L'Oreal", "Maybelline", "Nivea", "Dove", "Neutrogena", "Olay"],
+      image:
+        "https://images.unsplash.com/photo-1596462502278-27bfdc403348?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&q=80",
+    },
+
+    {
+      id: 8,
+      name: "Beauty",
+      icon: "fa-spa",
+      subcategories: [
+        "Skincare",
+        "Makeup",
+        "Haircare",
+        "Fragrance",
+        "Body Care",
+        "Men's Grooming",
+      ],
+      brands: ["L'Oreal", "Maybelline", "Nivea", "Dove", "Neutrogena", "Olay"],
+      image:
+        "https://images.unsplash.com/photo-1596462502278-27bfdc403348?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&q=80",
+    },
+    {
+      id: 9,
+      name: "Beauty",
+      icon: "fa-spa",
+      subcategories: [
+        "Skincare",
+        "Makeup",
+        "Haircare",
+        "Fragrance",
+        "Body Care",
+        "Men's Grooming",
+      ],
+      brands: ["L'Oreal", "Maybelline", "Nivea", "Dove", "Neutrogena", "Olay"],
+      image:
+        "https://images.unsplash.com/photo-1596462502278-27bfdc403348?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&q=80",
+    },
+
+    {
+      id: 10,
+      name: "Beauty",
+      icon: "fa-spa",
+      subcategories: [
+        "Skincare",
+        "Makeup",
+        "Haircare",
+        "Fragrance",
+        "Body Care",
+        "Men's Grooming",
+      ],
+      brands: ["L'Oreal", "Maybelline", "Nivea", "Dove", "Neutrogena", "Olay"],
+      image:
+        "https://images.unsplash.com/photo-1596462502276-27bfdc403348?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&q=80",
+    },
+
+    {
+      id: 12,
+      name: "Beauty",
+      icon: "fa-spa",
+      subcategories: [
+        "Skincare",
+        "Makeup",
+        "Haircare",
+        "Fragrance",
+        "Body Care",
+        "Men's Grooming",
+      ],
+      brands: ["L'Oreal", "Maybelline", "Nivea", "Dove", "Neutrogena", "Olay"],
+      image:
+        "https://images.unsplash.com/photo-1596462502274-27bfdc403348?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&q=80",
+    },
+
+    {
+      id: 14,
+      name: "Beauty",
+      icon: "fa-spa",
+      subcategories: [
+        "Skincare",
+        "Makeup",
+        "Haircare",
+        "Fragrance",
+        "Body Care",
+        "Men's Grooming",
+      ],
+      brands: ["L'Oreal", "Maybelline", "Nivea", "Dove", "Neutrogena", "Olay"],
+      image:
+        "https://images.unsplash.com/photo-1596462502272-27bfdc403348?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&q=80",
+    },
+
+    {
+      id: 16,
+      name: "Beauty",
+      icon: "fa-spa",
+      subcategories: [
+        "Skincare",
+        "Makeup",
+        "Haircare",
+        "Fragrance",
+        "Body Care",
+        "Men's Grooming",
+      ],
+      brands: ["L'Oreal", "Maybelline", "Nivea", "Dove", "Neutrogena", "Olay"],
+      image:
+        "https://images.unsplash.com/photo-1596462502270-27bfdc403348?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&q=80",
+    },
+
+    {
+      id: 18,
+      name: "Beauty",
+      icon: "fa-spa",
+      subcategories: [
+        "Skincare",
+        "Makeup",
+        "Haircare",
+        "Fragrance",
+        "Body Care",
+        "Men's Grooming",
+      ],
+      brands: ["L'Oreal", "Maybelline", "Nivea", "Dove", "Neutrogena", "Olay"],
+      image:
+        "https://images.unsplash.com/photo-1596462502268-27bfdc403348?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&q=80",
+    },
   ];
 
   const bannerImages = [
     "https://images.unsplash.com/photo-1607082350899-7e105aa886ae?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
-    "https://images.unsplash.com/photo-1556906781-2f0520405b71?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
+    "https://images.unsplash.com/photo-1607082350899-7e105aa886ae?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
+    "https://images.unsplash.com/photo-1607082350899-7e105aa886ae?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
+    "https://images.unsplash.com/photo-1607082350899-7e105aa886ae?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
   ];
 
   const [currentBanner, setCurrentBanner] = useState(0);
@@ -366,7 +537,7 @@ const ECommerceHero = () => {
     <div className="min-h-screen bg-gray-50">
       {/* Navbar with Categories Toggle (only on larger screens) */}
       <header className="bg-primary dark:bg-header-dark shadow-sm hidden lg:block ">
-        <div className="max-w-7xl mx-auto px-5">
+        <div className="max-w-7xl mx-auto">
           <div className="flex justify-between items-center gap-6 h-[48px]">
             <div
               className="flex items-center justify-between bg-secondary dark:bg-secondary-dark w-1/4  font-medium px-[24px] py-[12px] cursor-pointer rounded-t-[8px]"
@@ -532,12 +703,12 @@ const ECommerceHero = () => {
       {/*   </button> */}
       {/* </div> */}
 
-      {/* Hero Section */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      {/* Hero Section #ebeef2 */}
+      <section className="max-w-7xl mx-auto bg-[#f0f]">
         <div className="flex flex-col lg:flex-row gap-6">
           {/* Categories Sidebar - Hidden when collapsed on desktop */}
           {(!categoriesCollapsed || isMobile) && (
-            <div className="w-full lg:w-1/4 bg-white rounded-xl shadow-sm overflow-hidden h-fit">
+            <div className="w-full lg:w-1/4 bg-white  shadow-sm overflow-hidden h-fit">
               {/* Mobile Categories Toggle */}
               {isMobile && (
                 <div
@@ -555,16 +726,16 @@ const ECommerceHero = () => {
               )}
 
               {/* Desktop Categories Title */}
-              {!isMobile && (
-                <div className="p-4 bg-primary text-white font-bold text-lg">
-                  <i className={`fas fa-list ${isRTL ? "ml-2" : "mr-2"}`}></i>
-                  <span>Categories</span>
-                </div>
-              )}
+              {/* {!isMobile && ( */}
+              {/*   <div className="p-4 bg-primary text-white font-bold text-lg"> */}
+              {/*     <i className={`fas fa-list ${isRTL ? "ml-2" : "mr-2"}`}></i> */}
+              {/*     <span>Categories</span> */}
+              {/*   </div> */}
+              {/* )} */}
 
               <div
                 ref={categoriesContainerRef}
-                className="divide-y divide-gray-100 relative transition-all duration-300 ease-in-out"
+                className="divide-y divide-gray-100 relative transition-all duration-300 ease-in-out bg-white p-[9px]"
                 style={{
                   maxHeight:
                     isMobile && mobileCategoriesCollapsed ? "0" : "1000px",
@@ -575,14 +746,14 @@ const ECommerceHero = () => {
                   <div
                     key={category.id}
                     ref={(el) => (categoryRefs.current[index] = el)}
-                    className="category-container relative"
+                    className="category-container relative "
                     onMouseEnter={() =>
                       !isMobile && setActiveCategory(category)
                     }
                     onMouseLeave={() => !isMobile && setActiveCategory(null)}
                   >
                     <div
-                      className="category-item p-4 flex items-center justify-between"
+                      className="category-item cursor-pointer px-4 py-[10px] flex items-center justify-between bg-white rounded-[8px] hover:bg-[#F5F7FA]"
                       onClick={() =>
                         isMobile &&
                         setActiveCategory(
@@ -590,19 +761,38 @@ const ECommerceHero = () => {
                         )
                       }
                     >
-                      <div className="flex items-center">
-                        <i
-                          className={`fas ${category.icon} text-primary w-6`}
-                        ></i>
-                        <span
-                          className={`${isRTL ? "mr-3" : "ml-3"} font-medium`}
-                        >
-                          {category.name}
-                        </span>
+                      <div className="flex items-center justify-between  flex-1">
+                        <div className="flex items-center gap-2">
+                          <MonitorCheck
+                            width={20}
+                            height={20}
+                            className="text-[#858b95]"
+                          />
+                          <span
+                            className={`font-medium text-[14px] text-[#333D4C]`}
+                          >
+                            {category.name}
+                          </span>
+                        </div>
+                        <div className="">
+                          <ChevronRight
+                            width={16}
+                            height={16}
+                            className="text-[#333D4C]"
+                          />
+                        </div>
+                        {/* <i */}
+                        {/*   className={`fas ${category.icon} text-primary w-6`} */}
+                        {/* ></i> */}
+                        {/* <span */}
+                        {/*   className={`${isRTL ? "mr-3" : "ml-3"} font-medium`} */}
+                        {/* > */}
+                        {/*   {category.name} */}
+                        {/* </span> */}
                       </div>
-                      <i
-                        className={`fas fa-chevron-${isRTL ? "left" : "right"} text-gray-400 text-xs`}
-                      ></i>
+                      {/* <i */}
+                      {/*   className={`fas fa-chevron-${isRTL ? "left" : "right"} text-gray-400 text-xs`} */}
+                      {/* ></i> */}
                     </div>
 
                     {/* Mobile dropdown directly below category */}
@@ -628,7 +818,7 @@ const ECommerceHero = () => {
               className={`absolute inset-0 bg-gradient-to-r from-black/60 to-transparent p-8 flex flex-col justify-center ${isRTL ? "rtl:bg-gradient-to-l" : ""}`}
             >
               <h2 className="text-3xl font-bold text-white mb-4">
-                Summer Sale
+                Summer Saless
               </h2>
               <p className="text-white mb-6 text-lg">
                 Up to 50% off on selected items. Limited time offer!
@@ -640,7 +830,6 @@ const ECommerceHero = () => {
                 ></i>
               </button>
             </div>
-
             {/* Banner Indicators */}
             <div
               className={`absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2 ${isRTL ? "rtl:space-x-reverse" : ""}`}
@@ -667,11 +856,7 @@ const ECommerceHero = () => {
 
         .category-item {
           transition: all 0.2s ease;
-          cursor: pointer;
-        }
-
-        .category-item:hover {
-          background-color: #f3f4f6;
+          {/* cursor: pointer; */}
         }
 
         .banner-slide {

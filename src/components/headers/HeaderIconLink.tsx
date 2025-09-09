@@ -39,7 +39,7 @@ const HeaderIconLink = ({
     </Link>
   ) : (
     <div
-      className="h-[48px] w-[48px] flex items-center justify-center cursor-pointer hover:bg-secondary/80 dark:hover:bg-[#333D4C] rounded-full text-white"
+      className="h-[48px] w-[48px] flex items-center justify-center cursor-pointer hover:bg-secondary/80 dark:hover:bg-secondary-dark rounded-full text-white"
       onClick={onClick}
     >
       {icon}
