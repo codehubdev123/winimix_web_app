@@ -19,8 +19,11 @@
   --color-hover: #a1752d;
   --color-title: #030712;
   --color-font: #030712;
+  /* dark color section */
+  /* dark color section */
+  --color-header-dark: #222934;
   --color-primary-dark: #181d25;
-  --color-secondary-dark: #444444;
+  --color-secondary-dark: #333d4c;
   --color-title-dark: #ffffff;
   --color-font-dark: #ffffff;
   --color-hover-dark: #a1752d;
@@ -30,7 +33,7 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
+    --background: #181d25;
     --foreground: #ededed;
   }
 }

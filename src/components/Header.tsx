@@ -3,6 +3,7 @@ import Image from "next/image";
 import { useTheme } from "@/contexts/ThemeContext";
 import { useState, useEffect, useRef } from "react";
 import { cn } from "./utils/utils";
+import { useLocale } from "@/contexts/LocaleContext";
 
 const ECommerceHero = () => {
   const { theme, setTheme, isDark } = useTheme();
@@ -12,9 +13,61 @@ const ECommerceHero = () => {
   const [categoriesCollapsed, setCategoriesCollapsed] = useState(false);
   const [mobileCategoriesCollapsed, setMobileCategoriesCollapsed] =
     useState(true);
+  const { locale, changeLocale, t } = useLocale();
+  const [isCountryDropdownOpen, setIsCountryDropdownOpen] = useState(false);
+  const [isLanguageDropdownOpen, setIsLanguageDropdownOpen] = useState(false);
   const categoryRefs = useRef([]);
   const dropdownRef = useRef(null);
   const categoriesContainerRef = useRef(null);
+  const [selectedLanguage, setSelectedLanguage] = useState("EN");
+  const languageRef = useRef(null);
+  const countryRef = useRef(null);
+  const [selectedCountry, setSelectedCountry] = useState({
+    name: "Saudi Arabia",
+    code: "KSA",
+    flag: "🇸🇦",
+  });
+
+  const countries = [
+    { name: "Saudi Arabia", code: "KSA", flag: "🇸🇦" },
+    { name: "Bahrain", code: "BH", flag: "🇧🇭" },
+    { name: "Emirates", code: "UAE", flag: "🇦🇪" },
+    { name: "Qatar", code: "QA", flag: "🇶🇦" },
+    { name: "Kuwait", code: "KW", flag: "🇰🇼" },
+  ];
+
+  const languages = [
+    { code: "EN", name: "English" },
+    { code: "AR", name: "العربية" },
+  ];
+
+  // Close dropdowns when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (languageRef.current && !languageRef.current.contains(event.target)) {
+        setIsLanguageDropdownOpen(false);
+      }
+      if (countryRef.current && !countryRef.current.contains(event.target)) {
+        setIsCountryDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  const handleCountrySelect = (country) => {
+    setSelectedCountry(country);
+    setIsCountryDropdownOpen(false);
+  };
+
+  const handleLanguageSelect = (language) => {
+    setSelectedLanguage(language.code);
+    setIsLanguageDropdownOpen(false);
+    changeLocale();
+  };
 
   const toggleTheme = () => {
     setTheme(isDark ? "light" : "dark");
@@ -312,11 +365,11 @@ const ECommerceHero = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Navbar with Categories Toggle (only on larger screens) */}
-      <header className="bg-primary shadow-sm hidden lg:block ">
+      <header className="bg-primary dark:bg-header-dark shadow-sm hidden lg:block ">
         <div className="max-w-7xl mx-auto px-5">
           <div className="flex justify-between items-center gap-6 h-[48px]">
             <div
-              className="flex items-center justify-between bg-secondary w-1/4  font-medium px-[24px] py-[12px] cursor-pointer rounded-t-[8px]"
+              className="flex items-center justify-between bg-secondary dark:bg-secondary-dark w-1/4  font-medium px-[24px] py-[12px] cursor-pointer rounded-t-[8px]"
               onClick={toggleCategoriesCollapse}
             >
               <div className="flex gap-2 items-center">
@@ -342,8 +395,8 @@ const ECommerceHero = () => {
                 />
               </div>
             </div>
-
-            <div className="flex items-center justify-between flex-1">
+            {/* middle header */}
+            <div className="flex items-center justify-between flex-1 bg-xyellow-400">
               <nav className="flex text-left space-x-8  flex-1">
                 {Array.from({ length: 5 }).map((_, index) => (
                   <a
@@ -355,8 +408,112 @@ const ECommerceHero = () => {
                   </a>
                 ))}
               </nav>
+            </div>
+            {/* right header */}
+            <div className="flex items-center space-x-x4 bg-bxlue-400 text-[14px]  h-full gap-3">
+              {/* language dropdown */}
+              <div className="flex items-center space-x-4 rtl:space-x-reverse">
+                {/* Language Selector */}
+                <div className="relative" ref={languageRef}>
+                  <button
+                    onClick={() => {
+                      setIsLanguageDropdownOpen(!isLanguageDropdownOpen);
+                      setIsCountryDropdownOpen(false);
+                    }}
+                    className="flex items-center hover:underline transition-colors duration-200 text-white cursor-pointer"
+                  >
+                    <span>{selectedLanguage} </span>
+                    <svg
+                      className={`ml-1 rtl:ml-2 rtl:mr-1 w-3 h-3 transition-transform duration-200 ${isLanguageDropdownOpen ? "rotate-180" : ""}`}
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M19 9l-7 7-7-7"
+                      ></path>
+                    </svg>
+                  </button>
 
-              <div className="flex items-center space-x-4">right</div>
+                  {/* Language Dropdown Menu */}
+                  {isLanguageDropdownOpen && (
+                    <div className="absolute right-0 rtl:right-auto rtl:left-0 mt-1 w-32 bg-white rounded-md shadow-lg py-1 z-50 border border-gray-200">
+                      {languages.map((language) => (
+                        <button
+                          key={language.code}
+                          onClick={() => handleLanguageSelect(language)}
+                          className={`block w-full text-left px-4 py-2 text-sm hover:bg-primary hover:text-white transition-colors duration-200 ${selectedLanguage === language.code ? "text-secondary" : "text-gray-700"}`}
+                        >
+                          {language.name}
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
+
+                {/* Country Selector */}
+              </div>
+              {/* countries dropdown */}
+              <div className="relative" ref={countryRef}>
+                <button
+                  onClick={() => {
+                    setIsCountryDropdownOpen(!isCountryDropdownOpen);
+                    setIsLanguageDropdownOpen(false);
+                  }}
+                  className="flex items-center hover:text-secondary transition-colors duration-200"
+                >
+                  <span className="mr-1 rtl:mr-2 rtl:ml-1">
+                    {selectedCountry.flag}
+                  </span>
+                  <span className="hidden sm:inline text-white">
+                    {selectedCountry.code}
+                  </span>
+                  <Image
+                    src="/arrow_down.svg"
+                    width={16}
+                    height={16}
+                    alt="arrow down"
+                    className={cn({ "rotate-180": categoriesCollapsed })}
+                  />
+
+                  {/* <svg */}
+                  {/*   className={`ml-1 rtl:ml-0 rtl:mr-1 w-3 h-3 transition-transform duration-200 ${isCountryDropdownOpen ? "rotate-180" : ""}`} */}
+                  {/*   fill="none" */}
+                  {/*   stroke="currentColor" */}
+                  {/*   viewBox="0 0 24 24" */}
+                  {/*   xmlns="http://www.w3.org/2000/svg" */}
+                  {/* > */}
+                  {/*   <path */}
+                  {/*     strokeLinecap="round" */}
+                  {/*     strokeLinejoin="round" */}
+                  {/*     strokeWidth="2" */}
+                  {/*     d="M19 9l-7 7-7-7" */}
+                  {/*   ></path> */}
+                  {/* </svg> */}
+                </button>
+
+                {/* Country Dropdown Menu */}
+                {isCountryDropdownOpen && (
+                  <div className="absolute right-0 rtl:right-auto rtl:left-0 mt-1 w-48 bg-white rounded-md shadow-lg py-1 z-50 border border-gray-200">
+                    {countries.map((country) => (
+                      <button
+                        key={country.code}
+                        onClick={() => handleCountrySelect(country)}
+                        className={`block w-full text-left px-4 py-2 text-sm hover:bg-primary hover:text-white transition-colors duration-200 ${selectedCountry.code === country.code ? "text-secondary" : "text-gray-700"}`}
+                      >
+                        <span className="mr-2 rtl:mr-2 rtl:ml-2">
+                          {country.flag}
+                        </span>
+                        {country.name}
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         </div>

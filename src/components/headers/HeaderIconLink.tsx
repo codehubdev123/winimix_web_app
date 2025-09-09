@@ -22,14 +22,14 @@ const HeaderIconLink = ({
     <Link
       href={href || "#"}
       onClick={onClick}
-      className="flex items-center  bg-secondary/80 rounded-full"
+      className="flex items-center  bg-secondary/80 dark:bg-secondary-dark rounded-full"
     >
       <div className="h-[48px] w-[48px] flex items-center justify-center relative text-white">
         {icon}
         {isCart && (
           <span
-            className="w-[24px] h-[24px] absolute top-0 -right-2 bg-white rounded-full border-[3px] border-primary
-            text-secondary
+            className="w-[24px] h-[24px] absolute top-0 -right-2 bg-white dark:bg-[#33B36B] rounded-full border-[3px] border-primary dark:border-[#222934]
+            text-secondary dark:text-white
             flex items-center  justify-center text-sm"
           >
             3
@@ -39,7 +39,7 @@ const HeaderIconLink = ({
     </Link>
   ) : (
     <div
-      className="h-[48px] w-[48px] flex items-center justify-center cursor-pointer hover:bg-secondary/80 rounded-full text-white"
+      className="h-[48px] w-[48px] flex items-center justify-center cursor-pointer hover:bg-secondary/80 dark:hover:bg-[#333D4C] rounded-full text-white"
       onClick={onClick}
     >
       {icon}
