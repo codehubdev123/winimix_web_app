@@ -5,6 +5,7 @@ import { useState, useEffect, useRef } from "react";
 import { cn } from "./utils/utils";
 import { useLocale } from "@/contexts/LocaleContext";
 import { ChevronRight, MonitorCheck } from "lucide-react";
+import HomeSlider from "./sliders/HomeSlider";
 
 const ECommerceHero = () => {
   const { theme, setTheme, isDark } = useTheme();
@@ -739,7 +740,7 @@ const ECommerceHero = () => {
               {/* )} */}
               <div
                 ref={categoriesContainerRef}
-                className="divide-y divide-gray-100 relative transition-all duration-300 ease-in-out bg-white p-[9px]"
+                className="divide-y divide-gray-100 relative transition-all duration-300 ease-in-out bg-yellow-400 p-[9px] lg:h-[500px] lg:!overflow-y-auto"
                 style={{
                   maxHeight:
                     isMobile && mobileCategoriesCollapsed ? "0" : "1000px",
@@ -775,7 +776,7 @@ const ECommerceHero = () => {
                           <span
                             className={`font-medium text-[14px] text-[#333D4C]`}
                           >
-                            {category.name}
+                            {category.name} here
                           </span>
                         </div>
                         <div className="">
@@ -809,43 +810,11 @@ const ECommerceHero = () => {
             </div>
           )}
 
-          {/* Banner - Expands when categories are collapsed */}
+          {/* #banner Banner - Expands when categories are collapsed */}
           <div
             className={`relative rounded-xl overflow-hidden ${categoriesCollapsed ? "w-full" : "flex-1"}`}
           >
-            <img
-              src={bannerImages[currentBanner]}
-              alt="Special Offer"
-              className="w-full h-full object-cover banner-slide"
-            />
-            <div
-              className={`absolute inset-0 bg-gradient-to-r from-black/60 to-transparent p-8 flex flex-col justify-center ${isRTL ? "rtl:bg-gradient-to-l" : ""}`}
-            >
-              <h2 className="text-3xl font-bold text-white mb-4">
-                Summer Saless
-              </h2>
-              <p className="text-white mb-6 text-lg">
-                Up to 50% off on selected items. Limited time offer!
-              </p>
-              <button className="bg-primary hover:bg-secondary text-white font-medium py-3 px-8 rounded-lg w-fit transition-colors flex items-center">
-                Shop Now
-                <i
-                  className={`fas fa-arrow-right ${isRTL ? "mr-2 rotate-180" : "ml-2"}`}
-                ></i>
-              </button>
-            </div>
-            {/* Banner Indicators */}
-            <div
-              className={`absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2 ${isRTL ? "rtl:space-x-reverse" : ""}`}
-            >
-              {bannerImages.map((_, idx) => (
-                <button
-                  key={idx}
-                  className={`w-3 h-3 rounded-full ${currentBanner === idx ? "bg-white" : "bg-white/50"}`}
-                  onClick={() => setCurrentBanner(idx)}
-                />
-              ))}
-            </div>
+            <HomeSlider />
           </div>
         </div>
       </section>

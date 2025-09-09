@@ -51,7 +51,7 @@ const HomeSlider = () => {
   ];
 
   return (
-    <div className="w-full relative overflow-hidden" dir="ltr">
+    <div className="w-full relative overflow-hidden">
       <Swiper
         modules={[Autoplay, Navigation, Pagination]}
         spaceBetween={0}
