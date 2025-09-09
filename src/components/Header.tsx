@@ -704,7 +704,7 @@ const ECommerceHero = () => {
       {/* </div> */}
 
       {/* Hero Section #ebeef2 */}
-      <section className="max-w-7xl mx-auto bg-[#f0f]">
+      <section className="max-w-7xl mx-auto bg-purple-400">
         <div className="flex flex-col lg:flex-row gap-6">
           {/* Categories Sidebar - Hidden when collapsed on desktop */}
           {(!categoriesCollapsed || isMobile) && (
@@ -719,12 +719,17 @@ const ECommerceHero = () => {
                     <i className={`fas fa-list ${isRTL ? "ml-2" : "mr-2"}`}></i>
                     <span>Categories</span>
                   </div>
-                  <i
-                    className={`fas ${mobileCategoriesCollapsed ? "fa-chevron-down" : "fa-chevron-up"} ${isRTL ? "mr-auto" : "ml-auto"}`}
-                  ></i>
+                  {/* <i */}
+                  {/*   className={`fas ${mobileCategoriesCollapsed ? "fa-chevron-down" : "fa-chevron-up"} ${isRTL ? "mr-auto" : "ml-auto"}`} */}
+                  {/* ></i> */}
+                  <Image
+                    src="/categories.svg"
+                    width={18}
+                    height={18}
+                    alt="categories"
+                  />
                 </div>
               )}
-
               {/* Desktop Categories Title */}
               {/* {!isMobile && ( */}
               {/*   <div className="p-4 bg-primary text-white font-bold text-lg"> */}
@@ -732,7 +737,6 @@ const ECommerceHero = () => {
               {/*     <span>Categories</span> */}
               {/*   </div> */}
               {/* )} */}
-
               <div
                 ref={categoriesContainerRef}
                 className="divide-y divide-gray-100 relative transition-all duration-300 ease-in-out bg-white p-[9px]"
