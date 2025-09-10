@@ -86,7 +86,7 @@ const NewBanner = () => {
           </h1>
         </div>
         <div className="h-[400px] bg-[#EEF1F6] mt-[50px] text-center">
-          slider is here
+          products slider is here
         </div>
         <div className="mt-[24px]  flex items-center flex-col justify-center gap-4">
           <div>
