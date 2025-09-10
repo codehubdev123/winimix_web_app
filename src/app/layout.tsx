@@ -58,7 +58,6 @@ export default function RootLayout({
               <TopNavbar />
               <Navbar />
               {children}
-              <NewsLetter />
               <Footer />
             </CartProvider>
           </LocaleProvider>
