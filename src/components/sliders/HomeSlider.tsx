@@ -92,7 +92,7 @@ const HomeSlider = () => {
               <div className="absolute inset-0 flex items-center">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
                   <div
-                    className={`max-w-xl bg-red-400 text-white ltr:text-left rtl:text-right  rtl:ml-auto px-20`}
+                    className={`max-w-xl  text-white ltr:text-left rtl:text-right  rtl:ml-auto px-20`}
                   >
                     <p className="text-[16px] mb-6 opacity-90 animate-fadeIn delay-150">
                       {slide.subtitle}
@@ -102,7 +102,7 @@ const HomeSlider = () => {
                     </h2>
                     <a
                       href={slide.ctaLink}
-                      className="inline-block bg-primary hover:bg-secondary text-white font-medium py-3 px-8 rounded-full transition-all duration-300 transform hover:scale-105 animate-fadeIn delay-300"
+                      className="inline-block bg-primary hover:bg-secondary text-white font-medium py-3 px-8 rounded-[8px] transition-all duration-300 transform hover:scale-105 animate-fadeIn"
                     >
                       {slide.ctaText}
                     </a>
