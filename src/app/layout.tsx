@@ -11,6 +11,8 @@ import Header from "@/components/Header";
 import { ThemeProvider } from "@/contexts/ThemeContext";
 import TopHeader from "@/components/headers/TopHeader";
 import Features from "@/components/Features";
+import Newa from "@/components/Newa";
+import NewBanner from "@/components/newdesign/NewBanner";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -47,9 +49,11 @@ export default function RootLayout({
         <ThemeProvider>
           <LocaleProvider>
             <CartProvider>
+              <NewBanner />
               <TopHeader />
               <Header />
               <Features />
+              <Newa />
               <div className="mt-[300px]"></div>
               <TopNavbar />
               <Navbar />

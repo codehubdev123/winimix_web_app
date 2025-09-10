@@ -411,10 +411,9 @@ const ECommerceHero = () => {
       style={{
         top: `${dropdownPosition.top}px`,
         left: locale == "ar" ? "auto" : `${dropdownPosition.left}px`,
-        right:
-          locale == "ar"
-            ? `${window.innerWidth - dropdownPosition.left}px`
-            : "auto",
+        right: isRTL
+          ? `${window.innerWidth - dropdownPosition.left}px`
+          : "auto",
         width: "700px",
         opacity: activeCategory ? 1 : 0,
         visibility: activeCategory ? "visible" : "hidden",
