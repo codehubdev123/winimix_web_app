@@ -465,19 +465,16 @@ const ECommerceHero = () => {
 
       {/* Product Image Column */}
       <div className="flex flex-col">
-        <h4 className="font-bold text-gray-800 mb-4 text-lg border-b pb-2">
-          Featured Product
-        </h4>
-        <div className="flex-1 overflow-hidden rounded-lg">
+        <div className="flex-1 overflow-hidden rounded-lg relative">
           <img
             src={activeCategory?.image}
             alt={activeCategory?.name}
-            className="w-full h-48 object-cover transition-transform duration-500 hover:scale-105"
+            className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
           />
+          <button className="absolute bottom-8 right-12 z-10 mt-4 bg-primary hover:bg-secondary text-white text-xs font-medium py-2 px-4 rounded-lg transition-colors">
+            Shop Now
+          </button>
         </div>
-        <button className="mt-4 bg-primary hover:bg-secondary text-white font-medium py-2 px-4 rounded-lg w-full transition-colors">
-          View All Products
-        </button>
       </div>
     </div>
   );
