@@ -533,7 +533,7 @@ const ECommerceHero = () => {
   );
 
   return (
-    <div className="min-h-screen bg-white dark:bg-primary-dark">
+    <div className="x-min-h-screen bg-white dark:bg-primary-dark">
       {/* Navbar with Categories Toggle (only on larger screens) */}
       <header className="bg-primary dark:bg-header-dark shadow-sm hidden lg:block ">
         <div className="container mx-auto">

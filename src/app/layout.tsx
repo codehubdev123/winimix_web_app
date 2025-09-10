@@ -10,6 +10,7 @@ import { CartProvider } from "@/contexts/CartContext";
 import Header from "@/components/Header";
 import { ThemeProvider } from "@/contexts/ThemeContext";
 import TopHeader from "@/components/headers/TopHeader";
+import Features from "@/components/Features";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -48,6 +49,8 @@ export default function RootLayout({
             <CartProvider>
               <TopHeader />
               <Header />
+              <Features />
+              <div className="mt-[300px]"></div>
               <TopNavbar />
               <Navbar />
               {children}
