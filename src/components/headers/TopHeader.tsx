@@ -17,10 +17,12 @@ const TopHeader = () => {
 
   return (
     <div className="bg-primary dark:bg-header-dark">
-      <div className="max-w-7xl mx-auto  h-[88px] flex items-center justify-between">
-        <div className="md:text-2xl font-bold text-white">WiniMix</div>
+      <div className="max-w-7xl mx-auto  h-[88px] flex items-center justify-between px-5 lg:px-0">
+        <div className="md:text-2xl font-bold text-white">
+          <Image src="/logo.svg" width={150} height={48} alt="logo" />
+        </div>
         <div className="flex-1 px-12">
-          <div className="flex px-4 py-3  border-1 border-white overflow-hidden h-[48px] mx-auto rounded-[100px]">
+          <div className="flex px-4 py-3  border-1 border-white overflow-hidden h-[48px] mx-auto rounded-[100px] hidden lg:flex">
             <Search className="w-5 h-5 text-white mr-3 rtl:ml-3 rotate-90 " />
             {/* <svg */}
             {/*   xmlns="http://www.w3.org/2000/svg" */}
@@ -38,7 +40,7 @@ const TopHeader = () => {
           </div>
         </div>
         <div className="flex items-center justify-between gap-6">
-          <div>
+          <div className="hidden lg:block">
             <Image
               src="/sale.svg"
               width={176}

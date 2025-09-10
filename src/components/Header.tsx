@@ -370,7 +370,7 @@ const ECommerceHero = () => {
         });
       }
     }
-  }, [activeCategory, isRTL, isMobile]);
+  }, [activeCategory, locale, isMobile]);
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -410,10 +410,11 @@ const ECommerceHero = () => {
       className="fixed bg-white dark:bg-primary-dark shadow-xl rounded-lg z-50 p-6 grid grid-cols-3 gap-6"
       style={{
         top: `${dropdownPosition.top}px`,
-        left: isRTL ? "auto" : `${dropdownPosition.left}px`,
-        right: isRTL
-          ? `${window.innerWidth - dropdownPosition.left}px`
-          : "auto",
+        left: locale == "ar" ? "auto" : `${dropdownPosition.left}px`,
+        right:
+          locale == "ar"
+            ? `${window.innerWidth - dropdownPosition.left}px`
+            : "auto",
         width: "700px",
         opacity: activeCategory ? 1 : 0,
         visibility: activeCategory ? "visible" : "hidden",
@@ -435,7 +436,7 @@ const ECommerceHero = () => {
               className="text-font dark:text-white hover:text-primary cursor-pointer transition-colors flex items-center"
             >
               <i
-                className={`fas fa-chevron-right text-xs text-[#cdf] ${isRTL ? "ml-2 rotate-180" : "mr-2"}`}
+                className={`fas fa-chevron-right text-xs text-[#cdf] ${locale == "ar" ? "ml-2 rotate-180" : "mr-2"}`}
               ></i>
               {sub}
             </li>
@@ -455,7 +456,7 @@ const ECommerceHero = () => {
               className="text-font dark:text-white hover:text-primary cursor-pointer transition-colors flex items-center"
             >
               <i
-                className={`fas fa-chevron-right text-xs text-gray-400 ${isRTL ? "ml-2 rotate-180" : "mr-2"}`}
+                className={`fas fa-chevron-right text-xs text-gray-400 ${locale == "ar" ? "ml-2 rotate-180" : "mr-2"}`}
               ></i>
               {brand}
             </li>
@@ -714,7 +715,9 @@ const ECommerceHero = () => {
                   onClick={toggleMobileCategoriesCollapse}
                 >
                   <div className="flex items-center">
-                    <i className={`fas fa-list ${isRTL ? "ml-2" : "mr-2"}`}></i>
+                    <i
+                      className={`fas fa-list ${locale == "ar" ? "ml-2" : "mr-2"}`}
+                    ></i>
                     <span>Categories</span>
                   </div>
                   {/* <i */}
