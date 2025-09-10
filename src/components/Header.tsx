@@ -471,7 +471,7 @@ const ECommerceHero = () => {
             alt={activeCategory?.name}
             className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
           />
-          <button className="absolute bottom-8 right-12 z-10 mt-4 bg-primary hover:bg-secondary text-white text-xs font-medium py-2 px-4 rounded-lg transition-colors">
+          <button className="cursor-pointer absolute bottom-8 right-12 z-10 mt-4 bg-primary hover:bg-secondary text-white text-xs font-medium py-2 px-4 rounded-lg transition-colors">
             Shop Now
           </button>
         </div>
@@ -481,16 +481,16 @@ const ECommerceHero = () => {
 
   // Mobile dropdown component (opens directly below category)
   const MobileDropdown = ({ category }) => (
-    <div className="bg-white rounded-b-lg shadow-sm p-6 border-t border-gray-200">
+    <div className="bg-white dark:bg-primary-dark rounded-b-lg shadow-sm p-6 border-t border-gray-200">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Subcategories */}
         <div>
-          <h4 className="font-bold text-gray-800 mb-4 text-lg border-b pb-2">
-            Subcategories
+          <h4 className="font-bold text-font dark:text-white mb-4 text-[16px] ">
+            Smartphones
           </h4>
           <ul className="space-y-3">
             {category.subcategories.map((sub, idx) => (
-              <li key={idx} className="text-gray-700 text-sm py-1">
+              <li key={idx} className="text-font dark:text-white text-sm py-1">
                 {sub}
               </li>
             ))}
@@ -499,12 +499,12 @@ const ECommerceHero = () => {
 
         {/* Brands */}
         <div>
-          <h4 className="font-bold text-gray-800 mb-4 text-lg border-b pb-2">
-            Popular Brands
+          <h4 className="font-bold text-font dark:text-white mb-4 text-[16px] ">
+            Accessories
           </h4>
           <ul className="space-y-3">
             {category.brands.map((brand, idx) => (
-              <li key={idx} className="text-gray-700 text-sm py-1">
+              <li key={idx} className="text-font dark:text-white text-sm py-1">
                 {brand}
               </li>
             ))}
@@ -514,19 +514,19 @@ const ECommerceHero = () => {
 
       {/* Product Image */}
       <div className="mt-6">
-        <h4 className="font-bold text-gray-800 mb-4 text-lg border-b pb-2">
-          Featured Product
-        </h4>
-        <div className="overflow-hidden rounded-lg">
+        {/* <h4 className="font-bold text-gray-800 mb-4 text-lg border-b pb-2"> */}
+        {/*   Featured Product */}
+        {/* </h4> */}
+        <div className="overflow-hidden rounded-lg relative">
           <img
             src={category.image}
             alt={category.name}
             className="w-full h-48 object-cover"
           />
+          <button className="cursor-pointer absolute bottom-8 right-12 z-10 mt-4 bg-primary hover:bg-secondary text-white text-xs font-medium py-2 px-4 rounded-lg transition-colors">
+            Shop Now
+          </button>
         </div>
-        <button className="mt-4 bg-primary text-white font-medium py-2 px-4 rounded-lg w-full">
-          View All Products
-        </button>
       </div>
     </div>
   );
