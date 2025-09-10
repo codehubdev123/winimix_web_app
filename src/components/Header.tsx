@@ -407,7 +407,7 @@ const ECommerceHero = () => {
   const DesktopDropdown = () => (
     <div
       ref={dropdownRef}
-      className="fixed bg-white shadow-xl rounded-lg z-50 p-6 grid grid-cols-3 gap-6"
+      className="fixed bg-white dark:bg-primary-dark shadow-xl rounded-lg z-50 p-6 grid grid-cols-3 gap-6"
       style={{
         top: `${dropdownPosition.top}px`,
         left: isRTL ? "auto" : `${dropdownPosition.left}px`,
@@ -425,17 +425,17 @@ const ECommerceHero = () => {
     >
       {/* Subcategories Column */}
       <div>
-        <h4 className="font-bold text-gray-800 mb-4 text-lg border-b pb-2">
-          Subcategories
+        <h4 className="font-bold text-font dark:text-white mb-4 text-[16px] ">
+          Smartphones
         </h4>
         <ul className="space-y-3">
           {activeCategory?.subcategories.map((sub, idx) => (
             <li
               key={idx}
-              className="text-gray-700 hover:text-primary cursor-pointer transition-colors flex items-center"
+              className="text-font dark:text-white hover:text-primary cursor-pointer transition-colors flex items-center"
             >
               <i
-                className={`fas fa-chevron-right text-xs text-gray-400 ${isRTL ? "ml-2 rotate-180" : "mr-2"}`}
+                className={`fas fa-chevron-right text-xs text-[#cdf] ${isRTL ? "ml-2 rotate-180" : "mr-2"}`}
               ></i>
               {sub}
             </li>
@@ -445,14 +445,14 @@ const ECommerceHero = () => {
 
       {/* Brands Column */}
       <div>
-        <h4 className="font-bold text-gray-800 mb-4 text-lg border-b pb-2">
-          Popular Brands
+        <h4 className="font-bold text-font dark:text-white mb-4 text-[16px] ">
+          Accessories
         </h4>
         <ul className="space-y-3">
           {activeCategory?.brands.map((brand, idx) => (
             <li
               key={idx}
-              className="text-gray-700 hover:text-primary cursor-pointer transition-colors flex items-center"
+              className="text-font dark:text-white hover:text-primary cursor-pointer transition-colors flex items-center"
             >
               <i
                 className={`fas fa-chevron-right text-xs text-gray-400 ${isRTL ? "ml-2 rotate-180" : "mr-2"}`}
@@ -535,7 +535,7 @@ const ECommerceHero = () => {
   );
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-white dark:bg-primary-dark">
       {/* Navbar with Categories Toggle (only on larger screens) */}
       <header className="bg-primary dark:bg-header-dark shadow-sm hidden lg:block ">
         <div className="max-w-7xl mx-auto">
@@ -705,8 +705,8 @@ const ECommerceHero = () => {
       {/* </div> */}
 
       {/* Hero Section #ebeef2 */}
-      <section className="max-w-7xl mx-auto bg-purple-400">
-        <div className="flex flex-col lg:flex-row gap-6">
+      <section className="max-w-7xl mx-auto">
+        <div className="flex flex-col lg:flex-row lg:gap-6">
           {/* Categories Sidebar - Hidden when collapsed on desktop */}
           {(!categoriesCollapsed || isMobile) && (
             <div className="w-full lg:w-1/4 bg-white  shadow-sm overflow-hidden h-fit">
@@ -740,7 +740,7 @@ const ECommerceHero = () => {
               {/* )} */}
               <div
                 ref={categoriesContainerRef}
-                className="divide-y divide-gray-100 relative transition-all duration-300 ease-in-out bg-yellow-400 p-[9px] lg:h-[500px] lg:!overflow-y-auto"
+                className="divide-y divide-gray-100 dark:divide-none relative transition-all duration-300 ease-in-out bg-white dark:bg-primary-dark p-[9px] lg:h-[520px] lg:!overflow-y-auto no-scrollbar border border-[#EEF1F6] dark:border-[#333D4C]"
                 style={{
                   maxHeight:
                     isMobile && mobileCategoriesCollapsed ? "0" : "1000px",
@@ -758,7 +758,7 @@ const ECommerceHero = () => {
                     onMouseLeave={() => !isMobile && setActiveCategory(null)}
                   >
                     <div
-                      className="category-item cursor-pointer px-4 py-[10px] flex items-center justify-between bg-white rounded-[8px] hover:bg-[#F5F7FA]"
+                      className="category-item cursor-pointer px-4 py-[10px] flex items-center justify-between bg-white dark:bg-primary-dark rounded-[8px] hover:bg-[#F5F7FA] dark:hover:bg-[#222934] dark:text-white"
                       onClick={() =>
                         isMobile &&
                         setActiveCategory(
@@ -774,16 +774,16 @@ const ECommerceHero = () => {
                             className="text-[#858b95]"
                           />
                           <span
-                            className={`font-medium text-[14px] text-[#333D4C]`}
+                            className={`font-medium text-[14px] text-[#333D4C] dark:text-white`}
                           >
-                            {category.name} here
+                            {category.name}
                           </span>
                         </div>
                         <div className="">
                           <ChevronRight
                             width={16}
                             height={16}
-                            className="text-[#333D4C]"
+                            className="text-[#333D4C] dark:text-white"
                           />
                         </div>
                         {/* <i */}
@@ -810,9 +810,9 @@ const ECommerceHero = () => {
             </div>
           )}
 
-          {/* #banner Banner - Expands when categories are collapsed */}
+          {/* #banner #slider - Expands when categories are collapsed */}
           <div
-            className={`relative rounded-xl overflow-hidden ${categoriesCollapsed ? "w-full" : "flex-1"}`}
+            className={`relative rounded-xl overflow-hidden ${categoriesCollapsed ? "w-full" : "flex-1"} lg:mt-[19px] `}
           >
             <HomeSlider />
           </div>

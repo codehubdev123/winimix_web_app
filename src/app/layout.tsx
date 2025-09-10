@@ -40,7 +40,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${tajawal.variable}  ${geistSans.variable} ${geistMono.variable} antialiased bg-gray-50`}
+        className={`${tajawal.variable}  ${geistSans.variable} ${geistMono.variable} antialiased bg-white dark:bg-primary-dark`}
         suppressHydrationWarning
       >
         <ThemeProvider>

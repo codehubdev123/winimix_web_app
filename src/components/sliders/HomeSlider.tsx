@@ -92,12 +92,12 @@ const HomeSlider = () => {
               <div className="absolute inset-0 flex items-center">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
                   <div className={`max-w-md text-white text-left mr-auto`}>
-                    <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-3 animate-fadeIn">
-                      {slide.title}
-                    </h2>
                     <p className="text-lg md:text-xl mb-6 opacity-90 animate-fadeIn delay-150">
                       {slide.subtitle}
                     </p>
+                    <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-3 animate-fadeIn">
+                      {slide.title}
+                    </h2>
                     <a
                       href={slide.ctaLink}
                       className="inline-block bg-primary hover:bg-secondary text-white font-medium py-3 px-8 rounded-full transition-all duration-300 transform hover:scale-105 animate-fadeIn delay-300"

@@ -7,7 +7,11 @@ type Props = {
 };
 
 const PageLayout = ({ children }: Props) => {
-  return <div className="min-h-screen bg-gray-50">{children}</div>;
+  return (
+    <div className="min-h-screen bg-gray-5x0 dark:bgx-primary-dark">
+      {children}
+    </div>
+  );
 };
 
 export default PageLayout;
