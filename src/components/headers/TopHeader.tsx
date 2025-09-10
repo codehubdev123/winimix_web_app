@@ -17,7 +17,7 @@ const TopHeader = () => {
 
   return (
     <div className="bg-primary dark:bg-header-dark">
-      <div className="max-w-7xl mx-auto  h-[88px] flex items-center justify-between px-5 lg:px-0">
+      <div className="container mx-auto  h-[88px] flex items-center justify-between px-5 lg:px-0">
         <div className="md:text-2xl font-bold text-white">
           <Image src="/logo.svg" width={150} height={48} alt="logo" />
         </div>

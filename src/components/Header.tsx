@@ -536,7 +536,7 @@ const ECommerceHero = () => {
     <div className="min-h-screen bg-white dark:bg-primary-dark">
       {/* Navbar with Categories Toggle (only on larger screens) */}
       <header className="bg-primary dark:bg-header-dark shadow-sm hidden lg:block ">
-        <div className="max-w-7xl mx-auto">
+        <div className="container mx-auto">
           <div className="flex justify-between items-center gap-6 h-[48px]">
             <div
               className="flex items-center justify-between bg-secondary dark:bg-secondary-dark w-1/4  font-medium px-[24px] py-[12px] cursor-pointer rounded-t-[8px]"
@@ -703,7 +703,7 @@ const ECommerceHero = () => {
       {/* </div> */}
 
       {/* Hero Section #ebeef2 */}
-      <section className="max-w-7xl mx-auto">
+      <section className="container mx-auto">
         <div className="flex flex-col lg:flex-row lg:gap-6">
           {/* Categories Sidebar - Hidden when collapsed on desktop */}
           {(!categoriesCollapsed || isMobile) && (
