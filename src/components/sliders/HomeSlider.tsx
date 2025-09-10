@@ -24,7 +24,7 @@ const HomeSlider = () => {
       subtitle: "Latest electronics with amazing features",
       image:
         "https://images.unsplash.com/photo-1498049794561-7780e7231661?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80",
-      ctaText: "Explore Tech",
+      ctaText: "Shop Now",
       ctaLink: "#",
       bgPosition: "center",
     },
@@ -34,7 +34,7 @@ const HomeSlider = () => {
       subtitle: "Refresh your space with our exclusive collection",
       image:
         "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80",
-      ctaText: "Discover Home",
+      ctaText: "Shop Now",
       ctaLink: "#",
       bgPosition: "center",
     },
@@ -91,11 +91,13 @@ const HomeSlider = () => {
               {/* Content */}
               <div className="absolute inset-0 flex items-center">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-                  <div className={`max-w-md text-white text-left mr-auto`}>
-                    <p className="text-lg md:text-xl mb-6 opacity-90 animate-fadeIn delay-150">
+                  <div
+                    className={`max-w-xl bg-red-400 text-white ltr:text-left rtl:text-right  rtl:ml-auto px-20`}
+                  >
+                    <p className="text-[16px] mb-6 opacity-90 animate-fadeIn delay-150">
                       {slide.subtitle}
                     </p>
-                    <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-3 animate-fadeIn">
+                    <h2 className="text-3xl md:text-[56px]  font-bold mb-3 animate-fadeIn">
                       {slide.title}
                     </h2>
                     <a
