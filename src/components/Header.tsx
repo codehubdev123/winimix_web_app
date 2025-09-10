@@ -710,7 +710,7 @@ const ECommerceHero = () => {
               {/* Mobile Categories Toggle */}
               {isMobile && (
                 <div
-                  className="p-4 bg-secondary text-white font-bold text-lg flex justify-between items-center cursor-pointer"
+                  className="p-4 bg-secondary dark:bg-secondary-dark text-white font-bold text-lg flex justify-between items-center cursor-pointer"
                   onClick={toggleMobileCategoriesCollapse}
                 >
                   <div className="flex items-center">
