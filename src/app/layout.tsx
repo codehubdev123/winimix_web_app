@@ -13,6 +13,8 @@ import TopHeader from "@/components/headers/TopHeader";
 import Features from "@/components/Features";
 import Newa from "@/components/Newa";
 import NewBanner from "@/components/newdesign/NewBanner";
+import NewCategories from "@/components/newdesign/NewCategories";
+import NewProductSlider from "@/components/newdesign/NewProductSlider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -50,6 +52,8 @@ export default function RootLayout({
           <LocaleProvider>
             <CartProvider>
               <NewBanner />
+              <NewCategories />
+              {/* <NewProductSlider /> */}
               <TopHeader />
               <Header />
               <Features />
