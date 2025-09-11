@@ -53,7 +53,7 @@ export default function RootLayout({
             <CartProvider>
               <NewBanner />
               <NewCategories />
-              {/* <NewProductSlider /> */}
+              <NewProductSlider />
               <TopHeader />
               <Header />
               <Features />

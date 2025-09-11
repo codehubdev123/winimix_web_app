@@ -77,7 +77,7 @@ const NewCategories = () => {
 
   return (
     <div className="w-full py-16 px-4 bg-white">
-      <div className="max-w-7xl mx-auto">
+      <div className="container mx-auto">
         <Swiper
           modules={[Autoplay, Navigation]}
           spaceBetween={30}

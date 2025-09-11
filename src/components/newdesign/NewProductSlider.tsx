@@ -5,6 +5,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
 import { ChevronLeft, ChevronRight, Heart, ShoppingCart } from "lucide-react";
 import "swiper/css";
+import Link from "next/link";
 
 const ProductCardsSlider = () => {
   const [isRTL, setIsRTL] = useState(false);
@@ -15,8 +16,7 @@ const ProductCardsSlider = () => {
   const products = [
     {
       id: 1,
-      image:
-        "https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
+      image: "/p3.png",
       title: "Nike Air Max",
       price: "$129.99",
       colors: ["bg-red-500", "bg-blue-500", "bg-black", "bg-white"],
@@ -24,8 +24,7 @@ const ProductCardsSlider = () => {
     },
     {
       id: 2,
-      image:
-        "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
+      image: "p4.png",
       title: "Wireless Headphones",
       price: "$89.99",
       colors: ["bg-black", "bg-white", "bg-blue-500"],
@@ -33,8 +32,7 @@ const ProductCardsSlider = () => {
     },
     {
       id: 3,
-      image:
-        "https://images.unsplash.com/photo-1585386959984-a4155224a1ad?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1074&q=80",
+      image: "p5.png",
       title: "Luxury Watch",
       price: "$249.99",
       colors: ["bg-yellow-500", "bg-silver", "bg-black"],
@@ -42,8 +40,7 @@ const ProductCardsSlider = () => {
     },
     {
       id: 4,
-      image:
-        "https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=764&q=80",
+      image: "p1.png",
       title: "Running Shoes",
       price: "$119.99",
       colors: ["bg-green-500", "bg-blue-500", "bg-gray-400"],
@@ -90,35 +87,18 @@ const ProductCardsSlider = () => {
   };
 
   return (
-    <div
-      className={`min-h-screen bg-gray-50 flex items-center justify-center py-12 ${isRTL ? "rtl" : "ltr"}`}
-      dir={isRTL ? "rtl" : "ltr"}
-    >
-      {/* RTL Toggle Button */}
-      <button
-        onClick={() => setIsRTL(!isRTL)}
-        className="fixed top-4 right-4 z-50 px-4 py-2 bg-blue-600 text-white rounded-lg font-medium flex items-center shadow-md hover:bg-blue-700 transition-colors"
-      >
-        <span className="mr-2">{isRTL ? "LTR" : "RTL"}</span>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="h-5 w-5"
-          viewBox="0 0 20 20"
-          fill="currentColor"
-        >
-          <path
-            fillRule="evenodd"
-            d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z"
-            clipRule="evenodd"
-          />
-        </svg>
-      </button>
-
+    <div className={` bg-gray-50 flex items-center justify-center py-16 `}>
       {/* Main Container */}
-      <div className="w-full max-w-[1200px] mx-auto px-4">
-        <h2 className="text-2xl md:text-3xl font-bold text-center text-gray-800 mb-6 md:mb-10">
-          Featured Products
-        </h2>
+      <div className="w-full container mx-auto px-4  text-[#181D25] ">
+        <div className="flex items-center justify-between mb-6 md:mb-10">
+          <div className="font-semibold text-center text-[18px] md:text-[28px]">
+            Popular Products
+          </div>
+          <div className="flex gap-1 items-center">
+            <Link href="#">View All</Link>
+            <ChevronRight width={16} height={16} />
+          </div>
+        </div>
 
         {/* Slider Container */}
         <div className="relative w-full">
@@ -159,7 +139,7 @@ const ProductCardsSlider = () => {
                     <img
                       src={product.image}
                       alt={product.title}
-                      className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+                      className="w-full h-full x-object-cover transition-transform duration-500 hover:scale-105"
                     />
 
                     {/* New badge */}
