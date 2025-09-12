@@ -5,8 +5,11 @@ import Image from "next/image";
 const NewFeatures = () => {
   return (
     <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 pb-16 gap-[64px]">
-      {Array.from({ length: 3 }).map(() => (
-        <div className="flex items-center justify-center flex-col gap-[24px]">
+      {Array.from({ length: 3 }).map((_, index) => (
+        <div
+          className="flex items-center justify-center flex-col gap-[24px]"
+          key={index}
+        >
           <div>
             <img src="/feature.png" width={60} height={60} alt="feature" />
           </div>

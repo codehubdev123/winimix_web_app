@@ -16,6 +16,7 @@ import NewBanner from "@/components/newdesign/NewBanner";
 import NewCategories from "@/components/newdesign/NewCategories";
 import NewProductSlider from "@/components/newdesign/NewProductSlider";
 import NewFeatures from "@/components/newdesign/NewFeatures";
+import NewFooter from "@/components/newdesign/NewFooter";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -56,6 +57,7 @@ export default function RootLayout({
               <NewCategories />
               <NewProductSlider />
               <NewFeatures />
+              <NewFooter />
               <TopHeader />
               <Header />
               <Features />
