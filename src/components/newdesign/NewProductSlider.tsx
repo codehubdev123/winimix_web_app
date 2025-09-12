@@ -206,9 +206,9 @@ const ProductCardsSlider = () => {
             aria-label="Previous products"
           >
             {isRTL ? (
-              <ChevronRight className="w-5 h-5 text-gray-700" />
+              <ChevronRight className="w-5 h-5 text-gray-700 cursor-pointer" />
             ) : (
-              <ChevronLeft className="w-5 h-5 text-gray-700" />
+              <ChevronLeft className="w-5 h-5 text-gray-700 cursor-pointer" />
             )}
           </button>
 
@@ -221,9 +221,9 @@ const ProductCardsSlider = () => {
             aria-label="Next products"
           >
             {isRTL ? (
-              <ChevronLeft className="w-5 h-5 text-gray-700" />
+              <ChevronLeft className="w-5 h-5 text-gray-700 cursor-pointer" />
             ) : (
-              <ChevronRight className="w-5 h-5 text-gray-700" />
+              <ChevronRight className="w-5 h-5 text-gray-700 cursor-pointer" />
             )}
           </button>
         </div>

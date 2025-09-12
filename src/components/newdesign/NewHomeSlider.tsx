@@ -110,7 +110,7 @@ const EcommerceSlider = () => {
                       {slide.title}
                     </h2>
 
-                    <button className="bg-[#222934]  text-white px-6 py-2 md:px-8 md:py-3 rounded-full font-medium transition-colors shadow-md text-sm md:text-base">
+                    <button className="bg-[#222934]  text-white px-6 py-2 md:px-8 md:py-3 rounded-full font-medium transition-colors shadow-md text-sm md:text-base cursor-pointer">
                       {slide.buttonText}
                     </button>
                   </div>
@@ -131,9 +131,9 @@ const EcommerceSlider = () => {
             aria-label="Previous slide"
           >
             {isRTL ? (
-              <ChevronRight className="w-4 h-4 md:w-6 md:h-6 text-gray-700" />
+              <ChevronRight className="w-4 h-4 md:w-6 md:h-6 text-gray-700 cursor-pointer" />
             ) : (
-              <ChevronLeft className="w-4 h-4 md:w-6 md:h-6 text-gray-700" />
+              <ChevronLeft className="w-4 h-4 md:w-6 md:h-6 text-gray-700 cursor-pointer" />
             )}
           </button>
 
@@ -148,9 +148,9 @@ const EcommerceSlider = () => {
             aria-label="Next slide"
           >
             {isRTL ? (
-              <ChevronLeft className="w-4 h-4 md:w-6 md:h-6 text-gray-700" />
+              <ChevronLeft className="w-4 h-4 md:w-6 md:h-6 text-gray-700 cursor-pointer" />
             ) : (
-              <ChevronRight className="w-4 h-4 md:w-6 md:h-6 text-gray-700" />
+              <ChevronRight className="w-4 h-4 md:w-6 md:h-6 text-gray-700 cursor-pointer" />
             )}
           </button>
         </div>
