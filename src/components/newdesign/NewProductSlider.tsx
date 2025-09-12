@@ -3,7 +3,13 @@
 import { useRef, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
-import { ChevronLeft, ChevronRight, Heart, ShoppingCart } from "lucide-react";
+import {
+  ChevronLeft,
+  ChevronRight,
+  Heart,
+  HeartIcon,
+  ShoppingCart,
+} from "lucide-react";
 import "swiper/css";
 import Link from "next/link";
 
@@ -87,7 +93,7 @@ const ProductCardsSlider = () => {
   };
 
   return (
-    <div className={` bg-gray-50 flex items-center justify-center py-16 `}>
+    <div className={` bg-white flex items-center justify-center py-16 `}>
       {/* Main Container */}
       <div className="w-full container mx-auto px-4  text-[#181D25] ">
         <div className="flex items-center justify-between mb-6 md:mb-10">
@@ -143,22 +149,18 @@ const ProductCardsSlider = () => {
                     />
 
                     {/* New badge */}
-                    {product.isNew && (
-                      <div className="absolute top-3 left-3 bg-green-500 text-white px-2 py-1 rounded text-xs font-medium">
-                        NEW
-                      </div>
-                    )}
+                    {/* <div className="absolute top-3 left-3 bg-green-500 text-white px-2 py-1 rounded text-xs font-medium"></div> */}
 
                     {/* Favorite button */}
-                    <button
-                      onClick={() => toggleFavorite(product.id)}
-                      className="absolute top-3 right-3 w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-md hover:bg-gray-100 transition-colors"
-                      aria-label="Add to favorites"
-                    >
-                      <Heart
-                        className={`w-4 h-4 ${favorites.includes(product.id) ? "fill-red-500 text-red-500" : "text-gray-600"}`}
-                      />
-                    </button>
+                    {/* <button */}
+                    {/*   onClick={() => toggleFavorite(product.id)} */}
+                    {/*   className="absolute top-3 right-3 w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-md hover:bg-gray-100 transition-colors" */}
+                    {/*   aria-label="Add to favorites" */}
+                    {/* > */}
+                    {/*   <Heart */}
+                    {/*     className={`w-4 h-4 ${favorites.includes(product.id) ? "fill-red-500 text-red-500" : "text-gray-600"}`} */}
+                    {/*   /> */}
+                    {/* </button> */}
                   </div>
 
                   {/* Content Section */}
@@ -174,21 +176,30 @@ const ProductCardsSlider = () => {
                     </div>
 
                     {/* Title */}
-                    <h3 className="text-lg font-semibold text-gray-800 mb-2">
+                    <h3 className="text-lg font-semibold text-[#364254] text-[14px] mb-2">
                       {product.title}
                     </h3>
 
                     {/* Price */}
-                    <p className="text-blue-600 font-bold text-xl mb-4">
+                    <p className="text-[#181D25] font-semibold text-[16px] md:text-[18px] mb-4">
                       {product.price}
                     </p>
 
                     {/* Add to cart and Favorite buttons */}
                     <div className="mt-auto flex space-x-2">
-                      <button className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg font-medium transition-colors flex items-center justify-center">
-                        <ShoppingCart className="w-4 h-4 mr-2" />
+                      <button className="flex-1 bg-[#222934] cursor-pointer text-white py-2 px-4 rounded-[100px] font-medium transition-colors flex items-center justify-center">
                         Add to Cart
                       </button>
+                      <div
+                        className="w-[40px] h-[40px] bg-[#EEF1F6] flex items-center justify-center rounded-[100px] cursor-pointer"
+                        onClick={() => toggleFavorite(product.id)}
+                      >
+                        <HeartIcon
+                          width={16}
+                          height={16}
+                          className={`w-4 h-4 ${favorites.includes(product.id) ? "fill-red-500 text-red-500" : "text-gray-600"}`}
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>
