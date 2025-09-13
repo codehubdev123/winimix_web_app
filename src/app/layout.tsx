@@ -59,7 +59,6 @@ export default function RootLayout({
           <LocaleProvider>
             <CartProvider>
               <NewHeader />
-              <NewBanner />
               {/* <NewCategories /> */}
               {/* <AnimationWrapper direction="left" delay={1}> */}
               {/*   <NewProductSlider /> */}
