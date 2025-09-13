@@ -80,8 +80,8 @@ export default function RootLayout({
               {/* <Features /> */}
               {/* <Newa /> */}
               {/* <div className="mt-[300px]"></div> */}
-              {/* <TopNavbar /> */}
-              {/* <Navbar /> */}
+              <TopNavbar />
+              <Navbar />
               {children}
               <NewFooter />
               {/* <Footer /> */}

@@ -77,7 +77,7 @@ const BrandSlider = () => {
 
   return (
     <div className="w-full py-16 px-4 bg-gray-100">
-      <div className="max-w-7xl mx-auto">
+      <div className="container mx-auto">
         <div className="flex justify-between items-center mb-6 px-2">
           <h2 className="text-2xl md:text-3xl font-bold text-title">
             Shop by Brands

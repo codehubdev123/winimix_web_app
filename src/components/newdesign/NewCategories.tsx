@@ -114,6 +114,14 @@ const NewCategories = () => {
             </SwiperSlide>
           ))}
         </Swiper>
+        <div className=" flex items-center justify-center">
+          <Link
+            className="mt-12 bg-[#F5F7FA]  text-[#222934]   px-6 py-2 md:px-8  rounded-full font-medium transition-colors shadow-sm text-sm  cursor-pointer"
+            href={"/categories"}
+          >
+            All Categories
+          </Link>
+        </div>
       </div>
     </div>
   );

@@ -4,6 +4,7 @@ import { ChevronRight, Search, ShoppingCart, Sun } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import NewHomeSlider from "./NewHomeSlider";
+import NewCountriesDropdown from "./NewCountriesDropdown";
 
 const NewHeader = () => {
   const categories = [
@@ -34,7 +35,8 @@ const NewHeader = () => {
       {/* top header */}
       <div className=" container  mx-auto flex items-center justify-between text-[14px] ">
         <div>
-          <p>Contact us 24/7 : +1 50 537 53 082</p>
+          {/* <p>Contact us 24/7 : +1 50 537 53 082</p> */}
+          <NewCountriesDropdown />
         </div>
         <div>🔥The Biggest Sale Ever 50% Off</div>
 
