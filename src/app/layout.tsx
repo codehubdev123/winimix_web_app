@@ -75,7 +75,6 @@ export default function RootLayout({
               {/* <AnimationWrapper direction="left" delay={2}> */}
               {/*   <BrandSlider /> */}
               {/* </AnimationWrapper> */}
-              {/* <NewFooter /> */}
               {/* <TopHeader /> */}
               {/* <Header /> */}
               {/* <Features /> */}
@@ -84,6 +83,7 @@ export default function RootLayout({
               {/* <TopNavbar /> */}
               {/* <Navbar /> */}
               {children}
+              <NewFooter />
               {/* <Footer /> */}
             </CartProvider>
           </LocaleProvider>
