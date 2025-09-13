@@ -79,7 +79,7 @@ const BrandSlider = () => {
     <div className="w-full py-16 px-4 bg-gray-100">
       <div className="container mx-auto">
         <div className="flex justify-between items-center mb-6 px-2">
-          <h2 className="text-2xl md:text-3xl font-bold text-title">
+          <h2 className="text-[18px] md:text-[28px] font-bold text-title">
             Shop by Brands
           </h2>
           <div className="flex space-x-2 rtl:space-x-reverse">

@@ -17,7 +17,7 @@ const HomePage = () => {
       <AnimationWrapper direction="right" delay={2}>
         <NewStoresSlider />
       </AnimationWrapper>
-      <AnimationWrapper>
+      <AnimationWrapper direction="down" delay={0}>
         <BrandSlider />
       </AnimationWrapper>
     </>

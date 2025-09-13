@@ -85,7 +85,7 @@ const CategoriesPage = () => {
   return (
     <>
       <PageLayout>
-        <BannerPage title={"All Brands"} />
+        <BannerPage title={"All Categories"} />
         <Breadcrumb />
         <div className="bg-white border-b border-gray-200 py-2 px-4 sm:hidden">
           <button className="flex items-center text-gray-600 hover:text-secondary transition-colors duration-200">
@@ -94,7 +94,7 @@ const CategoriesPage = () => {
           </button>
         </div>
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="container mx-auto  py-8">
           <div className="flex justify-between items-center mb-6">
             <h2 className="text-2xl font-bold text-title">All Categories</h2>
             <div className="text-sm text-secondary">
@@ -103,12 +103,18 @@ const CategoriesPage = () => {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-12">
             {categories.map((category) => (
               <NewCategoryItem key={category.id} brand={category} />
             ))}
             {categories.map((category) => (
-              <CategoryItem key={category.id} category={category} withCount />
+              <NewCategoryItem key={category.id} brand={category} />
+            ))}
+            {categories.map((category) => (
+              <NewCategoryItem key={category.id} brand={category} />
+            ))}
+            {categories.map((category) => (
+              <NewCategoryItem key={category.id} brand={category} />
             ))}
           </div>
 

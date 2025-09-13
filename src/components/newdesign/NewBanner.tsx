@@ -34,7 +34,7 @@ const NewBanner = () => {
       {/* slider and content section */}
       <div className="container mx-auto  x-mb-[200px] ">
         <div className="mx-auto w-full  text-center">
-          <h1 className="font-bold text-[56px]">
+          <h1 className="font-bold text-[20px] lg:text-[56px]">
             Everything You Need for a <br /> Modern Interior
           </h1>
         </div>

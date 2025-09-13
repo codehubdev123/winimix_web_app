@@ -21,16 +21,15 @@ export default function NewFooter() {
           {/* Company Info */}
           <div>
             <div className="flex items-center space-x-2 rtl:space-x-reverse mb-4">
-              <div className="bg-white text-primary p-2 rounded-lg">
-                <div className="w-8 h-8 flex items-center justify-center font-bold text-xl">
-                  WM
+              <div className="ltr:pr-2 rtl:pl-2 rounded-lg">
+                <div className="flex items-center">
+                  <img
+                    src={"/logo-white.svg"}
+                    height={48}
+                    className="w-[100px] md:w-[150px]"
+                    alt="logo"
+                  />
                 </div>
-              </div>
-              <div>
-                <h3 className="text-xl font-bold">WiniMix</h3>
-                <p className="text-sm text-white">
-                  Quality Parts for Every Car
-                </p>
               </div>
             </div>
             <p className="text-white mb-4">

@@ -22,6 +22,7 @@ import NewStoresSlider from "@/components/newdesign/NewStoresSlider";
 import BrandSlider from "@/components/sliders/BrandSlider";
 import NewBrands from "@/components/newdesign/NewBrands";
 import NewHeader from "@/components/newdesign/NewHeader";
+import NewMobileSidebar from "@/components/newdesign/NewMobileSidebar";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -80,8 +81,9 @@ export default function RootLayout({
               {/* <Features /> */}
               {/* <Newa /> */}
               {/* <div className="mt-[300px]"></div> */}
-              <TopNavbar />
-              <Navbar />
+              {/* <TopNavbar /> */}
+              {/* <Navbar /> */}
+              {/* <NewMobileSidebar /> */}
               {children}
               <NewFooter />
               {/* <Footer /> */}
