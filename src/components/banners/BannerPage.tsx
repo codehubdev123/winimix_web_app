@@ -11,7 +11,7 @@ const BannerPage = ({ title }: { title: string }) => {
       ></div>
 
       {/* Gradient Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-r from-[#222934] to-[#222934]/90 z-1"></div>
+      <div className="absolute inset-0 bg-gradient-to-r from-[#222934] to-[#222934]/95 z-1"></div>
 
       {/* Animated Blobs */}
       <div className="absolute top-0 left-0 w-full h-full z-2">
