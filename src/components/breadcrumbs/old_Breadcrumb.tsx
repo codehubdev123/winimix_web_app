@@ -19,7 +19,7 @@ const Breadcrumb = () => {
               <div>
                 <Link
                   href="/"
-                  className="text-gray-400 hover:text-[#222934] transition-colors duration-200"
+                  className="text-gray-400 hover:text-secondary transition-colors duration-200"
                 >
                   <Home className="w-5 h-5" />
                   <span className="sr-only">Home</span>
@@ -31,13 +31,13 @@ const Breadcrumb = () => {
                 <div className="flex items-center">
                   <ChevronRight className="w-4 h-4 text-gray-400 mx-2 rtl:rotate-180" />
                   {index === breadcrumbItems.length - 1 ? (
-                    <span className="text-sm font-medium text-[#222934]">
+                    <span className="text-sm font-medium text-secondary">
                       {item.label}
                     </span>
                   ) : (
                     <Link
                       href={item.href}
-                      className="text-sm font-medium text-gray-500 hover:text-[#222934] transition-colors duration-200"
+                      className="text-sm font-medium text-gray-500 hover:text-secondary transition-colors duration-200"
                     >
                       {item.label}
                     </Link>

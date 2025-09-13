@@ -88,20 +88,20 @@ const CategoriesPage = () => {
         <BannerPage title={"All Categories"} />
         <Breadcrumb />
         <div className="bg-white border-b border-gray-200 py-2 px-4 sm:hidden">
-          <button className="flex items-center text-gray-600 hover:text-secondary transition-colors duration-200">
+          <button className="flex items-center text-gray-600 hover:text-[#222934] transition-colors duration-200">
             <ArrowLeft className="w-5 h-5 mr-1 rtl:mr-0 rtl:ml-1 rtl:rotate-180" />
             Back
           </button>
         </div>
 
-        <div className="container mx-auto  py-8">
-          <div className="flex justify-between items-center mb-6">
-            <h2 className="text-2xl font-bold text-title">All Categories</h2>
-            <div className="text-sm text-secondary">
-              Showing <span className="font-semibold">{categories.length}</span>{" "}
-              categories
-            </div>
-          </div>
+        <div className="container mx-auto  py-12 px-10">
+          {/* <div className="flex justify-between items-center mb-6"> */}
+          {/*   <h2 className="text-2xl font-bold text-title">All Categories</h2> */}
+          {/*   <div className="text-sm text-[#222934]"> */}
+          {/*     Showing <span className="font-semibold">{categories.length}</span>{" "} */}
+          {/*     categories */}
+          {/*   </div> */}
+          {/* </div> */}
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-12">
             {categories.map((category) => (
