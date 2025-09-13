@@ -82,10 +82,7 @@ const BrandSlider = () => {
             Shop by Brands
           </h2>
           <div className="flex space-x-2 rtl:space-x-reverse">
-            <Link
-              href="/brands"
-              className="text-sm text-secondary hover:underline"
-            >
+            <Link href="/brands" className="text-sm text-black hover:underline">
               All Brands
             </Link>
           </div>

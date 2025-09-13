@@ -7,14 +7,14 @@ type Props = {
 
 const BrandItem = ({ brand, withCount }: Props) => {
   return (
-    <div className="group relative bg-white rounded-xl shadow-sm hover:shadow-lg transition-all duration-500 p-6 h-40 flex items-center justify-center border border-gray-100 hover:border-amber-200">
+    <div className="group relative bg-white rounded-xl shadow-sm hover:shadow-lg transition-all duration-500 p-6 h-40 flex items-center justify-center border border-gray-100 ">
       {withCount && (
-        <div className="absolute top-3 right-3 rtl:left-auto rtl:right-3 bg-primary text-white text-xs font-bold px-2 py-1 rounded-md z-50">
+        <div className="absolute top-3 right-3 rtl:left-auto rtl:right-3 bg-black text-white text-xs font-bold px-2 py-1 rounded-md z-50">
           20 product
         </div>
       )}
       {/* Background effect on hover */}
-      <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-white opacity-0 group-hover:opacity-100 rounded-xl transition-opacity duration-500"></div>
+      <div className="absolute inset-0 bg-gradient-to-br from-black/20 to-white opacity-0 group-hover:opacity-100 rounded-xl transition-opacity duration-500"></div>
 
       {/* Logo */}
       <div className="relative z-10 transform transition-all duration-500 group-hover:scale-110">
@@ -26,7 +26,7 @@ const BrandItem = ({ brand, withCount }: Props) => {
       </div>
 
       {/* Brand name overlay on hover */}
-      <div className="absolute bottom-0 left-0 right-0 bg-primary text-white text-sm font-medium py-2 text-center rounded-b-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+      <div className="absolute bottom-0 left-0 right-0 bg-black text-white text-sm font-medium py-2 text-center rounded-b-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300">
         {brand.name}
       </div>
 

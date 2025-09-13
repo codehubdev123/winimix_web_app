@@ -17,6 +17,10 @@ import NewCategories from "@/components/newdesign/NewCategories";
 import NewProductSlider from "@/components/newdesign/NewProductSlider";
 import NewFeatures from "@/components/newdesign/NewFeatures";
 import NewFooter from "@/components/newdesign/NewFooter";
+import AnimationWrapper from "@/components/animations/AnimationWrapper";
+import NewStoresSlider from "@/components/newdesign/NewStoresSlider";
+import BrandSlider from "@/components/sliders/BrandSlider";
+import NewBrands from "@/components/newdesign/NewBrands";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -54,19 +58,32 @@ export default function RootLayout({
           <LocaleProvider>
             <CartProvider>
               <NewBanner />
-              <NewCategories />
-              <NewProductSlider />
-              <NewFeatures />
-              <NewFooter />
-              <TopHeader />
-              <Header />
-              <Features />
-              <Newa />
-              <div className="mt-[300px]"></div>
-              <TopNavbar />
-              <Navbar />
+              {/* <NewCategories /> */}
+              {/* <AnimationWrapper direction="left" delay={1}> */}
+              {/*   <NewProductSlider /> */}
+              {/* </AnimationWrapper> */}
+              {/* <AnimationWrapper direction="right" delay={1}> */}
+              {/*   <NewFeatures /> */}
+              {/* </AnimationWrapper> */}
+              {/* <AnimationWrapper direction="right" delay={2}> */}
+              {/*   <NewStoresSlider /> */}
+              {/* </AnimationWrapper> */}
+              {/* <AnimationWrapper direction="left" delay={2}> */}
+              {/*   <NewBrands /> */}
+              {/* </AnimationWrapper> */}
+              {/* <AnimationWrapper direction="left" delay={2}> */}
+              {/*   <BrandSlider /> */}
+              {/* </AnimationWrapper> */}
+              {/* <NewFooter /> */}
+              {/* <TopHeader /> */}
+              {/* <Header /> */}
+              {/* <Features /> */}
+              {/* <Newa /> */}
+              {/* <div className="mt-[300px]"></div> */}
+              {/* <TopNavbar /> */}
+              {/* <Navbar /> */}
               {children}
-              <Footer />
+              {/* <Footer /> */}
             </CartProvider>
           </LocaleProvider>
         </ThemeProvider>
