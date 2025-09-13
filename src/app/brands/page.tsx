@@ -84,19 +84,19 @@ const BrandsPage = () => {
 
       {/* Back Button for Mobile */}
       <div className="bg-white border-b border-gray-200 py-2 px-4 sm:hidden">
-        <button className="flex items-center text-gray-600 hover:text-secondary transition-colors duration-200">
+        <button className="flex items-center text-gray-600 hover:text-[#222934] transition-colors duration-200">
           <ArrowLeft className="w-5 h-5 mr-1 rtl:mr-0 rtl:ml-1 rtl:rotate-180" />
           Back
         </button>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 ">
-        <div className="flex justify-between items-center mb-6">
-          <h2 className="text-2xl font-bold text-gray-900">All Brands</h2>
-          <div className="text-sm text-secondary">
-            Showing <span className="font-semibold">30</span> Brand
-          </div>
-        </div>
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 ">
+        {/* <div className="flex justify-between items-center mb-6"> */}
+        {/*   <h2 className="text-2xl font-bold text-gray-900">All Brands</h2> */}
+        {/*   <div className="text-sm text-[#222934]"> */}
+        {/*     Showing <span className="font-semibold">30</span> Brand */}
+        {/*   </div> */}
+        {/* </div> */}
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {brands.map((brand) => (
