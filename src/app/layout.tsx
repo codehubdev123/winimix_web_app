@@ -21,6 +21,7 @@ import AnimationWrapper from "@/components/animations/AnimationWrapper";
 import NewStoresSlider from "@/components/newdesign/NewStoresSlider";
 import BrandSlider from "@/components/sliders/BrandSlider";
 import NewBrands from "@/components/newdesign/NewBrands";
+import NewHeader from "@/components/newdesign/NewHeader";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -57,6 +58,7 @@ export default function RootLayout({
         <ThemeProvider>
           <LocaleProvider>
             <CartProvider>
+              <NewHeader />
               <NewBanner />
               {/* <NewCategories /> */}
               {/* <AnimationWrapper direction="left" delay={1}> */}
