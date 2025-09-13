@@ -84,7 +84,7 @@ const BrandSlider = () => {
           </h2>
           <div className="flex space-x-2 rtl:space-x-reverse">
             <div className="flex gap-1 items-center">
-              <Link href="/brnads">All Brands</Link>
+              <Link href="/brands">All Brands</Link>
               <ChevronRight width={16} height={16} />
             </div>
           </div>
