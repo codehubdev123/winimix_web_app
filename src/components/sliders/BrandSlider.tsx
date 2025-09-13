@@ -6,6 +6,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 import Link from "next/link";
 import BrandItem from "../brands/BrandItem";
+import { ChevronRight } from "lucide-react";
 
 const BrandSlider = () => {
   const swiperRef = useRef(null);
@@ -82,9 +83,10 @@ const BrandSlider = () => {
             Shop by Brands
           </h2>
           <div className="flex space-x-2 rtl:space-x-reverse">
-            <Link href="/brands" className="text-sm text-black hover:underline">
-              All Brands
-            </Link>
+            <div className="flex gap-1 items-center">
+              <Link href="/brnads">All Brands</Link>
+              <ChevronRight width={16} height={16} />
+            </div>
           </div>
         </div>
         {/* <h2 className="text-2xl md:text-3xl font-bold text-center mb-10 text-gray-900"> */}

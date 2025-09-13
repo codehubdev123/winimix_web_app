@@ -102,7 +102,7 @@ const NewStoresSlider = () => {
             Featured Stores
           </div>
           <div className="flex gap-1 items-center">
-            <Link href="#">View All</Link>
+            <Link href="#">All Stores</Link>
             <ChevronRight width={16} height={16} />
           </div>
         </div>
