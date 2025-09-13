@@ -101,7 +101,7 @@ const ProductCardsSlider = () => {
             Popular Products
           </div>
           <div className="flex gap-1 items-center">
-            <Link href="#">View All</Link>
+            <Link href="/products">View All</Link>
             <ChevronRight width={16} height={16} />
           </div>
         </div>

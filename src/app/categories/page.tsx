@@ -6,6 +6,7 @@ import Breadcrumb from "@/components/breadcrumbs/Breadcrumb";
 import CategoryItem from "@/components/categories/CategoryItem";
 import PageLayout from "@/components/layouts/PageLayout";
 import NewCategoryItem from "@/components/newdesign/NewCategortItem";
+import NewPageBannerTwo from "@/components/newdesign/NewPageBannerTwo";
 
 const CategoriesPage = () => {
   // Sample category data
@@ -86,6 +87,7 @@ const CategoriesPage = () => {
     <>
       <PageLayout>
         <BannerPage title={"All Categories"} />
+        {/* <NewPageBannerTwo /> */}
         <Breadcrumb />
         <div className="bg-white border-b border-gray-200 py-2 px-4 sm:hidden">
           <button className="flex items-center text-gray-600 hover:text-[#222934] transition-colors duration-200">
