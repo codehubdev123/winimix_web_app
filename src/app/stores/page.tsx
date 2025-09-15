@@ -211,7 +211,7 @@ const StoresPage = () => {
           {categories.map((category) => (
             <button
               key={category.id}
-              className={`flex-shrink-0 flex items-center px-4 py-2 rounded-full mr-3 rtl:mr-0 rtl:ml-3 ${activeCategory === category.id ? "bg-[#222934] text-white" : "bg-white text-gray-700 border border-gray-200"}`}
+              className={`cursor-pointer flex-shrink-0 flex items-center px-4 py-2 rounded-full mr-3 rtl:mr-0 rtl:ml-3 ${activeCategory === category.id ? "bg-[#222934] text-white" : "bg-white text-gray-700 border border-gray-200"}`}
               onClick={() => setActiveCategory(category.id)}
             >
               <span className="mr-2 rtl:mr-0 rtl:ml-2">{category.icon}</span>
@@ -287,6 +287,152 @@ const StoresPage = () => {
           </div>
         ) : (
           <div className="bg-white rounded-xl shadow-sm overflow-hidden">
+            {sortedStores.map((store) => (
+              <div
+                key={store.id}
+                className="border-b border-gray-100 last:border-b-0"
+              >
+                <div className="flex flex-col md:flex-row p-4">
+                  <div className="md:w-48 flex-shrink-0 mb-4 md:mb-0">
+                    <img
+                      src={store.image}
+                      alt={store.name}
+                      className="w-full h-32 object-cover rounded-lg"
+                    />
+                  </div>
+
+                  <div className="flex-1 md:pl-6 rtl:md:pl-0 rtl:md:pr-6">
+                    <div className="flex flex-col md:flex-row md:items-start md:justify-between">
+                      <div>
+                        <h3 className="font-semibold text-lg text-gray-900">
+                          {store.name}
+                        </h3>
+                        <p className="text-gray-500 text-sm mt-1">
+                          {store.description}
+                        </p>
+
+                        <div className="flex items-center mt-2">
+                          <div className="flex items-center bg-primary-50 text-primary-700 px-2 py-1 rounded-full">
+                            <svg
+                              className="w-4 h-4 mr-1 rtl:mr-0 rtl:ml-1"
+                              fill="currentColor"
+                              viewBox="0 0 20 20"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                            </svg>
+                            <span className="text-sm font-medium">
+                              {store.rating}
+                            </span>
+                          </div>
+
+                          <span className="text-sm text-gray-500 mx-3">•</span>
+                          <span className="text-sm text-gray-500">
+                            {store.reviews.toLocaleString()} reviews
+                          </span>
+
+                          <span className="text-sm text-gray-500 mx-3">•</span>
+                          <div className="flex items-center text-sm text-gray-500">
+                            <svg
+                              className="w-4 h-4 mr-1 rtl:mr-0 rtl:ml-1"
+                              fill="currentColor"
+                              viewBox="0 0 20 20"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                fillRule="evenodd"
+                                d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z"
+                                clipRule="evenodd"
+                              />
+                            </svg>
+                            <span>{store.deliveryTime}</span>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="mt-4 md:mt-0">
+                        <button className="bg-primary-500 hover:bg-primary-600 text-white py-2 px-4 rounded-lg transition-colors duration-200">
+                          Visit Store
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+            {sortedStores.map((store) => (
+              <div
+                key={store.id}
+                className="border-b border-gray-100 last:border-b-0"
+              >
+                <div className="flex flex-col md:flex-row p-4">
+                  <div className="md:w-48 flex-shrink-0 mb-4 md:mb-0">
+                    <img
+                      src={store.image}
+                      alt={store.name}
+                      className="w-full h-32 object-cover rounded-lg"
+                    />
+                  </div>
+
+                  <div className="flex-1 md:pl-6 rtl:md:pl-0 rtl:md:pr-6">
+                    <div className="flex flex-col md:flex-row md:items-start md:justify-between">
+                      <div>
+                        <h3 className="font-semibold text-lg text-gray-900">
+                          {store.name}
+                        </h3>
+                        <p className="text-gray-500 text-sm mt-1">
+                          {store.description}
+                        </p>
+
+                        <div className="flex items-center mt-2">
+                          <div className="flex items-center bg-primary-50 text-primary-700 px-2 py-1 rounded-full">
+                            <svg
+                              className="w-4 h-4 mr-1 rtl:mr-0 rtl:ml-1"
+                              fill="currentColor"
+                              viewBox="0 0 20 20"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                            </svg>
+                            <span className="text-sm font-medium">
+                              {store.rating}
+                            </span>
+                          </div>
+
+                          <span className="text-sm text-gray-500 mx-3">•</span>
+                          <span className="text-sm text-gray-500">
+                            {store.reviews.toLocaleString()} reviews
+                          </span>
+
+                          <span className="text-sm text-gray-500 mx-3">•</span>
+                          <div className="flex items-center text-sm text-gray-500">
+                            <svg
+                              className="w-4 h-4 mr-1 rtl:mr-0 rtl:ml-1"
+                              fill="currentColor"
+                              viewBox="0 0 20 20"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                fillRule="evenodd"
+                                d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z"
+                                clipRule="evenodd"
+                              />
+                            </svg>
+                            <span>{store.deliveryTime}</span>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="mt-4 md:mt-0">
+                        <button className="bg-primary-500 hover:bg-primary-600 text-white py-2 px-4 rounded-lg transition-colors duration-200">
+                          Visit Store
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
             {sortedStores.map((store) => (
               <div
                 key={store.id}

@@ -11,6 +11,7 @@ import {
   Plus,
   Minus,
   ArrowRight,
+  HeartIcon,
 } from "lucide-react";
 import { useState } from "react";
 import Link from "next/link";
@@ -118,9 +119,51 @@ export default function ProductDetailsPage({
   const [selectedImage, setSelectedImage] = useState(0);
   const [quantity, setQuantity] = useState(1);
   const [activeTab, setActiveTab] = useState("description");
+  const [favorites, setFavorites] = useState([]);
 
   const product = getProductData(params.id);
+  const toggleFavorite = (productId) => {
+    if (favorites.includes(productId)) {
+      setFavorites(favorites.filter((id) => id !== productId));
+    } else {
+      setFavorites([...favorites, productId]);
+    }
+  };
 
+  const products = [
+    {
+      id: 1,
+      image: "/p3.png",
+      title: "Nike Air Max",
+      price: "$129.99",
+      colors: ["bg-red-500", "bg-blue-500", "bg-black", "bg-white"],
+      isNew: true,
+    },
+    {
+      id: 2,
+      image: "p4.png",
+      title: "Wireless Headphones",
+      price: "$89.99",
+      colors: ["bg-black", "bg-white", "bg-blue-500"],
+      isNew: false,
+    },
+    {
+      id: 3,
+      image: "p5.png",
+      title: "Luxury Watch",
+      price: "$249.99",
+      colors: ["bg-yellow-500", "bg-silver", "bg-black"],
+      isNew: true,
+    },
+    {
+      id: 4,
+      image: "p1.png",
+      title: "Running Shoes",
+      price: "$119.99",
+      colors: ["bg-green-500", "bg-blue-500", "bg-gray-400"],
+      isNew: false,
+    },
+  ];
   const handleAddToCart = () => {
     for (let i = 0; i < quantity; i++) {
       addToCart({
@@ -171,9 +214,42 @@ export default function ProductDetailsPage({
 
   return (
     <PageLayout>
-      <BannerPage title={"Product Details"} />
-      <Breadcrumb />
+      <div className="container mx-auto pt-12 pb-8">
+        <nav aria-label="Breadcrumb">
+          <ol className="flex items-center gap-1 text-sm text-gray-700">
+            <li>
+              <a
+                href="#"
+                className="block transition-colors hover:text-gray-900"
+              >
+                {" "}
+                Home{" "}
+              </a>
+            </li>
 
+            <li className="rtl:rotate-180">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="size-4"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                  clipRule="evenodd"
+                />
+              </svg>
+            </li>
+
+            <li>
+              <a href="#" className="block transition-colors text-[#9CA3AF] ">
+                Categories
+              </a>
+            </li>
+          </ol>
+        </nav>
+      </div>
       <div className="container mx-auto px-4 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           {/* Product Images */}
@@ -199,21 +275,21 @@ export default function ProductDetailsPage({
             </div>
 
             {/* Thumbnail Images */}
-            <div className="grid grid-cols-5 gap-2">
+            <div className="x-grid x-grid-cols-5 flex items-center justify-start gap-2">
               {product.images.map((image, index) => (
                 <button
                   key={index}
                   onClick={() => setSelectedImage(index)}
-                  className={`relative overflow-hidden rounded border-2 transition-all duration-200 ${
+                  className={`relative overflow-hidden rounded border-2 transition-all duration-200 cursor-pointer w-[96px] h-[96px] ${
                     selectedImage === index
-                      ? "border-primary ring-2 ring-primary"
+                      ? "border-[#222934] ring-2 ring-[#222934]"
                       : "border-gray-200 hover:border-gray-300"
                   }`}
                 >
                   <img
                     src={image || "/placeholder.svg"}
                     alt={`${locale === "ar" ? product.nameAr : product.name} - View ${index + 1}`}
-                    className="w-full h-16 object-cover"
+                    className="w-full h-full x-h-16 object-cover"
                   />
                 </button>
               ))}
@@ -268,7 +344,7 @@ export default function ProductDetailsPage({
               {/* Price */}
               <div className="mb-6">
                 <div className="flex items-center space-x-4 rtl:space-x-reverse">
-                  <span className="text-3xl font-bold text-secondary">
+                  <span className="text-3xl font-bold text-[#222934]">
                     {product.price} SAR
                   </span>
                   {product.originalPrice && (
@@ -298,7 +374,7 @@ export default function ProductDetailsPage({
                 {locale === "ar" ? "توافق المركبة" : "Compatibility"}
               </label>
               <select
-                className={`w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary ${
+                className={`w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#222934] ${
                   locale === "ar" ? "text-right" : "text-left"
                 }`}
               >
@@ -372,7 +448,7 @@ export default function ProductDetailsPage({
             {/* Features */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
               <div className="flex items-center space-x-3 rtl:space-x-reverse p-3 bg-gray-50 rounded-lg">
-                <Truck className="w-6 h-6 text-primary" />
+                <Truck className="w-6 h-6 text-[#222934]" />
                 <div>
                   <div className="font-semibold text-sm">
                     {locale === "ar" ? "توصيل مجاني" : "Free Delivery"}
@@ -439,7 +515,7 @@ export default function ProductDetailsPage({
                   onClick={() => setActiveTab(tab.id)}
                   className={`py-4 px-1 border-b-2 font-medium transition-colors ${
                     activeTab === tab.id
-                      ? "border-primary text-secondary"
+                      ? "border-[#222934] text-[#222934]"
                       : "border-transparent text-gray-500 hover:text-gray-700"
                   }`}
                 >
@@ -513,7 +589,7 @@ export default function ProductDetailsPage({
                   {/* Review Summary */}
                   <div className="flex items-center space-x-6 rtl:space-x-reverse p-6 bg-gray-50 rounded-lg">
                     <div className="text-center">
-                      <div className="text-4xl font-bold text-primary">
+                      <div className="text-4xl font-bold text-[#222934]">
                         {product.rating}.0
                       </div>
                       <div className="flex items-center justify-center mt-1">
@@ -698,6 +774,77 @@ export default function ProductDetailsPage({
           <h2 className="text-3xl font-bold text-gray-800 mb-8 text-center">
             {locale === "ar" ? "منتجات ذات صلة" : "Related Products"}
           </h2>
+          <div className="container mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10 pb-20">
+            {products.map((product) => (
+              <div
+                className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 h-full flex flex-col pb-10"
+                key={product.id}
+              >
+                {/* Image Section */}
+                <div className="relative h-56 md:h-64 overflow-hidden">
+                  <img
+                    src={product.image}
+                    alt={product.title}
+                    className="w-full h-full x-object-cover transition-transform duration-500 hover:scale-105"
+                  />
+
+                  {/* New badge */}
+                  {/* <div className="absolute top-3 left-3 bg-green-500 text-white px-2 py-1 rounded text-xs font-medium"></div> */}
+
+                  {/* Favorite button */}
+                  {/* <button */}
+                  {/*   onClick={() => toggleFavorite(product.id)} */}
+                  {/*   className="absolute top-3 right-3 w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-md hover:bg-gray-100 transition-colors" */}
+                  {/*   aria-label="Add to favorites" */}
+                  {/* > */}
+                  {/*   <Heart */}
+                  {/*     className={`w-4 h-4 ${favorites.includes(product.id) ? "fill-red-500 text-red-500" : "text-gray-600"}`} */}
+                  {/*   /> */}
+                  {/* </button> */}
+                </div>
+
+                {/* Content Section */}
+                <div className="p-4 flex-1 flex flex-col">
+                  {/* Color options */}
+                  <div className="flex space-x-2 mb-3">
+                    {product.colors.map((color, index) => (
+                      <div
+                        key={index}
+                        className={`w-4 h-4 rounded-full ${color} border border-gray-200`}
+                      />
+                    ))}
+                  </div>
+
+                  {/* Title */}
+                  <h3 className="text-lg font-semibold text-[#364254] text-[14px] mb-2">
+                    {product.title}
+                  </h3>
+
+                  {/* Price */}
+                  <p className="text-[#181D25] font-semibold text-[16px] md:text-[18px] mb-4">
+                    {product.price}
+                  </p>
+
+                  {/* Add to cart and Favorite buttons */}
+                  <div className="mt-auto flex space-x-2">
+                    <button className="flex-1 bg-[#222934] cursor-pointer text-white py-2 px-4 rounded-[100px] font-medium transition-colors flex items-center justify-center">
+                      Add to Cart
+                    </button>
+                    <div
+                      className="w-[40px] h-[40px] bg-[#EEF1F6] flex items-center justify-center rounded-[100px] cursor-pointer"
+                      onClick={() => toggleFavorite(product.id)}
+                    >
+                      <HeartIcon
+                        width={16}
+                        height={16}
+                        className={`w-4 h-4 ${favorites.includes(product.id) ? "fill-red-500 text-red-500" : "text-gray-600"}`}
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </PageLayout>

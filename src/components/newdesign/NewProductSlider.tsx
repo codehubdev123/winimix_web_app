@@ -177,7 +177,7 @@ const ProductCardsSlider = () => {
 
                     {/* Title */}
                     <h3 className="text-lg font-semibold text-[#364254] text-[14px] mb-2">
-                      {product.title}
+                      <Link href={"/product"}> {product.title}</Link>
                     </h3>
 
                     {/* Price */}

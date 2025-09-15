@@ -113,10 +113,12 @@ const NewHeader = () => {
               />
             </li>
             <li className=" relative hover:bg-[#EEF1F6] cursor-pointer  transition h-[40px] w-[40px] rounded-[100px] flex items-center justify-center">
-              <ShoppingCart width={16} height={16} />
-              <span className="absolute -top-1 -right-1 bg-[#222934]  text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
-                3
-              </span>
+              <Link href={"/cart"}>
+                <ShoppingCart width={16} height={16} />
+                <span className="absolute -top-1 -right-1 bg-[#222934]  text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                  3
+                </span>
+              </Link>
             </li>
             <li className="md:bg-[#EEF1F6] hover:bg-[#EEF1F6]  cursor-pointer h-[40px] w-[40px] rounded-[100px] flex items-center justify-center">
               <Search width={16} height={16} />
