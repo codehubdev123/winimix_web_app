@@ -324,14 +324,14 @@ const CheckoutPage = () => {
                 <div className="flex space-x-4">
                   <button
                     onClick={() => setActiveTab("information")}
-                    className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-800 py-3 px-6 rounded-lg font-medium transition-colors flex items-center justify-center"
+                    className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-800 py-3 px-6 rounded-[100px] font-medium transition-colors flex items-center justify-center"
                   >
                     <ArrowLeft className="mr-2" />
                     Back
                   </button>
                   <button
                     onClick={() => setActiveTab("payment")}
-                    className="flex-1 cursor-pointer bg-[#222934] hover:x-bg-blue-700 text-white py-3 px-6 rounded-lg font-medium transition-colors flex items-center justify-center"
+                    className="flex-1 cursor-pointer bg-[#222934] hover:x-bg-blue-700 text-white py-3 px-6 rounded-[100px] font-medium transition-colors flex items-center justify-center"
                   >
                     Continue to Payment
                     <ArrowRight className="ml-2" />
@@ -439,12 +439,12 @@ const CheckoutPage = () => {
                 <div className="flex space-x-4">
                   <button
                     onClick={() => setActiveTab("shipping")}
-                    className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-800 py-3 px-6 rounded-lg font-medium transition-colors flex items-center justify-center"
+                    className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-800 py-3 px-6 rounded-[100px] font-medium transition-colors flex items-center justify-center"
                   >
                     <ArrowLeft className="mr-2" />
                     Back
                   </button>
-                  <button className="flex-1 bg-[#222934] cursor-pointer x-hover:bg-blue-700 text-white py-3 px-6 rounded-lg font-medium transition-colors flex items-center justify-center">
+                  <button className="flex-1 bg-[#222934] cursor-pointer x-hover:bg-blue-700 text-white py-3 px-6 rounded-[100px] font-medium transition-colors flex items-center justify-center">
                     Complete Order
                   </button>
                 </div>
@@ -453,16 +453,16 @@ const CheckoutPage = () => {
 
             <div className="bg-white rounded-xl shadow-sm p-6">
               <h3 className="text-lg font-semibold text-gray-800 mb-4">
-                Purchase Protection
+                Checkout Protection
               </h3>
               <p className="text-gray-600 text-sm mb-4">
-                Shop with confidence. We offer free returns within 30 days of
-                purchase and a full money-back guarantee if you're not
-                completely satisfied.
+                Something something Something something Something something
+                Something something Something something Something something
+                Something something
               </p>
               <div className="flex items-center text-sm text-gray-600">
                 <Shield className="mr-2" size={16} />
-                <span>Secure shopping guarantee</span>
+                <span>Something something</span>
               </div>
             </div>
           </div>

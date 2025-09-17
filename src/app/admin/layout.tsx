@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Tajawal } from "next/font/google";
-import "./globals.css";
+// import "./globals.css";
 import TopNavbar from "@/components/navbars/TopNavbar";
 import { LocaleProvider } from "@/contexts/LocaleContext";
 import Navbar from "@/components/navbars/Navbar";
@@ -45,7 +45,7 @@ export const metadata: Metadata = {
   description: "Dropshipping Store",
 };
 
-export default function RootLayout({
+export default function AdminLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
@@ -59,7 +59,6 @@ export default function RootLayout({
         <ThemeProvider>
           <LocaleProvider>
             <CartProvider>
-              <NewHeader />
               {/* <NewCategories /> */}
               {/* <AnimationWrapper direction="left" delay={1}> */}
               {/*   <NewProductSlider /> */}
@@ -85,7 +84,6 @@ export default function RootLayout({
               {/* <Navbar /> */}
               {/* <NewMobileSidebar /> */}
               {children}
-              <NewFooter />
               {/* <Footer /> */}
             </CartProvider>
           </LocaleProvider>
