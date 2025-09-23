@@ -37,13 +37,6 @@ const CheckoutPage = () => {
     // Payment
     paymentMethod: "credit-card",
     saveAddress: true,
-
-    // Credit Card Details
-    cardName: "",
-    cardNumber: "",
-    expiryDate: "",
-    cvv: "",
-    saveCard: false,
   });
 
   const [mapLocation, setMapLocation] = useState({
@@ -53,7 +46,6 @@ const CheckoutPage = () => {
   });
 
   const [mapSearch, setMapSearch] = useState("");
-  const [cardType, setCardType] = useState("");
   const autocompleteRef = useRef(null);
   const [isMapLoaded, setIsMapLoaded] = useState(false);
 
@@ -120,18 +112,18 @@ const CheckoutPage = () => {
       icons: ["💳", "🛡️"],
       description: "Pay with Visa, MasterCard, or Mada",
     },
-    // {
-    //   value: "apple-pay",
-    //   label: "Apple Pay",
-    //   icons: [""],
-    //   description: "Fast and secure payment",
-    // },
-    // {
-    //   value: "stc-pay",
-    //   label: "STC Pay",
-    //   icons: ["📱"],
-    //   description: "Popular in Saudi Arabia",
-    // },
+    {
+      value: "apple-pay",
+      label: "Apple Pay",
+      icons: [""],
+      description: "Fast and secure payment",
+    },
+    {
+      value: "stc-pay",
+      label: "STC Pay",
+      icons: ["📱"],
+      description: "Popular in Saudi Arabia",
+    },
     {
       value: "cash",
       label: "Cash on Delivery",
@@ -144,7 +136,7 @@ const CheckoutPage = () => {
     visa: "https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg",
     mastercard:
       "https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg",
-    // mada: "https://upload.wikimedia.org/wikipedia/commons/c/c5/Mada_Logo.svg",
+    mada: "https://upload.wikimedia.org/wikipedia/commons/c/c5/Mada_Logo.svg",
     amex: "https://upload.wikimedia.org/wikipedia/commons/3/30/American_Express_logo.svg",
   };
 
@@ -154,38 +146,6 @@ const CheckoutPage = () => {
       ...prev,
       [name]: type === "checkbox" ? checked : value,
     }));
-
-    // Detect card type when card number changes
-    if (name === "cardNumber") {
-      detectCardType(value);
-    }
-
-    // Format expiry date
-    if (name === "expiryDate") {
-      const formattedValue = value
-        .replace(/\D/g, "")
-        .replace(/(\d{2})(\d)/, "$1/$2")
-        .substring(0, 5);
-      setFormData((prev) => ({ ...prev, expiryDate: formattedValue }));
-    }
-  };
-
-  const detectCardType = (cardNumber) => {
-    const cleanedNumber = cardNumber.replace(/\D/g, "");
-
-    if (/^4/.test(cleanedNumber)) {
-      setCardType("visa");
-    } else if (/^5[1-5]/.test(cleanedNumber)) {
-      setCardType("mastercard");
-    } else if (/^2/.test(cleanedNumber)) {
-      setCardType("mastercard"); // Mastercard 2-series
-    } else if (/^3[47]/.test(cleanedNumber)) {
-      setCardType("amex");
-    } else if (/^6(?:011|5)/.test(cleanedNumber)) {
-      setCardType("mada");
-    } else {
-      setCardType("");
-    }
   };
 
   const handleAddressTypeChange = (type) => {
@@ -261,32 +221,6 @@ const CheckoutPage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    // Validate credit card details if credit card is selected
-    if (formData.paymentMethod === "credit-card") {
-      if (
-        !formData.cardName ||
-        !formData.cardNumber ||
-        !formData.expiryDate ||
-        !formData.cvv
-      ) {
-        alert("Please fill in all credit card details");
-        return;
-      }
-
-      // Basic card validation
-      const cleanedCardNumber = formData.cardNumber.replace(/\D/g, "");
-      if (cleanedCardNumber.length < 13) {
-        alert("Please enter a valid card number");
-        return;
-      }
-
-      if (formData.cvv.length < 3) {
-        alert("Please enter a valid CVV");
-        return;
-      }
-    }
-
     console.log("Checkout data:", { addressType, ...formData, mapLocation });
     alert("Order placed successfully!");
   };
@@ -312,7 +246,7 @@ const CheckoutPage = () => {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Header */}
           <div className="text-center mb-8">
-            <h1 className="text-4xl font-bold x-bg-gradient-to-r from-blue-600 to-green-600 bg-clip-text text-primary">
+            <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-green-600 bg-clip-text text-transparent">
               Complete Your Order
             </h1>
             <p className="text-gray-600 mt-2">
@@ -364,19 +298,19 @@ const CheckoutPage = () => {
                       />
                     </div>
 
-                    {/* <div className="md:col-span-2"> */}
-                    {/*   <label className="block text-sm font-medium text-gray-700 mb-2"> */}
-                    {/*     Email Address */}
-                    {/*   </label> */}
-                    {/*   <input */}
-                    {/*     type="email" */}
-                    {/*     name="email" */}
-                    {/*     value={formData.email} */}
-                    {/*     onChange={handleInputChange} */}
-                    {/*     className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300" */}
-                    {/*     placeholder="your@email.com" */}
-                    {/*   /> */}
-                    {/* </div> */}
+                    <div className="md:col-span-2">
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Email Address
+                      </label>
+                      <input
+                        type="email"
+                        name="email"
+                        value={formData.email}
+                        onChange={handleInputChange}
+                        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
+                        placeholder="your@email.com"
+                      />
+                    </div>
                   </div>
                 </div>
 
@@ -386,7 +320,7 @@ const CheckoutPage = () => {
                     <span className="w-8 h-8 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center mr-3">
                       2
                     </span>
-                    Address Type
+                    Shipping Type
                   </h2>
 
                   <div className="grid grid-cols-2 md:grid-cols-3 gap-3 mb-6">
@@ -625,94 +559,94 @@ const CheckoutPage = () => {
                 </div>
 
                 {/* Additional Address Details */}
-                <div className="bg-white rounded-2xl shadow-lg p-6">
-                  <h2 className="text-xl font-semibold text-gray-900 mb-4 flex items-center">
-                    <span className="w-8 h-8 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center mr-3">
-                      4
-                    </span>
-                    Address Details
-                  </h2>
-
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                    {/* <div> */}
-                    {/*   <label className="block text-sm font-medium text-gray-700 mb-2"> */}
-                    {/*     Street Name * */}
-                    {/*   </label> */}
-                    {/*   <input */}
-                    {/*     type="text" */}
-                    {/*     name="street" */}
-                    {/*     required */}
-                    {/*     value={formData.street} */}
-                    {/*     onChange={handleInputChange} */}
-                    {/*     className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300" */}
-                    {/*     placeholder="King Fahd Road" */}
-                    {/*   /> */}
-                    {/* </div> */}
-
-                    {/* <div> */}
-                    {/*   <label className="block text-sm font-medium text-gray-700 mb-2"> */}
-                    {/*     District * */}
-                    {/*   </label> */}
-                    {/*   <input */}
-                    {/*     type="text" */}
-                    {/*     name="district" */}
-                    {/*     required */}
-                    {/*     value={formData.district} */}
-                    {/*     onChange={handleInputChange} */}
-                    {/*     className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300" */}
-                    {/*     placeholder="Al Olaya" */}
-                    {/*   /> */}
-                    {/* </div> */}
-
-                    {/* <div> */}
-                    {/*   <label className="block text-sm font-medium text-gray-700 mb-2"> */}
-                    {/*     City * */}
-                    {/*   </label> */}
-                    {/*   <select */}
-                    {/*     name="city" */}
-                    {/*     required */}
-                    {/*     value={formData.city} */}
-                    {/*     onChange={handleInputChange} */}
-                    {/*     className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300" */}
-                    {/*   > */}
-                    {/*     <option value="">Select City</option> */}
-                    {/*     {saudiCities.map((city) => ( */}
-                    {/*       <option key={city} value={city}> */}
-                    {/*         {city} */}
-                    {/*       </option> */}
-                    {/*     ))} */}
-                    {/*   </select> */}
-                    {/* </div> */}
-
-                    {/* <div> */}
-                    {/*   <label className="block text-sm font-medium text-gray-700 mb-2"> */}
-                    {/*     Postal Code */}
-                    {/*   </label> */}
-                    {/*   <input */}
-                    {/*     type="text" */}
-                    {/*     name="postalCode" */}
-                    {/*     value={formData.postalCode} */}
-                    {/*     onChange={handleInputChange} */}
-                    {/*     className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300" */}
-                    {/*     placeholder="12345" */}
-                    {/*   /> */}
-                    {/* </div> */}
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Delivery Notes
-                    </label>
-                    <textarea
-                      name="notes"
-                      rows={3}
-                      value={formData.notes}
-                      onChange={handleInputChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
-                      placeholder="Any special delivery instructions? "
-                    />
-                  </div>
-                </div>
+                {/* <div className="bg-white rounded-2xl shadow-lg p-6"> */}
+                {/*   <h2 className="text-xl font-semibold text-gray-900 mb-4 flex items-center"> */}
+                {/*     <span className="w-8 h-8 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center mr-3"> */}
+                {/*       4 */}
+                {/*     </span> */}
+                {/*     Address Details */}
+                {/*   </h2> */}
+                {/**/}
+                {/*   <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4"> */}
+                {/*     <div> */}
+                {/*       <label className="block text-sm font-medium text-gray-700 mb-2"> */}
+                {/*         Street Name * */}
+                {/*       </label> */}
+                {/*       <input */}
+                {/*         type="text" */}
+                {/*         name="street" */}
+                {/*         required */}
+                {/*         value={formData.street} */}
+                {/*         onChange={handleInputChange} */}
+                {/*         className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300" */}
+                {/*         placeholder="King Fahd Road" */}
+                {/*       /> */}
+                {/*     </div> */}
+                {/**/}
+                {/*     <div> */}
+                {/*       <label className="block text-sm font-medium text-gray-700 mb-2"> */}
+                {/*         District * */}
+                {/*       </label> */}
+                {/*       <input */}
+                {/*         type="text" */}
+                {/*         name="district" */}
+                {/*         required */}
+                {/*         value={formData.district} */}
+                {/*         onChange={handleInputChange} */}
+                {/*         className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300" */}
+                {/*         placeholder="Al Olaya" */}
+                {/*       /> */}
+                {/*     </div> */}
+                {/**/}
+                {/*     <div> */}
+                {/*       <label className="block text-sm font-medium text-gray-700 mb-2"> */}
+                {/*         City * */}
+                {/*       </label> */}
+                {/*       <select */}
+                {/*         name="city" */}
+                {/*         required */}
+                {/*         value={formData.city} */}
+                {/*         onChange={handleInputChange} */}
+                {/*         className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300" */}
+                {/*       > */}
+                {/*         <option value="">Select City</option> */}
+                {/*         {saudiCities.map((city) => ( */}
+                {/*           <option key={city} value={city}> */}
+                {/*             {city} */}
+                {/*           </option> */}
+                {/*         ))} */}
+                {/*       </select> */}
+                {/*     </div> */}
+                {/**/}
+                {/*     <div> */}
+                {/*       <label className="block text-sm font-medium text-gray-700 mb-2"> */}
+                {/*         Postal Code */}
+                {/*       </label> */}
+                {/*       <input */}
+                {/*         type="text" */}
+                {/*         name="postalCode" */}
+                {/*         value={formData.postalCode} */}
+                {/*         onChange={handleInputChange} */}
+                {/*         className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300" */}
+                {/*         placeholder="12345" */}
+                {/*       /> */}
+                {/*     </div> */}
+                {/*   </div> */}
+                {/**/}
+                {/*   <div> */}
+                {/*     <label className="block text-sm font-medium text-gray-700 mb-2"> */}
+                {/*       Delivery Notes */}
+                {/*     </label> */}
+                {/*     <textarea */}
+                {/*       name="notes" */}
+                {/*       rows={3} */}
+                {/*       value={formData.notes} */}
+                {/*       onChange={handleInputChange} */}
+                {/*       className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300" */}
+                {/*       placeholder="Any special delivery instructions? (gate code, building access, etc.)" */}
+                {/*     /> */}
+                {/*   </div> */}
+                {/* </div> */}
 
                 {/* Payment Method */}
                 <div className="bg-white rounded-2xl shadow-lg p-6">
@@ -768,190 +702,47 @@ const CheckoutPage = () => {
                     ))}
                   </div>
 
-                  {/* Credit Card Form */}
+                  {/* Card Icons Display */}
                   {formData.paymentMethod === "credit-card" && (
-                    <div className="border-t pt-6">
-                      <div className="mb-4">
-                        <label className="block text-sm font-medium text-gray-700 mb-3">
-                          We Accept
-                        </label>
-                        <div className="flex space-x-3 mb-4">
-                          {Object.entries(cardIcons).map(([card, icon]) => (
-                            <div
-                              key={card}
-                              className={`w-12 h-8 bg-white border rounded flex items-center justify-center p-1 transition-all duration-200 ${
-                                cardType === card
-                                  ? "border-blue-500 shadow-md scale-110"
-                                  : "border-gray-200"
-                              }`}
-                            >
-                              <img
-                                src={icon}
-                                alt={card}
-                                className="max-w-full max-h-full object-contain"
-                              />
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div className="md:col-span-2">
-                          <label className="block text-sm font-medium text-gray-700 mb-2">
-                            Cardholder Name *
-                          </label>
-                          <input
-                            type="text"
-                            name="cardName"
-                            required={formData.paymentMethod === "credit-card"}
-                            value={formData.cardName}
-                            onChange={handleInputChange}
-                            className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
-                            placeholder="As it appears on your card"
-                          />
-                        </div>
-
-                        <div className="md:col-span-2">
-                          <label className="block text-sm font-medium text-gray-700 mb-2">
-                            Card Number *
-                          </label>
-                          <div className="relative">
-                            <input
-                              type="text"
-                              name="cardNumber"
-                              required={
-                                formData.paymentMethod === "credit-card"
-                              }
-                              value={formData.cardNumber}
-                              onChange={handleInputChange}
-                              className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
-                              placeholder="1234 5678 9012 3456"
-                              maxLength={19}
-                            />
-                            {cardType && (
-                              <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
-                                <img
-                                  src={cardIcons[cardType]}
-                                  alt={cardType}
-                                  className="w-6 h-4"
-                                />
-                              </div>
-                            )}
-                          </div>
-                        </div>
-
-                        <div>
-                          <label className="block text-sm font-medium text-gray-700 mb-2">
-                            Expiry Date *
-                          </label>
-                          <input
-                            type="text"
-                            name="expiryDate"
-                            required={formData.paymentMethod === "credit-card"}
-                            value={formData.expiryDate}
-                            onChange={handleInputChange}
-                            className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
-                            placeholder="MM/YY"
-                            maxLength={5}
-                          />
-                        </div>
-
-                        <div>
-                          <label className="block text-sm font-medium text-gray-700 mb-2">
-                            CVV *
-                          </label>
-                          <div className="relative">
-                            <input
-                              type="text"
-                              name="cvv"
-                              required={
-                                formData.paymentMethod === "credit-card"
-                              }
-                              value={formData.cvv}
-                              onChange={handleInputChange}
-                              className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
-                              placeholder="123"
-                              maxLength={4}
-                            />
-                            <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
-                              <button
-                                type="button"
-                                className="text-gray-400 hover:text-gray-600"
-                                title="3-digit code on back of card"
-                              >
-                                <svg
-                                  className="w-5 h-5"
-                                  fill="none"
-                                  stroke="currentColor"
-                                  viewBox="0 0 24 24"
-                                >
-                                  <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth={2}
-                                    d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                                  />
-                                </svg>
-                              </button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* <div className="flex items-center mt-4"> */}
-                      {/*   <input */}
-                      {/*     type="checkbox" */}
-                      {/*     name="saveCard" */}
-                      {/*     checked={formData.saveCard} */}
-                      {/*     onChange={handleInputChange} */}
-                      {/*     className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500" */}
-                      {/*   /> */}
-                      {/*   <label className="ml-2 text-sm text-gray-700"> */}
-                      {/*     Save this card for future purchases */}
-                      {/*   </label> */}
-                      {/* </div> */}
-
-                      <div className="mt-4 p-3 bg-green-50 border border-green-200 rounded-lg">
-                        <div className="flex items-center text-green-700">
-                          <svg
-                            className="w-4 h-4 mr-2"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
+                    <div className="border-t pt-4">
+                      <label className="block text-sm font-medium text-gray-700 mb-3">
+                        We Accept
+                      </label>
+                      <div className="flex space-x-3">
+                        {Object.entries(cardIcons).map(([card, icon]) => (
+                          <div
+                            key={card}
+                            className="w-12 h-8 bg-white border border-gray-200 rounded flex items-center justify-center p-1"
                           >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth={2}
-                              d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
+                            <img
+                              src={icon}
+                              alt={card}
+                              className="max-w-full max-h-full object-contain"
                             />
-                          </svg>
-                          <span className="text-sm">
-                            Your payment information is secure and encrypted
-                          </span>
-                        </div>
+                          </div>
+                        ))}
                       </div>
                     </div>
                   )}
 
-                  {/* <div className="flex items-center mt-6"> */}
-                  {/*   <input */}
-                  {/*     type="checkbox" */}
-                  {/*     name="saveAddress" */}
-                  {/*     checked={formData.saveAddress} */}
-                  {/*     onChange={handleInputChange} */}
-                  {/*     className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500" */}
-                  {/*   /> */}
-                  {/*   <label className="ml-2 text-sm text-gray-700"> */}
-                  {/*     Save this address for future orders */}
-                  {/*   </label> */}
-                  {/* </div> */}
+                  <div className="flex items-center mt-4">
+                    <input
+                      type="checkbox"
+                      name="saveAddress"
+                      checked={formData.saveAddress}
+                      onChange={handleInputChange}
+                      className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                    />
+                    <label className="ml-2 text-sm text-gray-700">
+                      Save this address for future orders
+                    </label>
+                  </div>
                 </div>
 
                 {/* Submit Button */}
                 <button
                   type="submit"
-                  className="w-full x-bg-gradient-to-r from-blue-600 to-green-600 text-white py-4 px-6 rounded-[100px] font-semibold text-lg shadow-lg hover:shadow-xl transition-all duration-300 hover:from-blue-700 hover:to-green-700 bg-primary"
+                  className="w-full bg-gradient-to-r from-blue-600 to-green-600 text-white py-4 px-6 rounded-xl font-semibold text-lg shadow-lg hover:shadow-xl transition-all duration-300 hover:from-blue-700 hover:to-green-700"
                 >
                   Complete Order - SAR 1,245.00
                 </button>
