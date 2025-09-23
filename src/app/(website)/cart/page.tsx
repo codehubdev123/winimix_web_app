@@ -334,7 +334,7 @@ const CartPage = () => {
               {/* Checkout Button */}
               <button
                 disabled={cartItems.length === 0}
-                className={`w-full mt-6 py-3 px-4 rounded-lg text-white font-medium transition-colors duration-300 ${
+                className={`w-full mt-6 py-3 px-4 rounded-[100px] text-white font-medium transition-colors duration-300 ${
                   cartItems.length === 0
                     ? "bg-gray-400 cursor-not-allowed"
                     : "bg-[#222934] hover:bg-[#222934]"

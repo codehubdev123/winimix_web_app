@@ -1,5 +1,10 @@
 "use client";
 
+import OrderCards from "@/components/cards/OrderCards";
+import ProductListCard from "@/components/cards/ProductListCard";
+import ProductItem from "@/components/products/ProductItem";
+import AdminProfile from "@/components/profiles/AdminProfile";
+import Link from "next/link";
 import { useState } from "react";
 
 const VendorProfilePage = () => {
@@ -31,65 +36,219 @@ const VendorProfilePage = () => {
   const products = [
     {
       id: 1,
-      name: "Wireless Earbuds",
-      price: 79.99,
+      name: "Wireless  Headphones",
+      price: 89.99,
+      originalPrice: 129.99,
+      images: [
+        "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80",
+        "https://images.unsplash.com/photo-1572536147248-ac59a8abfa4b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80",
+        "https://images.unsplash.com/photo-1583394838336-acd977736f90?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80",
+      ],
       rating: 4.5,
-      reviews: 245,
-      image:
-        "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
-      category: "Audio",
+      reviews: 124,
+      category: "Electronics",
+      brand: "Sony",
+      inStock: true,
+      isNew: true,
+      discount: 30,
     },
     {
       id: 2,
-      name: "Smart Watch",
+      name: "Smart Watch Series 5",
       price: 199.99,
+      originalPrice: 249.99,
+      images: [
+        "https://images.unsplash.com/photo-1523275335684-37898b6baf30?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlf极x8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80",
+        "https://images.unsplash.com/photo-1524592094714-0f0654e20314?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80",
+        "https://images.unsplash.com/photo-1434494878577-86c23bcb06b9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&极t=crop&w=500&q=80",
+      ],
       rating: 4.8,
-      reviews: 512,
-      image:
-        "https://images.unsplash.com/photo-1523275335684-37898b6baf30?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
-      category: "Wearables",
+      category: "Electronics",
+      brand: "Sony",
+      inStock: true,
+
+      reviews: 89,
+      isNew: false,
+      discount: 20,
     },
     {
       id: 3,
-      name: "Phone Case",
-      price: 24.99,
+      name: "Premium Leather Backpack",
+      price: 129.99,
+      originalPrice: 159.99,
+      images: [
+        "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80",
+        "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80",
+        "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80",
+      ],
       rating: 4.3,
-      reviews: 187,
-      image:
-        "https://images.unsplash.com/photo-1601593346740-9b7e84c06f1a?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
-      category: "Accessories",
+      category: "Electronics",
+      brand: "Sony",
+      inStock: true,
+
+      reviews: 67,
+      isNew: true,
+      discount: 18,
     },
     {
       id: 4,
-      name: "Portable Charger",
-      price: 49.99,
-      rating: 4.6,
-      reviews: 324,
-      image:
-        "https://images.unsplash.com/photo-1574944985076-5742d84e7b61?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
-      category: "Power",
+      name: "Wireless Charging Pad",
+      price: 39.99,
+      originalPrice: 49.99,
+      images: [
+        "https://images.unsplash.com/photo-1572569511254-d8f925fe2cbb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80",
+        "https://images.unsplash.com/photo-1572569511254-d8f925fe2cbb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80",
+        "https://images.unsplash.com/photo-1572569511254-d8f925fe2cbb?ixlib=rb-4.0.3&ixid=M3wxMjA3f极B8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3极%3D&auto=format&fit=crop&w=500&q=80",
+      ],
+      rating: 4.2,
+      category: "Electronics",
+      brand: "Sony",
+      inStock: true,
+
+      reviews: 42,
+      isNew: false,
+      discount: 20,
     },
     {
       id: 5,
-      name: "Bluetooth Speaker",
-      price: 89.99,
-      rating: 4.7,
-      reviews: 432,
-      image:
-        "https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
-      category: "Audio",
+      name: "Minimalist Sneakers",
+      price: 79.99,
+      originalPrice: 99.99,
+      images: [
+        "https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80",
+        "https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80",
+        "https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80",
+      ],
+      rating: 4.6,
+      category: "Electronics",
+      brand: "Sony",
+      inStock: true,
+
+      reviews: 156,
+      isNew: true,
+      discount: 20,
     },
     {
       id: 6,
-      name: "VR Headset",
-      price: 299.99,
+      name: "Smart Home Speaker",
+      price: 129.99,
+      originalPrice: 149.99,
+      images: [
+        "https://images.unsplash.com/photo-1589003077984-894e133dabab?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwa极0by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80",
+        "https://images.unsplash.com/photo-1589003077984-894e133dabab?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwa极0by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80",
+        "https://images.unsplash.com/photo-1589003077984-894e133dabab?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwa极0by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80",
+      ],
+      rating: 4.7,
+      category: "Electronics",
+      brand: "Sony",
+      inStock: true,
+
+      reviews: 201,
+      isNew: false,
+      discount: 13,
+    },
+    {
+      id: 7,
+      name: "Designer Sunglasses",
+      price: 149.99,
+      originalPrice: 199.99,
+      images: [
+        "https://images.unsplash.com/photo-1572635196237-14b3f281503f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80",
+        "https://images.unsplash.com/photo-1572635196237-14b3f281503f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80",
+        "https://images.unsplash.com/photo-1572635196237-14b3f281503f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80",
+      ],
       rating: 4.4,
-      reviews: 156,
-      image:
-        "https://images.unsplash.com/photo-1593118247619-e2d6f056869e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
-      category: "Gaming",
+      category: "Electronics",
+      brand: "Sony",
+      inStock: true,
+
+      reviews: 78,
+      isNew: true,
+      discount: 25,
+    },
+    {
+      id: 8,
+      name: "Fitness Tracker Band",
+      price: 59.99,
+      originalPrice: 79.99,
+      images: [
+        "https://images.unsplash.com/photo-1576243345690-4e4b79b63288?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80",
+        "https://images.unsplash.com/photo-1576243345690-4e4b79b63288?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80",
+        "https://images.unsplash.com/photo-1576243345690-4e4b79b63288?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80",
+      ],
+      rating: 4.1,
+      category: "Electronics",
+      brand: "Sony",
+      inStock: true,
+
+      reviews: 95,
+      isNew: false,
+      discount: 25,
     },
   ];
+
+  //   [
+  //   {
+  //     id: 1,
+  //     name: "Wireless Earbuds",
+  //     price: 79.99,
+  //     rating: 4.5,
+  //     reviews: 245,
+  //     image:
+  //       "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+  //     category: "Audio",
+  //   },
+  //   {
+  //     id: 2,
+  //     name: "Smart Watch",
+  //     price: 199.99,
+  //     rating: 4.8,
+  //     reviews: 512,
+  //     image:
+  //       "https://images.unsplash.com/photo-1523275335684-37898b6baf30?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+  //     category: "Wearables",
+  //   },
+  //   {
+  //     id: 3,
+  //     name: "Phone Case",
+  //     price: 24.99,
+  //     rating: 4.3,
+  //     reviews: 187,
+  //     image:
+  //       "https://images.unsplash.com/photo-1601593346740-9b7e84c06f1a?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+  //     category: "Accessories",
+  //   },
+  //   {
+  //     id: 4,
+  //     name: "Portable Charger",
+  //     price: 49.99,
+  //     rating: 4.6,
+  //     reviews: 324,
+  //     image:
+  //       "https://images.unsplash.com/photo-1574944985076-5742d84e7b61?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+  //     category: "Power",
+  //   },
+  //   {
+  //     id: 5,
+  //     name: "Bluetooth Speaker",
+  //     price: 89.99,
+  //     rating: 4.7,
+  //     reviews: 432,
+  //     image:
+  //       "https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+  //     category: "Audio",
+  //   },
+  //   {
+  //     id: 6,
+  //     name: "VR Headset",
+  //     price: 299.99,
+  //     rating: 4.4,
+  //     reviews: 156,
+  //     image:
+  //       "https://images.unsplash.com/photo-1593118247619-e2d6f056869e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+  //     category: "Gaming",
+  //   },
+  // ];
 
   // Sample reviews
   const reviews = [
@@ -145,7 +304,7 @@ const VendorProfilePage = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Cover Photo */}
-      <div className="h-64 w-full relative">
+      <div className="h-[30rem] w-full relative">
         <img
           src={vendor.coverImage}
           alt="Cover"
@@ -154,7 +313,10 @@ const VendorProfilePage = () => {
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
 
         {/* Back Button */}
-        <button className="absolute top-6 ltr:left-6 rtl:right-6 bg-white/90 text-gray-800 p-2 rounded-full hover:bg-white transition-colors">
+        <Link
+          href="/"
+          className="absolute top-6 ltr:left-6 rtl:right-6 bg-white/90 text-gray-800 p-2 rounded-full hover:bg-white transition-colors"
+        >
           <svg
             className="w-5 h-5"
             fill="none"
@@ -169,7 +331,7 @@ const VendorProfilePage = () => {
               d="M10 19l-7-7m0 0l7-7m-7 7h18"
             />
           </svg>
-        </button>
+        </Link>
       </div>
 
       {/* Vendor Info Section */}
@@ -274,29 +436,27 @@ const VendorProfilePage = () => {
 
               {/* Stats */}
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8 pt-8 border-t border-gray-200">
+                {/* <div className="text-center"> */}
+                {/*   <div className="text-2xl font-bold text-gray-900"> */}
+                {/*     {vendor.products} */}
+                {/*   </div> */}
+                {/*   <div className="text-gray-600 font-bold">Products</div> */}
+                {/* </div> */}
                 <div className="text-center">
-                  <div className="text-2xl font-bold text-gray-900">
-                    {vendor.followers.toLocaleString()}
-                  </div>
-                  <div className="text-gray-600">Followers</div>
+                  <div className="text-2xl font-bold text-gray-900">$ 100</div>
+                  <div className="text-gray-600 font-bold">Total Balance</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-2xl font-bold text-gray-900">
-                    {vendor.products}
+                  <div className="text-2xl font-bold text-green-700">$ 60</div>
+                  <div className="text-green-700 font-bold">
+                    Current Balance
                   </div>
-                  <div className="text-gray-600">Products</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-2xl font-bold text-gray-900">
-                    {vendor.responseRate}%
+                  <div className="text-2xl font-bold text-orange-600">$ 40</div>
+                  <div className="text-orange-600 font-bold">
+                    Withdraw Balance
                   </div>
-                  <div className="text-gray-600">Response Rate</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-2xl font-bold text-gray-900">
-                    {vendor.shippingRate}%
-                  </div>
-                  <div className="text-gray-600">Shipping Rate</div>
                 </div>
               </div>
             </div>
@@ -323,82 +483,19 @@ const VendorProfilePage = () => {
             className={`px-4 py-3 font-medium whitespace-nowrap ${activeTab === "about" ? "text-primary-600 border-b-2 border-primary-600" : "text-gray-500 hover:text-gray-700"}`}
             onClick={() => setActiveTab("about")}
           >
-            About
+            Management
           </button>
           <button
             className={`px-4 py-3 font-medium whitespace-nowrap ${activeTab === "policies" ? "text-primary-600 border-b-2 border-primary-600" : "text-gray-500 hover:text-gray-700"}`}
             onClick={() => setActiveTab("policies")}
           >
-            Policies
+            Orders
           </button>
         </div>
 
         {/* Tab Content */}
         <div className="mt-8">
-          {activeTab === "products" && (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-              {products.map((product) => (
-                <div
-                  key={product.id}
-                  className="bg-white rounded-xl shadow-sm overflow-hidden transition-transform duration-200 hover:shadow-md hover:-translate-y-1"
-                >
-                  <div className="relative">
-                    <img
-                      src={product.image}
-                      alt={product.name}
-                      className="w-full h-48 object-cover"
-                    />
-                    <button className="absolute top-3 ltr:right-3 rtl:left-3 bg-white/90 p-2 rounded-full text-gray-700 hover:text-rose-500 transition-colors">
-                      <svg
-                        className="w-5 h-5"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-                        />
-                      </svg>
-                    </button>
-                  </div>
-
-                  <div className="p-4">
-                    <div className="flex justify-between items-start">
-                      <h3 className="font-semibold text-gray-900">
-                        {product.name}
-                      </h3>
-                      <div className="flex items-center bg-primary-50 text-primary-700 px-2 py-1 rounded-full">
-                        <span className="text-sm font-medium">
-                          {product.rating}
-                        </span>
-                      </div>
-                    </div>
-
-                    <p className="text-gray-500 text-sm mt-1">
-                      {product.category}
-                    </p>
-
-                    <div className="flex items-center justify-between mt-4">
-                      <div className="text-lg font-bold text-gray-900">
-                        ${product.price}
-                      </div>
-                      <div className="text-sm text-gray-500">
-                        <span>{product.reviews} reviews</span>
-                      </div>
-                    </div>
-
-                    <button className="mt-4 w-full bg-primary-500 hover:bg-primary-600 text-white py-2 px-4 rounded-lg transition-colors duration-200">
-                      Add to Cart
-                    </button>
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
+          {activeTab === "products" && <ProductListCard />}
 
           {activeTab === "reviews" && (
             <div className="bg-white rounded-2xl shadow-sm p-6">
@@ -441,76 +538,13 @@ const VendorProfilePage = () => {
 
           {activeTab === "about" && (
             <div className="bg-white rounded-2xl shadow-sm p-6">
-              <h2 className="text-xl font-bold text-gray-900 mb-6">
-                About {vendor.name}
-              </h2>
-
-              <div className="prose max-w-none">
-                <p className="text-gray-700">{vendor.description}</p>
-
-                <h3 className="text-lg font-semibold text-gray-900 mt-6">
-                  Our Story
-                </h3>
-                <p className="text-gray-700">
-                  Founded in 2022, Tech Gadgets started as a small family
-                  business with a passion for technology. Our mission is to
-                  provide high-quality tech products at affordable prices with
-                  exceptional customer service.
-                </p>
-
-                <h3 className="text-lg font-semibold text-gray-900 mt-6">
-                  Why Choose Us
-                </h3>
-                <ul className="list-disc list-inside text-gray-700 mt-2">
-                  <li>Premium quality products with warranty</li>
-                  <li>Fast and reliable shipping</li>
-                  <li>Excellent customer support</li>
-                  <li>30-day return policy</li>
-                  <li>Secure payment options</li>
-                </ul>
-              </div>
+              <AdminProfile />
             </div>
           )}
 
           {activeTab === "policies" && (
             <div className="bg-white rounded-2xl shadow-sm p-6">
-              <h2 className="text-xl font-bold text-gray-900 mb-6">
-                Store Policies
-              </h2>
-
-              <div className="space-y-6">
-                <div>
-                  <h3 className="text-lg font-semibold text-gray-900">
-                    Shipping Policy
-                  </h3>
-                  <p className="text-gray-700 mt-2">
-                    We offer worldwide shipping. Orders are processed within 1-2
-                    business days and delivered within 5-10 business days
-                    depending on your location.
-                  </p>
-                </div>
-
-                <div>
-                  <h3 className="text-lg font-semibold text-gray-900">
-                    Return Policy
-                  </h3>
-                  <p className="text-gray-700 mt-2">
-                    We accept returns within 30 days of purchase. Products must
-                    be in original condition with all packaging and accessories.
-                  </p>
-                </div>
-
-                <div>
-                  <h3 className="text-lg font-semibold text-gray-900">
-                    Warranty
-                  </h3>
-                  <p className="text-gray-700 mt-2">
-                    Most products come with a 1-year manufacturer warranty.
-                    Please check individual product pages for specific warranty
-                    information.
-                  </p>
-                </div>
-              </div>
+              <OrderCards />
             </div>
           )}
         </div>

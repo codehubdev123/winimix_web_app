@@ -51,12 +51,45 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html>
       <body
         className={`  ${geistSans.variable} ${geistMono.variable} ${tajawal.variable} antialiased bg-white dark:bg-primary-dark`}
         suppressHydrationWarning
       >
-        {children}
+        <ThemeProvider>
+          <LocaleProvider>
+            <CartProvider>
+              <NewHeader />
+              {/* <NewCategories /> */}
+              {/* <AnimationWrapper direction="left" delay={1}> */}
+              {/*   <NewProductSlider /> */}
+              {/* </AnimationWrapper> */}
+              {/* <AnimationWrapper direction="right" delay={1}> */}
+              {/*   <NewFeatures /> */}
+              {/* </AnimationWrapper> */}
+              {/* <AnimationWrapper direction="right" delay={2}> */}
+              {/*   <NewStoresSlider /> */}
+              {/* </AnimationWrapper> */}
+              {/* <AnimationWrapper direction="left" delay={2}> */}
+              {/*   <NewBrands /> */}
+              {/* </AnimationWrapper> */}
+              {/* <AnimationWrapper direction="left" delay={2}> */}
+              {/*   <BrandSlider /> */}
+              {/* </AnimationWrapper> */}
+              {/* <TopHeader /> */}
+              {/* <Header /> */}
+              {/* <Features /> */}
+              {/* <Newa /> */}
+              {/* <div className="mt-[300px]"></div> */}
+              {/* <TopNavbar /> */}
+              {/* <Navbar /> */}
+              {/* <NewMobileSidebar /> */}
+              {children}
+              <NewFooter />
+              {/* <Footer /> */}
+            </CartProvider>
+          </LocaleProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

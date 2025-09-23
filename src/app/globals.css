@@ -14,8 +14,9 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-  --color-primary: #c8aa65;
-  --color-secondary: #a1752d;
+  --color-primary: #222934;
+  --color-secondary: #222934;
+  /* --color-secondary: #fe9a00; */
   --color-hover: #a1752d;
   --color-title: #030712;
   --color-font: #181d25;

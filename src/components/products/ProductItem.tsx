@@ -62,7 +62,7 @@ const ProductItem = ({ product }: Props) => {
         {/* Favorite Icon */}
         <button
           onClick={() => toggleFavorite(product.id)}
-          className={`absolute top-3 right-3 z-10 p-2 rounded-full transition-all duration-300 ${
+          className={`absolute top-3 right-3 z-10 p-2 rounded-full transition-all duration-300 cursor-pointer ${
             favorites.includes(product.id)
               ? "bg-rose-100 text-rose-500"
               : "bg-white/80 text-gray-500 hover:bg-rose-100 hover:text-rose-500"
@@ -85,7 +85,7 @@ const ProductItem = ({ product }: Props) => {
         {/* New Badge */}
         {product.isNew && (
           <div className="absolute top-12 left-3 bg-emerald-600 text-white text-xs font-bold px-2 py-1 rounded-md z-10">
-            NEW
+            Dropshipping
           </div>
         )}
 
@@ -158,7 +158,7 @@ const ProductItem = ({ product }: Props) => {
 
         {/* Price */}
         <div className="flex items-center mt-3">
-          <span className="text-xl font-bold text-secondary">
+          <span className="text-xl font-bold text-primary">
             ${product.price}
           </span>
           {product.originalPrice && (
@@ -169,7 +169,7 @@ const ProductItem = ({ product }: Props) => {
         </div>
 
         {/* Add to Cart Button */}
-        <button className="mt-4 w-full bg-primary hover:bg-secondary text-white py-2 px-4 rounded-lg transition-all duration-300 transform hover:scale-105 flex items-center justify-center cursor-pointer">
+        <button className="mt-4 w-full bg-primary  text-white py-2 px-4 rounded-lg transition-all duration-300 transform hover:scale-105 flex items-center justify-center cursor-pointer">
           <ShoppingCart className="w-5 h-5 mr-2" />
           Add to Cart
         </button>

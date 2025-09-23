@@ -108,7 +108,7 @@ const NewStoresSlider = () => {
         </div>
 
         {/* Slider Container */}
-        <div className="relative w-full">
+        <div className="relative w-full" dir="ltr">
           <Swiper
             ref={swiperRef}
             modules={[Autoplay]}

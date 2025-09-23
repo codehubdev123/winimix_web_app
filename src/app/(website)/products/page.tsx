@@ -1,25 +1,22 @@
 "use client";
+import NewFilterDrodown from "@/components/newdesign/NewFilterDrodown";
+import ProductItem from "@/components/products/ProductItem";
+import { HeartIcon } from "lucide-react";
+import { useState } from "react";
 
-import { useRef, useState } from "react";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay } from "swiper/modules";
-import {
-  ChevronLeft,
-  ChevronRight,
-  Heart,
-  HeartIcon,
-  ShoppingCart,
-} from "lucide-react";
-import "swiper/css";
-import Link from "next/link";
-import ProductItem from "../products/ProductItem";
-
-const ProductCardsSlider = () => {
-  const [isRTL, setIsRTL] = useState(false);
-  const swiperRef = useRef(null);
+const ProductsPage = () => {
+  const [selectedOption, setSelectedOption] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [selectedUser, setSelectedUser] = useState(null);
   const [favorites, setFavorites] = useState([]);
+  const toggleFavorite = (productId) => {
+    if (favorites.includes(productId)) {
+      setFavorites(favorites.filter((id) => id !== productId));
+    } else {
+      setFavorites([...favorites, productId]);
+    }
+  };
 
-  // Product data
   const products = [
     {
       id: 1,
@@ -173,7 +170,6 @@ const ProductCardsSlider = () => {
       discount: 25,
     },
   ];
-
   //   [
   //   {
   //     id: 1,
@@ -227,112 +223,136 @@ const ProductCardsSlider = () => {
   //   },
   // ];
 
-  const goNext = () => {
-    if (swiperRef.current && swiperRef.current.swiper) {
-      swiperRef.current.swiper.slideNext();
-    }
+  const options = [
+    { value: "option1", label: "Option 1" },
+    { value: "option2", label: "Option 2" },
+    { value: "option3", label: "Option 3" },
+    { value: "option4", label: "Option 4" },
+    { value: "option5", label: "Option 5" },
+  ];
+
+  const categories = [
+    { value: "electronics", label: "Electronics" },
+    { value: "clothing", label: "Clothing" },
+    { value: "books", label: "Books" },
+    { value: "home", label: "Home & Kitchen" },
+    { value: "sports", label: "Sports & Outdoors" },
+  ];
+
+  const users = [
+    { value: "user1", label: "John Doe" },
+    { value: "user2", label: "Jane Smith" },
+    { value: "user3", label: "Robert Johnson" },
+    { value: "user4", label: "Emily Davis" },
+    { value: "user5", label: "Michael Wilson" },
+  ];
+
+  const handleSelectOption = (option) => {
+    setSelectedOption(option);
+    console.log("Selected option:", option);
   };
 
-  const goPrev = () => {
-    if (swiperRef.current && swiperRef.current.swiper) {
-      swiperRef.current.swiper.slidePrev();
-    }
+  const handleSelectCategory = (category) => {
+    setSelectedCategory(category);
+    console.log("Selected category:", category);
   };
 
-  const toggleFavorite = (productId) => {
-    if (favorites.includes(productId)) {
-      setFavorites(favorites.filter((id) => id !== productId));
-    } else {
-      setFavorites([...favorites, productId]);
-    }
+  const handleSelectUser = (user) => {
+    setSelectedUser(user);
+    console.log("Selected user:", user);
   };
 
   return (
-    <div className={`bg-white flex items-center justify-center py-16 `}>
-      {/* Main Container */}
-      <div className="w-full container mx-auto px-4  text-[#181D25] ">
-        <div className="flex items-center justify-between mb-6 md:mb-10">
-          <div className="font-semibold text-center text-[18px] md:text-[28px]">
-            Popular Products
-          </div>
-          <div className="flex gap-1 items-center">
-            <Link href="/products">View All</Link>
-            <ChevronRight width={16} height={16} />
-          </div>
+    <>
+      <div className="container mx-auto pt-12 pb-8">
+        <nav aria-label="Breadcrumb">
+          <ol className="flex items-center gap-1 text-sm text-gray-700">
+            <li>
+              <a
+                href="#"
+                className="block transition-colors hover:text-gray-900"
+              >
+                {" "}
+                Home{" "}
+              </a>
+            </li>
+
+            <li className="rtl:rotate-180">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="size-4"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                  clipRule="evenodd"
+                />
+              </svg>
+            </li>
+
+            <li>
+              <a href="#" className="block transition-colors text-[#9CA3AF] ">
+                Categories
+              </a>
+            </li>
+          </ol>
+        </nav>
+      </div>
+      <div className="mx-auto container">
+        <h1 className="text-[18px] md:text-[20px] font-semibold text-[#181D25] pb-8">
+          Products Catalog
+        </h1>
+      </div>
+      <div className="mx-auto container flex items-center gap-3 pb-8">
+        <div>
+          <NewFilterDrodown
+            options={options}
+            onSelect={handleSelectOption}
+            placeholder="Choose an option"
+          />
         </div>
-
-        {/* Slider Container */}
-        <div className="relative w-full" dir="ltr">
-          <Swiper
-            ref={swiperRef}
-            modules={[Autoplay]}
-            autoplay={{
-              delay: 4000,
-              disableOnInteraction: false,
-            }}
-            loop={true}
-            spaceBetween={20}
-            slidesPerView={1}
-            breakpoints={{
-              480: {
-                slidesPerView: 1,
-              },
-              640: {
-                slidesPerView: 2,
-              },
-              768: {
-                slidesPerView: 2,
-              },
-              1024: {
-                slidesPerView: 3,
-              },
-              1280: {
-                slidesPerView: 4,
-              },
-            }}
-            className="w-full"
-          >
-            {products.map((product) => (
-              <SwiperSlide key={product.id} className="pb-10">
-                <ProductItem key={product.id} product={product} />
-              </SwiperSlide>
-            ))}
-          </Swiper>
-
-          {/* Navigation Arrows */}
-          <button
-            onClick={goPrev}
-            className={`absolute top-1/2 z-10 w-10 h-10 bg-white rounded-full shadow-lg flex items-center justify-center hover:bg-gray-100 transition-colors border border-gray-200 ${
-              isRTL ? "right-2 sm:right-4" : "left-2 sm:left-4"
-            }`}
-            style={{ top: "40%" }}
-            aria-label="Previous products"
-          >
-            {isRTL ? (
-              <ChevronRight className="w-5 h-5 text-gray-700 cursor-pointer" />
-            ) : (
-              <ChevronLeft className="w-5 h-5 text-gray-700 cursor-pointer" />
-            )}
-          </button>
-
-          <button
-            onClick={goNext}
-            className={`absolute top-1/2 z-10 w-10 h-10 bg-white rounded-full shadow-lg flex items-center justify-center hover:bg-gray-100 transition-colors border border-gray-200 ${
-              isRTL ? "left-2 sm:left-4" : "right-2 sm:right-4"
-            }`}
-            style={{ top: "40%" }}
-            aria-label="Next products"
-          >
-            {isRTL ? (
-              <ChevronLeft className="w-5 h-5 text-gray-700 cursor-pointer" />
-            ) : (
-              <ChevronRight className="w-5 h-5 text-gray-700 cursor-pointer" />
-            )}
-          </button>
+        <div>
+          <NewFilterDrodown
+            options={options}
+            onSelect={handleSelectOption}
+            placeholder="Choose an option"
+          />
+        </div>
+        <div>
+          <NewFilterDrodown
+            options={options}
+            onSelect={handleSelectOption}
+            placeholder="Choose an option"
+          />
+        </div>
+        <div>
+          <NewFilterDrodown
+            options={options}
+            onSelect={handleSelectOption}
+            placeholder="Choose an option"
+          />
+        </div>
+        <div>
+          <NewFilterDrodown
+            options={options}
+            onSelect={handleSelectOption}
+            placeholder="Choose an option"
+          />
         </div>
       </div>
-    </div>
+      {/* products area */}
+      <div className="container mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10 pb-20">
+        {products.map((product) => (
+          <ProductItem key={product.id} product={product} />
+        ))}
+        {products.map((product) => (
+          <ProductItem key={product.id} product={product} />
+        ))}
+      </div>
+    </>
   );
 };
 
-export default ProductCardsSlider;
+export default ProductsPage;

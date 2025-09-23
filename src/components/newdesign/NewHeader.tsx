@@ -20,30 +20,38 @@ import NewHomeSlider from "./NewHomeSlider";
 import NewCountriesDropdown from "./NewCountriesDropdown";
 import NewLanguageDropdown from "./NewLanguageDropdown";
 import { useState } from "react";
+import NewCurrencyDropdown from "./NewCurrancyDropdown";
+import HotOffersButton from "../buttons/HotOffers";
 
 const NewHeader = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
   };
+
+  const userMenuItems = [
+    { label: "My Account", href: "/vendor/profile" },
+    { label: "Orders", href: "#" },
+    { label: "Wishlist", href: "#" },
+    // { label: "Addresses", href: "#" },
+    // { label: "Payment Methods", href: "#" },
+    { label: "Logout", href: "#" },
+  ];
+
   const categories = [
     {
-      name: "Beadroom",
+      name: "Home",
     },
     {
-      name: "Living Room",
+      name: "Men",
     },
     {
-      name: "Kitchen",
+      name: "Women",
     },
     {
-      name: "Decoration",
-    },
-    {
-      name: "Sale",
-    },
-    {
-      name: "Blog",
+      name: "Kids",
     },
   ];
   // Menu items
@@ -65,16 +73,34 @@ const NewHeader = () => {
           {/* <p>Contact us 24/7 : +1 50 537 53 082</p> */}
           <NewCountriesDropdown />
           <NewLanguageDropdown />
+          <NewCurrencyDropdown />
         </div>
-        <div className="hidden md:block">🔥The Biggest Sale Ever 50% Off</div>
 
-        <div>
-          <ul className="flex items-center justify-between gap-6">
+        <div className="">
+          <ul className="flex items-center justify-between gap-6  relative">
+            {/* <li> */}
+            {/*   <Link href="#">Wishlist</Link> */}
+            {/* </li> */}
             <li>
-              <Link href="#">Wishlist</Link>
-            </li>
-            <li>
-              <Link href="#">Account</Link>
+              <Link
+                href="#"
+                onClick={() => setIsUserDropdownOpen(!isUserDropdownOpen)}
+              >
+                Account
+              </Link>
+              {isUserDropdownOpen && (
+                <div className="absolute right-0 rtl:right-auto rtl:left-0 mt-2 w-36 bg-white rounded-md shadow-lg py-1 z-50 border border-gray-200">
+                  {userMenuItems.map((item) => (
+                    <a
+                      key={item.label}
+                      href={item.href}
+                      className="block px-4 py-2 text-sm text-primary hover:bg-primary hover:text-white transition-colors duration-200"
+                    >
+                      {item.label}
+                    </a>
+                  ))}
+                </div>
+              )}
             </li>
           </ul>
         </div>
@@ -112,6 +138,9 @@ const NewHeader = () => {
                 onClick={toggleSidebar}
               />
             </li>
+            <li>
+              <HotOffersButton />
+            </li>
             <li className=" relative hover:bg-[#EEF1F6] cursor-pointer  transition h-[40px] w-[40px] rounded-[100px] flex items-center justify-center">
               <Link href={"/cart"}>
                 <ShoppingCart width={16} height={16} />
@@ -120,12 +149,44 @@ const NewHeader = () => {
                 </span>
               </Link>
             </li>
-            <li className="md:bg-[#EEF1F6] hover:bg-[#EEF1F6]  cursor-pointer h-[40px] w-[40px] rounded-[100px] flex items-center justify-center">
+            <li
+              className="md:bg-[#EEF1F6] hover:bg-[#EEF1F6]  cursor-pointer h-[40px] w-[40px] rounded-[100px] flex items-center justify-center"
+              onClick={() => setIsSearchOpen(!isSearchOpen)}
+            >
               <Search width={16} height={16} />
             </li>
           </ul>
         </div>
       </div>
+      {isSearchOpen && (
+        <div className=" mx-auto container mt-2">
+          <div className="pb-4 px-2">
+            <div className="relative bg-white">
+              <input
+                type="text"
+                placeholder="Search for products..."
+                className="w-full px-10 py-2 border border-gray-300 rounded-lg focus:none  focus:ring-amber-500 focus:border-amber-500"
+              />
+              <button className="absolute cursor-pointer right-0 rtl:right-auto rtl:left-0 top-0 h-full px-4 text-primary hover:text-amber-700">
+                <svg
+                  className="w-5 h-5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                  ></path>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
       {/* mobile start */}
       {isOpen && (
         <div

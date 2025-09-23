@@ -248,7 +248,7 @@ const ProductCardsSlider = () => {
   };
 
   return (
-    <div className={`bg-white flex items-center justify-center py-16 `}>
+    <div className={` bg-white flex items-center justify-center py-16 `}>
       {/* Main Container */}
       <div className="w-full container mx-auto px-4  text-[#181D25] ">
         <div className="flex items-center justify-between mb-6 md:mb-10">
@@ -262,7 +262,7 @@ const ProductCardsSlider = () => {
         </div>
 
         {/* Slider Container */}
-        <div className="relative w-full" dir="ltr">
+        <div className="relative w-full">
           <Swiper
             ref={swiperRef}
             modules={[Autoplay]}
@@ -295,6 +295,70 @@ const ProductCardsSlider = () => {
             {products.map((product) => (
               <SwiperSlide key={product.id} className="pb-10">
                 <ProductItem key={product.id} product={product} />
+                {/* <div className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 h-full flex flex-col"> */}
+                {/*   {/* Image Section */} */}
+                {/*   <div className="relative h-56 md:h-64 overflow-hidden"> */}
+                {/*     <img */}
+                {/*       src={product.image} */}
+                {/*       alt={product.title} */}
+                {/*       className="w-full h-full x-object-cover transition-transform duration-500 hover:scale-105" */}
+                {/*     /> */}
+                {/**/}
+                {/*     {/* New badge */} */}
+                {/*     {/* <div className="absolute top-3 left-3 bg-green-500 text-white px-2 py-1 rounded text-xs font-medium"></div> */} */}
+                {/**/}
+                {/*     {/* Favorite button */} */}
+                {/*     {/* <button */} */}
+                {/*     {/*   onClick={() => toggleFavorite(product.id)} */} */}
+                {/*     {/*   className="absolute top-3 right-3 w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-md hover:bg-gray-100 transition-colors" */} */}
+                {/*     {/*   aria-label="Add to favorites" */} */}
+                {/*     {/* > */} */}
+                {/*     {/*   <Heart */} */}
+                {/*     {/*     className={`w-4 h-4 ${favorites.includes(product.id) ? "fill-red-500 text-red-500" : "text-gray-600"}`} */} */}
+                {/*     {/*   /> */} */}
+                {/*     {/* </button> */} */}
+                {/*   </div> */}
+                {/**/}
+                {/*   {/* Content Section */} */}
+                {/*   <div className="p-4 flex-1 flex flex-col"> */}
+                {/*     {/* Color options */} */}
+                {/*     <div className="flex space-x-2 mb-3"> */}
+                {/*       {product.colors.map((color, index) => ( */}
+                {/*         <div */}
+                {/*           key={index} */}
+                {/*           className={`w-4 h-4 rounded-full ${color} border border-gray-200`} */}
+                {/*         /> */}
+                {/*       ))} */}
+                {/*     </div> */}
+                {/**/}
+                {/*     {/* Title */} */}
+                {/*     <h3 className="text-lg font-semibold text-[#364254] text-[14px] mb-2"> */}
+                {/*       <Link href={"/product"}> {product.title}</Link> */}
+                {/*     </h3> */}
+                {/**/}
+                {/*     {/* Price */} */}
+                {/*     <p className="text-[#181D25] font-semibold text-[16px] md:text-[18px] mb-4"> */}
+                {/*       {product.price} */}
+                {/*     </p> */}
+                {/**/}
+                {/*     {/* Add to cart and Favorite buttons */} */}
+                {/*     <div className="mt-auto flex space-x-2"> */}
+                {/*       <button className="flex-1 bg-[#222934] cursor-pointer text-white py-2 px-4 rounded-[100px] font-medium transition-colors flex items-center justify-center"> */}
+                {/*         Add to Cart */}
+                {/*       </button> */}
+                {/*       <div */}
+                {/*         className="w-[40px] h-[40px] bg-[#EEF1F6] flex items-center justify-center rounded-[100px] cursor-pointer" */}
+                {/*         onClick={() => toggleFavorite(product.id)} */}
+                {/*       > */}
+                {/*         <HeartIcon */}
+                {/*           width={16} */}
+                {/*           height={16} */}
+                {/*           className={`w-4 h-4 ${favorites.includes(product.id) ? "fill-red-500 text-red-500" : "text-gray-600"}`} */}
+                {/*         /> */}
+                {/*       </div> */}
+                {/*     </div> */}
+                {/*   </div> */}
+                {/* </div> */}
               </SwiperSlide>
             ))}
           </Swiper>

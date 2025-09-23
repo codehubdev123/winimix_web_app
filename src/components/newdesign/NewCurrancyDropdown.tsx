@@ -3,10 +3,10 @@
 import { useLocale } from "@/contexts/LocaleContext";
 import { useEffect, useRef, useState } from "react";
 
-const NewLanguageDropdown = () => {
+const NewCurrencyDropdown = () => {
   const { locale, changeLocale, t } = useLocale();
   const [isLanguageDropdownOpen, setIsLanguageDropdownOpen] = useState(false);
-  const [selectedLanguage, setSelectedLanguage] = useState("EN");
+  const [selectedLanguage, setSelectedLanguage] = useState("ريال");
   const languageRef = useRef(null);
 
   // Close dropdowns when clicking outside
@@ -27,13 +27,14 @@ const NewLanguageDropdown = () => {
   }, []);
 
   const languages = [
-    { code: "EN", name: "English" },
-    { code: "AR", name: "العربية" },
+    { code: "1", name: "ريال" },
+    { code: "2", name: "درهم" },
+    { code: "3", name: "دولار" },
+    { code: "4", name: "دينار" },
   ];
   const handleLanguageSelect = (language) => {
-    setSelectedLanguage(language.code);
+    setSelectedLanguage(language.name);
     setIsLanguageDropdownOpen(false);
-    changeLocale();
   };
 
   return (
@@ -80,4 +81,4 @@ const NewLanguageDropdown = () => {
   );
 };
 
-export default NewLanguageDropdown;
+export default NewCurrencyDropdown;
