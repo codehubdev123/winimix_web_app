@@ -54,7 +54,7 @@ const Dropdown = ({
 
   return (
     <div
-      className={`relative inline-block text-left w-full ${className}`}
+      className={`relative inline-block min-w-48 text-left w-full ${className}`}
       ref={dropdownRef}
     >
       <div>

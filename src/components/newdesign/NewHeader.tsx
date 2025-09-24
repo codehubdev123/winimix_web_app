@@ -120,7 +120,7 @@ const NewHeader = () => {
         <div className="flex-1  px-2 lg:px-10 h-full  hidden md:block">
           <ul className="flex items-center justify-center gap-8  h-full">
             {categories.map((category, index) => (
-              <Link href="#" key={index} className="hover:underline">
+              <Link href="/products" key={index} className="hover:underline">
                 <li className="h-[40px]   flex items-center text-[#333D4C] text-[14px] lg:text-[16px]">
                   {category.name}
                 </li>

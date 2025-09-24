@@ -12,7 +12,10 @@ const HomePage = () => {
       <NewBanner />
       <NewCategories />
       <AnimationWrapper direction="left" delay={1}>
-        <NewProductSlider />
+        <NewProductSlider pTitle="Popular Products" isWhite={false} />
+      </AnimationWrapper>
+      <AnimationWrapper direction="right" delay={2}>
+        <NewProductSlider pTitle={"Products History"} isWhite={true} />
       </AnimationWrapper>
       <AnimationWrapper direction="right" delay={2}>
         <NewStoresSlider />

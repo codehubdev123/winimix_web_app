@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import React, { useState, useEffect } from "react";
 
 const HotOffersButton = () => {
@@ -16,7 +17,8 @@ const HotOffersButton = () => {
   }, []);
 
   return (
-    <button
+    <Link
+      href="/products"
       className={`
         relative overflow-hidden
         px-3 py-1 rounded-full
@@ -83,7 +85,7 @@ cursor-pointer
           />
         </>
       )}
-    </button>
+    </Link>
   );
 };
 

@@ -310,28 +310,32 @@ const ProductsPage = () => {
           <NewFilterDrodown
             options={options}
             onSelect={handleSelectOption}
-            placeholder="Choose an option"
+            placeholder="By Categories"
           />
         </div>
         <div>
           <NewFilterDrodown
             options={options}
             onSelect={handleSelectOption}
-            placeholder="Choose an option"
+            placeholder="By Brands"
           />
         </div>
+
         <div>
           <NewFilterDrodown
             options={options}
             onSelect={handleSelectOption}
-            placeholder="Choose an option"
+            placeholder="By Colors"
           />
         </div>
         <div>
           <NewFilterDrodown
-            options={options}
+            options={[
+              { value: 1, label: "desc" },
+              { value: 2, label: "asc" },
+            ]}
             onSelect={handleSelectOption}
-            placeholder="Choose an option"
+            placeholder="Order By"
           />
         </div>
         <div>

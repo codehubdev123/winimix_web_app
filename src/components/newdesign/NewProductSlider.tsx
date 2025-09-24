@@ -13,8 +13,11 @@ import {
 import "swiper/css";
 import Link from "next/link";
 import ProductItem from "../products/ProductItem";
-
-const ProductCardsSlider = () => {
+type Props = {
+  pTitle?: string;
+  isWhite?: boolean;
+};
+const ProductCardsSlider = ({ pTitle, isWhite = false }: Props) => {
   const [isRTL, setIsRTL] = useState(false);
   const swiperRef = useRef(null);
   const [favorites, setFavorites] = useState([]);
@@ -248,12 +251,14 @@ const ProductCardsSlider = () => {
   };
 
   return (
-    <div className={`bg-white flex items-center justify-center py-16 `}>
+    <div
+      className={` ${isWhite ? "bg-white" : "bg-gray-50"} flex items-center justify-center py-16`}
+    >
       {/* Main Container */}
       <div className="w-full container mx-auto px-4  text-[#181D25] ">
         <div className="flex items-center justify-between mb-6 md:mb-10">
           <div className="font-semibold text-center text-[18px] md:text-[28px]">
-            Popular Products
+            {pTitle}
           </div>
           <div className="flex gap-1 items-center">
             <Link href="/products">View All</Link>
