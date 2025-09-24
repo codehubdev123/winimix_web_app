@@ -30,14 +30,14 @@ const NewBanner = () => {
     },
   ];
   return (
-    <div className="bg-[#F5F7FA] x-min-h-screen  pb-16">
+    <div className="bg-[#F5F7FA] x-min-h-screen  py-16">
       {/* slider and content section */}
       <div className="container mx-auto  x-mb-[200px] ">
-        <div className="mx-auto w-full  text-center">
-          <h1 className="font-bold text-[20px] lg:text-[56px]">
-            Everything You Need for a <br /> Modern Interior
-          </h1>
-        </div>
+        {/* <div className="mx-auto w-full  text-center"> */}
+        {/*   <h1 className="font-bold text-[20px] lg:text-[56px]"> */}
+        {/*     Everything You Need for a <br /> Modern Interior */}
+        {/*   </h1> */}
+        {/* </div> */}
         <div className="x-h-[400px] x-bg-[#EEF1F6] mt-[50px] text-center">
           <NewHomeSlider />
         </div>

@@ -9,8 +9,8 @@ import BrandSlider from "@/components/sliders/BrandSlider";
 const HomePage = () => {
   return (
     <>
-      <NewBanner />
       <NewCategories />
+      <NewBanner />
       <AnimationWrapper direction="left" delay={1}>
         <NewProductSlider pTitle="Popular Products" isWhite={false} />
       </AnimationWrapper>

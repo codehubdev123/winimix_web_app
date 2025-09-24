@@ -77,6 +77,11 @@ const NewCategories = () => {
 
   return (
     <div className="w-full py-16 px-4 bg-white">
+      <div className="mx-auto w-full  text-center mb-20">
+        <h1 className="font-bold text-[20px] lg:text-[56px]">
+          Everything You Need for a <br /> Modern Interior
+        </h1>
+      </div>
       <div className="container mx-auto">
         <Swiper
           modules={[Autoplay, Navigation]}
