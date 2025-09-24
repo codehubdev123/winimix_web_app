@@ -6,6 +6,8 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --font-tajawal: "Tajawal", sans-serif; /* Fallback fonts */
+  --font-noto: "Noto Sans", sans-serif;
 }
 @custom-variant dark (&:where(.dark, .dark *));
 
@@ -50,8 +52,13 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  /* font-family: Arial, Helvetica, sans-serif; */
   overflow-x: hidden;
+  font-family: var(--font-noto);
+}
+/* Example for language-specific application using dir attribute */
+[dir="rtl"] body {
+  font-family: var(--font-tajawal);
 }
 .swiper-pagination-bullet-active {
   background: #000000 !important;

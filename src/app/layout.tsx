@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Tajawal } from "next/font/google";
+import { Geist, Geist_Mono, Noto_Sans, Tajawal } from "next/font/google";
 import "./globals.css";
 import TopNavbar from "@/components/navbars/TopNavbar";
 import { LocaleProvider } from "@/contexts/LocaleContext";
@@ -38,6 +38,14 @@ const tajawal = Tajawal({
   weight: ["300", "400", "500", "700"],
   subsets: ["arabic"],
   variable: "--font-tajawal",
+  display: "swap",
+});
+// Configure Noto Sans for English/Latin
+const notoSans = Noto_Sans({
+  subsets: ["latin"],
+  variable: "--font-noto-sans",
+  display: "swap",
+  weight: ["300", "400", "500", "600", "700"], // Include weights you need
 });
 
 export const metadata: Metadata = {
@@ -53,7 +61,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`  ${geistSans.variable} ${geistMono.variable} ${tajawal.variable} antialiased bg-white dark:bg-primary-dark`}
+        className={` ${notoSans.varable}  ${tajawal.variable} antialiased bg-white dark:bg-primary-dark`}
         suppressHydrationWarning
       >
         {children}
