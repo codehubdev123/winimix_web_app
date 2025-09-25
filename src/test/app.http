@@ -1,0 +1,16 @@
+@baseurl = "http://localhost:3000"
+
+
+### List all categories
+
+# POST {{baseurl}}/api/categories HTTP/1.1
+
+POST http://localhost:3000/api/categories HTTP/1.1
+Content-Type: multipart/form-data; boundary=----MyBoundary
+Accept: application/json
+
+------MyBoundary
+Content-Disposition: form-data; name="test"
+
+hello
+------MyBoundary--
