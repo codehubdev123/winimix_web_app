@@ -5,14 +5,19 @@ import { formDataToJson, formDataToObject } from "@/utils/formDataUtils";
 import { validateFormData } from "@/utils/validateFormData";
 import { CreateCategorySchema } from "../validations/CreateCategotySchema";
 import { CheckIfNamesAlreadyExistsUseCase } from "../useCases/CheckIfNamesAlreadyExists";
+import { STATUS_EXISTS } from "../../shared/Statuses";
+import { CreateUseCase } from "../useCases/CreateUseCase";
 
-export class CateogoryListController extends BaseController {
+export class CategoryCreateController extends BaseController {
   private readonly checkIfNamesAlreadyExistsUseCase: CheckIfNamesAlreadyExistsUseCase;
+  private readonly createUsecase: CreateUseCase;
   constructor(
     checkIfNamesAlreadyExistsUseCase: CheckIfNamesAlreadyExistsUseCase,
+    createUseCase: CreateUseCase,
   ) {
     super();
     this.checkIfNamesAlreadyExistsUseCase = checkIfNamesAlreadyExistsUseCase;
+    this.createUsecase = createUseCase;
   }
 
   public async execute(req: NextRequest) {
@@ -39,15 +44,31 @@ export class CateogoryListController extends BaseController {
     // !checkIfNamesExists.empty ? exists : not exist so continu;
     if (checkIfNamesExists) {
       return this.error({
-        status: 401,
+        STATUS_EXISTS,
         message: "Name already exists",
       });
     }
-
-    // console.warn("@@ ", validatedData.success);
-    // console.warn("## ", formData);
+    // Step 8: Handle file upload if image is a File object
+    if (validatedData.files?.image) {
+      const imageFile = validatedData.files.image;
+      console.log("🖼️ Processing image file:", imageFile.name);
+      // Here you would upload to Firebase Storage
+      // For now, we'll just store the file name
+      validatedData.image = imageFile.name;
+    }
+    // Step 9: Prepare category data for database
+    const data = {
+      ...validatedData,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    };
+    // add the data to database
+    // Step 10: Save to Firestore
+    const docRef = await this.createUsecase.execute(data);
+    console.log("🔵🔵🔵🔵🔵🔵 docRef ", docRef);
     return this.success({
-      message: validatedData, // return empty
+      message: "Category created successfully",
+      data,
     });
   }
 }
