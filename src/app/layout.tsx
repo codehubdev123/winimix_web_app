@@ -23,6 +23,8 @@ import BrandSlider from "@/components/sliders/BrandSlider";
 import NewBrands from "@/components/newdesign/NewBrands";
 import NewHeader from "@/components/newdesign/NewHeader";
 import NewMobileSidebar from "@/components/newdesign/NewMobileSidebar";
+import SidebarAdmin from "@/components/sidebars/SidebarAdmin";
+import HeaderAdmin from "@/components/headers/HeaderAdmin";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
