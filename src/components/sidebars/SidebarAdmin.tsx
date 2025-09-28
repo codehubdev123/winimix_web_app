@@ -3,7 +3,12 @@
 import MenuLink from "@/features/admin/shared/components/links/MenuLink";
 import MenuLinkDropdown from "@/features/admin/shared/components/links/MenuLinkDropdown";
 import MenuLinkDropdownItem from "@/features/admin/shared/components/links/MenuLinkDropdownItem";
-import { route_dashboard } from "@/routes/admin";
+import {
+  route_admin_categories_create,
+  route_admin_dashboard,
+  route_categories_add,
+  route_dashboard,
+} from "@/routes/admin";
 import {
   BarChart3,
   Box,
@@ -47,7 +52,21 @@ const SidebarAdmin = () => {
         </div>
 
         <nav className="mt-6 px-4">
-          <MenuLink name={"Dashboard"} href={"#"} iconName="home" />
+          <MenuLink
+            name={"Dashboard"}
+            href={route_admin_dashboard}
+            iconName="home"
+          />
+          <MenuLinkDropdown
+            name={"Categories"}
+            iconName="box"
+            menuId={"categories"}
+          >
+            <MenuLinkDropdownItem
+              name={"Add New"}
+              href={route_admin_categories_create}
+            />
+          </MenuLinkDropdown>
           {/* Products Dropdown */}
           <MenuLinkDropdown
             name={"Products"}

@@ -1,0 +1,9 @@
+sorry but note about those notes: 
+1 - all my input components live in @/components/inputs/ 
+2 - dialogs live in @/components/alerts/
+3- make CreateForm insted of CreateCategoryForm  because i need make same name for all my features 
+4 - make EditForm insted of EditCategoryForm i need make same name for all my features  same for showPage  NAME IT AS ShowPage and for list ListPage
+5 - make sure CtaeogryTable component called Table because i need name it as table
+5- dont put everything inside one page because i have page for each curd  i am using server page like admin/category/create/page.tsx for create  form need use the create form component inside it without paramter make handler of form inside component by itself
+6 - same for edit server component for  edit same for show same for list so make component to each page no need all components be in the same file
+7- need api routes to manager everything inside my dashbord with api routes with firebase curd with image upload to firebase with with axios form data handler starting from creating untill redirection and show success message step by step guide

@@ -1,6 +1,6 @@
 import { adminDb } from "@/lib/firebase-admin";
 import ICategoryContract from "./contracts/ICategoryContract";
-import { categoryCollection } from "../../shared/Collections/Collections";
+import { categoryCollection } from "../../shared/collections/Collections";
 
 export class CategoryRepository implements ICategoryContract {
   async create(data: any): Promise<any> {

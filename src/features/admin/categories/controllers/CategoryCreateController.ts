@@ -3,10 +3,10 @@ import { BaseController } from "../../shared/BaseController";
 import { validateYup } from "@/utils/validateYupUtils";
 import { formDataToJson, formDataToObject } from "@/utils/formDataUtils";
 import { validateFormData } from "@/utils/validateFormData";
-import { CreateCategorySchema } from "../validations/CreateCategotySchema";
 import { CheckIfNamesAlreadyExistsUseCase } from "../useCases/CheckIfNamesAlreadyExists";
 import { STATUS_EXISTS } from "../../shared/Statuses";
 import { CreateUseCase } from "../useCases/CreateUseCase";
+import { CreateCategorySchema } from "../validations/CreateCategotySchema";
 
 export class CategoryCreateController extends BaseController {
   private readonly checkIfNamesAlreadyExistsUseCase: CheckIfNamesAlreadyExistsUseCase;
@@ -29,13 +29,15 @@ export class CategoryCreateController extends BaseController {
     // validatedData = await validateFormData(categoryFormDataSchema, jsonData as any);
     // const formData = formDataToObject(body);
     // check validations status
+    console.log("🔴🔴🔴🔴🔴🔴 #here ", validatedData);
+    console.log("🔴🔴🔴🔴🔴🔴 #body ", body);
     if (!validatedData.success) {
       return this.error({
         errors: validatedData.errors,
         fieldErrors: validatedData.fieldErrors,
       });
-      console.log("❌ Validation failed:", validatedData.fieldErrors);
     }
+    return this.success({ messge: "here" });
     // Step 6: Validation successful - proceed with business logic
     // Step 7: Check if category with same slug already exists
     const checkIfNamesExists =

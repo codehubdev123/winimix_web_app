@@ -1,12 +1,14 @@
 import { CategoryCreateController } from "@/features/admin/categories/controllers/CategoryCreateController";
 import { CategoryRepository } from "@/features/admin/categories/repositories/CategoryRepository";
 import { CheckIfNamesAlreadyExistsUseCase } from "@/features/admin/categories/useCases/CheckIfNamesAlreadyExistsUseCase";
+import { CreateUseCase } from "@/features/admin/categories/useCases/CreateUseCase";
 import { adminDb } from "@/lib/firebase-admin";
 import { NextRequest, NextResponse } from "next/server";
 
 export const POST = async (req: NextRequest) => {
   const app = new CategoryCreateController(
     new CheckIfNamesAlreadyExistsUseCase(new CategoryRepository()),
+    new CreateUseCase(new CategoryRepository()),
   );
   return await app.execute(req);
   try {

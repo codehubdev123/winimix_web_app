@@ -1,16 +1,21 @@
-@baseurl = "http://localhost:3000"
+@host = http://localhost:3000
 
 
-### List all categories
+### ADMIN CREATE CATEGORIES
 
-# POST {{baseurl}}/api/categories HTTP/1.1
+POST {{host}}/api/admin/categories HTTP/1.1
+Content-Type: multipart/form-data; boundary=simple
 
-POST http://localhost:3000/api/categories HTTP/1.1
-Content-Type: multipart/form-data; boundary=----MyBoundary
-Accept: application/json
+--simple
+Content-Disposition: form-data; name="name.en"
 
-------MyBoundary
-Content-Disposition: form-data; name="test"
+Electronics
+--simple
+Content-Disposition: form-data; name="name.ar"
 
-hello
-------MyBoundary--
+إلكترونيات
+--simple
+Content-Disposition: form-data; name="isVisible"
+
+true
+--simple--
