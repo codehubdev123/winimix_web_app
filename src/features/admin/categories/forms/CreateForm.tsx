@@ -4,66 +4,15 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useRouter } from "next/navigation";
-import { categoryService } from "@/services/categoryService";
 import { Input } from "@/components/inputs/Input";
 import { Textarea } from "@/components/inputs/Textarea";
 import { FileInput } from "@/components/inputs/FileInput";
 import { Checkbox } from "@/components/inputs/Checkbox";
 import { Save, X, Loader } from "lucide-react";
 import { CreateCategorySchema } from "../validations/CreateCategotySchema";
+import { CategoryService } from "../services/CategoryService";
 
-// Simplified schema for better error messages
-const createCategorySchema = yup.object({
-  "name.en": yup
-    .string()
-    .required("English name is required")
-    .min(2, "Must be at least 2 characters"),
-  "name.ar": yup
-    .string()
-    .required("Arabic name is required")
-    .min(2, "Must be at least 2 characters"),
-  "slug.en": yup
-    .string()
-    .required("English slug is required")
-    .matches(
-      /^[a-z0-9-]+$/,
-      "Only lowercase letters, numbers, and hyphens allowed",
-    ),
-  "slug.ar": yup
-    .string()
-    .required("Arabic slug is required")
-    .matches(
-      /^[a-z0-9-]+$/,
-      "Only lowercase letters, numbers, and hyphens allowed",
-    ),
-  "description.en": yup
-    .string()
-    .optional()
-    .max(500, "Must be less than 500 characters"),
-  "description.ar": yup
-    .string()
-    .optional()
-    .max(500, "Must be less than 500 characters"),
-  image: yup.mixed().nullable(),
-  isVisible: yup.boolean().default(true),
-  isFeatured: yup.boolean().default(false),
-  sortOrder: yup.number().min(0, "Cannot be negative").default(0),
-});
-
-interface CreateFormData {
-  "name.en": string;
-  "name.ar": string;
-  "slug.en": string;
-  "slug.ar": string;
-  "description.en": string;
-  "description.ar": string;
-  image: File | null;
-  isVisible: boolean;
-  isFeatured: boolean;
-  sortOrder: number;
-}
-
-export const CreateForm: React.FC = () => {
+export const CreateForm = () => {
   const router = useRouter();
   const [isLoading, setIsLoading] = React.useState(false);
   const [error, setError] = React.useState("");
@@ -112,17 +61,12 @@ export const CreateForm: React.FC = () => {
     alert("submitted");
     try {
       setIsLoading(true);
-      setError("");
-
-      console.log("📤 Form data:", data);
-
+      // setError("");
       const formData = new FormData();
-      formData.append("name.en", data["name.en"]);
-      formData.append("name.ar", data["name.ar"]);
-      formData.append("slug.en", data["slug.en"]);
-      formData.append("slug.ar", data["slug.ar"]);
-      formData.append("description.en", data["description.en"] || "");
-      formData.append("description.ar", data["description.ar"] || "");
+      formData.append("name.en", data["name"]["en"]);
+      formData.append("name.ar", data["name"]["ar"]);
+      formData.append("description.en", data["description"]["en"]);
+      formData.append("description.ar", data["description"]["ar"]);
       formData.append("isVisible", data.isVisible.toString());
       formData.append("isFeatured", data.isFeatured.toString());
       formData.append("sortOrder", data.sortOrder.toString());
@@ -131,13 +75,12 @@ export const CreateForm: React.FC = () => {
         formData.append("image", data.image);
       }
 
-      const response = await categoryService.createCategory(formData);
-
+      const response = await new CategoryService().create(formData);
       if (response.success) {
         router.push("/admin/categories?success=Category created successfully");
         router.refresh();
       } else {
-        setError(response.message || "Failed to create category");
+        // setError(response.message || "Failed to create category");
       }
     } catch (err: any) {
       console.error("❌ Form submission error:", err);
@@ -161,7 +104,6 @@ export const CreateForm: React.FC = () => {
 
   const onError = (errors: any) => {
     console.log("❌ Form validation errors:", errors);
-    console.log("#input", errors["name"]["en"]);
     // setError("Please fix the validation errors above.");
   };
 
@@ -224,6 +166,7 @@ export const CreateForm: React.FC = () => {
             errors={errors}
             placeholder="Latest electronic devices and gadgets"
             rows={3}
+            isNestable
           />
 
           {/* Arabic Description */}
@@ -235,6 +178,7 @@ export const CreateForm: React.FC = () => {
             placeholder="أحدث الأجهزة الإلكترونية والأدوات"
             dir="rtl"
             rows={3}
+            isNestable
           />
         </div>
 

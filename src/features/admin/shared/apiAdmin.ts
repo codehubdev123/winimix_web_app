@@ -1,1 +1,1 @@
-export const api_admin_category: string = "/api/admin/categories";
+export const api_admin_category: string = "/admin/categories";

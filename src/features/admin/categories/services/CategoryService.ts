@@ -43,7 +43,7 @@ export interface CategoryListParams {
   search?: string;
 }
 
-class CategoryService {
+export class CategoryService {
   // Explanation: Get all categories with filtering and pagination
   async getCategories(
     params: CategoryListParams = {},

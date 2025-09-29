@@ -11,6 +11,6 @@ export class CheckIfNamesAlreadyExistsUseCase
   }
   async execute(data: any): Promise<any, Promise<any>> {
     const category = await this.repo.getCategoryByNames(data);
-    return category ? true : false;
+    return category._size == 1 ? true : false;
   }
 }

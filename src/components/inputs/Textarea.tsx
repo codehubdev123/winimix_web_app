@@ -13,6 +13,7 @@ interface TextareaProps {
   rows?: number;
   className?: string;
   dir?: "ltr" | "rtl";
+  isNestable?: boolean;
 }
 
 export const Textarea: React.FC<TextareaProps> = ({
@@ -26,9 +27,9 @@ export const Textarea: React.FC<TextareaProps> = ({
   rows = 4,
   className = "",
   dir = "ltr",
+  isNestable = false,
 }) => {
   const error = errors[name] as FieldError | undefined;
-
   return (
     <div className="mb-4">
       <label
@@ -52,7 +53,7 @@ export const Textarea: React.FC<TextareaProps> = ({
           ${className}
         `}
       />
-      <ErrorMessage errors={errors} id={name} />
+      <ErrorMessage errors={errors} id={name} isNestable={isNestable} />
     </div>
   );
 };

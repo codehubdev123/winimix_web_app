@@ -13,7 +13,6 @@ const ErrorMessage = ({ errors, id, isNestable = false }: Props) => {
       if (isNestable) {
         // Handle nested errors like "name.en", "slug.ar"
         const [parent, child] = id.split(".");
-
         // Check if parent exists and has the child property
         if (errors[parent] && typeof errors[parent] === "object") {
           const childError = errors[parent][child];

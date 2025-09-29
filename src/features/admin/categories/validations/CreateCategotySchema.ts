@@ -38,14 +38,14 @@ export const CreateCategorySchema = yup.object({
     .object({
       en: yup
         .string()
-        .optional()
+        .required()
         .max(500, "English description cannot exceed 500 characters"),
       ar: yup
         .string()
-        .optional()
+        .required()
         .max(500, "Arabic description cannot exceed 500 characters"),
     })
-    .optional()
+    .required()
     .default({ en: "", ar: "" }),
 
   // Visibility toggle

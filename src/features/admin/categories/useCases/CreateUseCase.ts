@@ -7,7 +7,8 @@ export class CreateUseCase implements UseCase<any, Promise<any>> {
   constructor(repo: ICategoryContract) {
     this.repo = repo;
   }
-  execute(data?: any): Promise<any> {
-    return this.repo.create(data);
+  async execute(data?: any): Promise<any> {
+    const docRef = this.repo.create(data);
+    return docRef;
   }
 }

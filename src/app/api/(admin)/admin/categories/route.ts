@@ -11,17 +11,17 @@ export const POST = async (req: NextRequest) => {
     new CreateUseCase(new CategoryRepository()),
   );
   return await app.execute(req);
-  try {
-    const docRef = await adminDb
-      .collection("categories")
-      .add({ name: "test name" });
-    return NextResponse.json({ SUCCESS: "created  yas", data: docRef });
-  } catch (error) {
-    console.log("🔵🔵🔵🔵🔵🔵 error ", error);
-    throw new Error("field to fetch data from this api");
-  }
-};
-
+//   try {
+//     const docRef = await adminDb
+//       .collection("categories")
+//       .add({ name: "test name" });
+//     return NextResponse.json({ SUCCESS: "created  yas", data: docRef });
+//   } catch (error) {
+//     console.log("🔵🔵🔵🔵🔵🔵 error ", error);
+//     throw new Error("field to fetch data from this api");
+//   }
+// };
+//
 // import { NextRequest, NextResponse } from "next/server";
 // import { adminDb } from "@/lib/firebase-admin";
 // import * as yup from "yup";

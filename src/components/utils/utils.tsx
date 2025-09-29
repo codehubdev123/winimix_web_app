@@ -1,3 +1,4 @@
+import { invalidData } from "@hookform/resolvers/typeschema/src/__tests__/__fixtures__/data.js";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 

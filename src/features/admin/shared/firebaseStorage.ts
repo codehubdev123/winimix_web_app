@@ -1,85 +1,92 @@
-import { storage } from "@/lib/firebase";
-import {
-  ref,
-  uploadBytes,
-  getDownloadURL,
-  deleteObject,
-} from "firebase/storage";
+import admin from "@/lib/firebase-admin";
 
 /**
- * Uploads an image file to Firebase Storage
- * @param file - The image file to upload
- * @param folder - Storage folder name (default: 'categories')
- * @returns Promise with download URL
+ * Upload image to Firebase Storage and return public URL
  */
 export async function uploadImageToFirebase(
   file: File,
   folder: string = "categories",
 ): Promise<string> {
   try {
-    // Validate file type
-    if (!file.type.startsWith("image/")) {
-      throw new Error("File must be an image");
-    }
+    console.log("🖼️ Starting Firebase Storage upload...");
 
-    // Validate file size (max 5MB)
-    if (file.size > 5 * 1024 * 1024) {
-      throw new Error("Image size must be less than 5MB");
-    }
+    // Get the storage bucket
+    const bucket = admin.storage().bucket();
 
-    // Create a unique filename with timestamp to avoid overwrites
+    // Create unique filename to avoid conflicts
     const timestamp = Date.now();
     const fileExtension = file.name.split(".").pop();
     const fileName = `${folder}/${timestamp}_${Math.random().toString(36).substring(2, 15)}.${fileExtension}`;
 
-    // Create a reference to the storage location
-    const storageRef = ref(storage, fileName);
+    // Convert File to Buffer
+    const arrayBuffer = await file.arrayBuffer();
+    const buffer = Buffer.from(arrayBuffer);
 
-    // Upload the file to Firebase Storage
-    const snapshot = await uploadBytes(storageRef, file);
+    console.log(`📁 Uploading file: ${fileName} (${buffer.length} bytes)`);
 
-    // Get the public download URL
-    const downloadURL = await getDownloadURL(snapshot.ref);
+    // Upload to Firebase Storage
+    const fileUpload = bucket.file(fileName);
 
-    console.log("✅ Image uploaded successfully:", downloadURL);
-    return downloadURL;
+    await fileUpload.save(buffer, {
+      metadata: {
+        contentType: file.type,
+        metadata: {
+          originalName: file.name,
+          uploadedAt: new Date().toISOString(),
+        },
+      },
+    });
+
+    console.log("✅ File uploaded to Firebase Storage");
+
+    // Make the file publicly accessible
+    await fileUpload.makePublic();
+
+    // Get public URL
+    const publicUrl = `https://storage.googleapis.com/${bucket.name}/${fileName}`;
+
+    console.log("🔗 Public URL:", publicUrl);
+
+    return publicUrl;
   } catch (error) {
-    console.error("❌ Image upload failed:", error);
+    console.error("❌ Firebase Storage upload error:", error);
     throw new Error(
-      `Image upload failed: ${error instanceof Error ? error.message : "Unknown error"}`,
+      `Failed to upload image: ${error instanceof Error ? error.message : "Unknown error"}`,
     );
   }
 }
 
 /**
- * Deletes an image from Firebase Storage
- * @param imageUrl - The URL of the image to delete
+ * Delete image from Firebase Storage
  */
 export async function deleteImageFromFirebase(imageUrl: string): Promise<void> {
   try {
-    // Extract the file path from the URL
-    const matches = imageUrl.match(/o\/(.+)\?/);
-    if (!matches || matches.length < 2) {
-      throw new Error("Invalid image URL");
-    }
+    console.log("🗑️ Deleting image from Firebase Storage:", imageUrl);
 
-    // URL decode the file path (spaces become %20 in URLs)
-    const filePath = decodeURIComponent(matches[1]);
-    const storageRef = ref(storage, filePath);
+    const bucket = admin.storage().bucket();
 
-    // Delete the file
-    await deleteObject(storageRef);
-    console.log("✅ Image deleted successfully:", filePath);
+    // Extract file path from URL
+    const urlParts = imageUrl.split("/");
+    const fileName = urlParts[urlParts.length - 1];
+    const folder = urlParts[urlParts.length - 2];
+    const filePath = `${folder}/${fileName}`;
+
+    console.log(`📁 File path to delete: ${filePath}`);
+
+    // Delete file from storage
+    await bucket.file(filePath).delete();
+
+    console.log("✅ Image deleted successfully from Firebase Storage");
   } catch (error) {
-    console.error("❌ Image deletion failed:", error);
+    console.error("❌ Firebase Storage deletion error:", error);
     throw new Error(
-      `Image deletion failed: ${error instanceof Error ? error.message : "Unknown error"}`,
+      `Failed to delete image: ${error instanceof Error ? error.message : "Unknown error"}`,
     );
   }
 }
 
 /**
- * Validates an image file before upload
+ * Validate image file before upload
  */
 export function validateImageFile(file: File): {
   isValid: boolean;
@@ -106,7 +113,7 @@ export function validateImageFile(file: File): {
   }
 
   // Check file size (5MB max)
-  const maxSize = 5 * 1024 * 1024; // 5MB in bytes
+  const maxSize = 5 * 1024 * 1024;
   if (file.size > maxSize) {
     return { isValid: false, error: "Image size must be less than 5MB" };
   }
