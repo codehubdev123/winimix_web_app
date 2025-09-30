@@ -76,3 +76,23 @@ export const CreateCategorySchema = yup.object({
 });
 
 export type CategoryFormData = yup.InferType<typeof CreateCategorySchema>;
+
+export const EditCategorySchema = CreateCategorySchema.shape({
+  // Make image optional for edit
+  image: yup
+    .mixed()
+    .nullable() // Allow null
+    .optional() // Make it optional
+    .test("is-valid-image", "Image must be a valid file or URL", (value) => {
+      // Allow empty/undefined/null (image is optional in edit)
+      if (!value || value === null || value === "") return true;
+
+      // Allow File objects (new uploads)
+      if (value instanceof File) return true;
+
+      // Allow string URLs (existing images)
+      if (typeof value === "string") return true;
+
+      return false;
+    }),
+});

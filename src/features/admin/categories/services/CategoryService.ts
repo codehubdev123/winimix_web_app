@@ -4,6 +4,7 @@ import {
   api_admin_category,
   api_admin_category_id,
 } from "../../shared/apiAdmin";
+import { categoryUpdateSchema } from "@/validations/categoryValidation";
 
 // Type definitions for Category
 export interface Category {
@@ -94,19 +95,14 @@ export class CategoryService {
   }
 
   // Explanation: Update existing category
-  async updateCategory(
-    id: string,
-    categoryData: Partial<Category>,
-  ): Promise<ApiResponse<Category>> {
+  async updateCategory(id: string, categoryData: any): Promise<any> {
     console.log("🔴🔴🔴🔴🔴🔴 from updateCategory ", id, categoryData);
     if (!id) {
       throw new Error("Category ID is required for update");
     }
 
-    return await apiClient.put<Category>(
-      api_admin_category_id(id),
-      categoryData,
-    );
+    return await apiClient.put<any>(api_admin_category_id(id), categoryData);
+    return await apiClient.post<any>(api_admin_category, data);
   }
 
   // Explanation: Delete category
@@ -121,9 +117,23 @@ export class CategoryService {
   // Explanation: Toggle category visibility
   async toggleVisibility(
     id: string,
-    isVisible: boolean,
+    categoryData: any,
   ): Promise<ApiResponse<Category>> {
-    return await this.updateCategory(id, { isVisible });
+    const toggleValue = !categoryData.isVisible;
+    const formData = new FormData();
+    formData.append("name.en", categoryData["name"]["en"]);
+    formData.append("name.ar", categoryData["name"]["ar"]);
+    formData.append("description.en", categoryData["description"]["en"]);
+    formData.append("description.ar", categoryData["description"]["ar"]);
+    (formData.append("isVisible", toggleValue.toString()),
+      formData.append("isFeatured", categoryData.isFeatured.toString()));
+    formData.append("sortOrder", categoryData.sortOrder.toString());
+
+    if (categoryData.image instanceof File) {
+      formData.append("image", categoryData.image);
+    }
+
+    return await this.updateCategory(id, formData);
   }
 
   // Explanation: Toggle featured status

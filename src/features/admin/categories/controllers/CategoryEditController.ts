@@ -6,13 +6,17 @@ import { validateFormData } from "@/utils/validateFormData";
 import { CheckIfNamesAlreadyExistsUseCase } from "../useCases/CheckIfNamesAlreadyExists";
 import { STATUS_EXISTS } from "../../shared/Statuses";
 import { CreateUseCase } from "../useCases/CreateUseCase";
-import { CreateCategorySchema } from "../validations/CreateCategotySchema";
+import {
+  CreateCategorySchema,
+  EditCategorySchema,
+} from "../validations/CreateCategotySchema";
 import {
   uploadImageToFirebase,
   validateImageFile,
 } from "../../shared/firebaseStorage";
 import firebase from "firebase/compat/app";
 import { adminDb } from "@/lib/firebase-admin";
+import { categoryCollection } from "../../shared/collections/Collections";
 
 export class CategoryEditController extends BaseController {
   private readonly checkIfNamesAlreadyExistsUseCase: CheckIfNamesAlreadyExistsUseCase;
@@ -27,44 +31,57 @@ export class CategoryEditController extends BaseController {
   }
 
   public async execute(req: NextRequest, params: any) {
-    console.log("ROCUHED HERE IN SERVER", params);
-    return this.success({ message: "here in update", params });
+    const { id } = params;
+    const body = await req.formData();
+    // Explanation: Parse and validate update data
+    const validatedData = await validateFormData(EditCategorySchema, body);
+    if (!validatedData.success) {
+      return this.error({
+        errors: validatedData.errors,
+        fieldErrors: validatedData.fieldErrors,
+      });
+    }
+
+    // Explanation: Validate category ID
+    if (!id || typeof id !== "string") {
+      return NextResponse.json(
+        {
+          success: false,
+          message: "Invalid category ID",
+          errors: ["Category ID is required and must be a string"],
+        },
+        { status: 400 },
+      );
+    }
+    // Explanation: Check if category exists before updating
+    const doc = await adminDb.collection(categoryCollection).doc(id).get();
+    if (!doc.exists) {
+      return this.error({ message: "category not found", status: 404 });
+    }
+
+    // Explanation: Prepare update data with new timestamp
+    const updateData = {
+      ...validatedData.data,
+      updatedAt: new Date(),
+    };
+
+    // Explanation: Perform the update operation
+    await adminDb.collection(categoryCollection).doc(id).update(updateData);
+    // Explanation: Fetch updated document to return complete data
+    const updatedDoc = await adminDb
+      .collection(categoryCollection)
+      .doc(id)
+      .get();
+
+    return this.success({
+      message: "Category updated successfully",
+      data: {
+        id: updatedDoc.id,
+        ...updatedDoc.data(),
+      },
+    });
     // try {
-    //   const { id } = params;
-    //
-    //   // Explanation: Validate category ID
-    //   if (!id || typeof id !== "string") {
-    //     return NextResponse.json(
-    //       {
-    //         success: false,
-    //         message: "Invalid category ID",
-    //         errors: ["Category ID is required and must be a string"],
-    //       },
-    //       { status: 400 },
-    //     );
-    //   }
-    //
-    //   // Explanation: Check if category exists before updating
-    //   const doc = await adminDb.collection("categories").doc(id).get();
-    //
-    //   if (!doc.exists) {
-    //     return NextResponse.json(
-    //       {
-    //         success: false,
-    //         message: "Category not found",
-    //         errors: [`Category with ID ${id} does not exist`],
-    //       },
-    //       { status: 404 },
-    //     );
-    //   }
-    //
-    //   // Explanation: Parse and validate update data
-    //   const body = await request.json();
-    //   const validatedData = await categoryUpdateSchema.validate(body, {
-    //     abortEarly: false,
-    //     stripUnknown: true,
-    //   });
-    //
+
     //   // Explanation: Check for slug uniqueness (excluding current category)
     //   if (validatedData.slug) {
     //     const slugExists = await adminDb
@@ -86,17 +103,8 @@ export class CategoryEditController extends BaseController {
     //     }
     //   }
     //
-    //   // Explanation: Prepare update data with new timestamp
-    //   const updateData = {
-    //     ...validatedData,
-    //     updatedAt: new Date(),
-    //   };
     //
-    //   // Explanation: Perform the update operation
-    //   await adminDb.collection("categories").doc(id).update(updateData);
     //
-    //   // Explanation: Fetch updated document to return complete data
-    //   const updatedDoc = await adminDb.collection("categories").doc(id).get();
     //
     //   return NextResponse.json(
     //     {

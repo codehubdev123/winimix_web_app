@@ -121,15 +121,14 @@ export const Table: React.FC<TableProps> = ({
   };
 
   // Toggle category visibility
-  const handleToggleVisibility = async (category: Category) => {
-    console.log("🔴🔴🔴🔴🔴🔴 category ", !category.isVisible);
+  const handleToggleVisibility = async (category: any) => {
     try {
       const response = await new CategoryService().toggleVisibility(
         category.id,
-        !category.isVisible,
+        category,
       );
-
-      if (response.success) {
+      console.log("🔴🔴🔴🔴🔴🔴 response ", response.data.success);
+      if (response.data.success) {
         // Update local state immediately for better UX
         setCategories((prev) =>
           prev.map((cat) =>
