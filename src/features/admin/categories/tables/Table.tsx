@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from "react";
-import { Category } from "@/services/CategoryService";
+import { useRouter, useSearchParams, usePathname } from "next/navigation";
+import { Category } from "@/services/categoryService";
 import {
   Edit2,
   Trash2,
@@ -9,92 +10,213 @@ import {
   Star,
   Search,
   Filter,
-  ChevronUp,
-  ChevronDown,
+  Plus,
 } from "lucide-react";
+import { AlertDialog } from "@/components/alerts/AlertDialog";
+import { CategoryService } from "../services/CategoryService";
 
 interface TableProps {
-  categories: Category[];
-  onEdit: (category: Category) => void;
-  onDelete: (category: Category) => void;
-  onToggleVisibility: (id: string, isVisible: boolean) => void;
-  onToggleFeatured: (id: string, isFeatured: boolean) => void;
-  onSearch: (params: {
-    search: string;
+  initialCategories: Category[];
+  initialPagination?: any;
+  initialFilters?: {
+    search?: string;
     isVisible?: boolean;
     isFeatured?: boolean;
-    sortBy: string;
-    sortOrder: "asc" | "desc";
-  }) => void;
-  onCreateNew: () => void;
-  isLoading: boolean;
-  pagination?: {
-    page: number;
-    limit: number;
-    total: number;
-    totalPages: number;
-    hasNext: boolean;
-    hasPrev: boolean;
+    sortBy?: string;
+    sortOrder?: "asc" | "desc";
   };
 }
 
 export const Table: React.FC<TableProps> = ({
-  categories,
-  onEdit,
-  onDelete,
-  onToggleVisibility,
-  onToggleFeatured,
-  onSearch,
-  onCreateNew,
-  isLoading,
-  pagination,
+  initialCategories,
+  initialPagination,
+  initialFilters = {},
 }) => {
-  const [searchQuery, setSearchQuery] = useState("");
-  const [filters, setFilters] = useState({
-    isVisible: undefined as boolean | undefined,
-    isFeatured: undefined as boolean | undefined,
-    sortBy: "createdAt",
-    sortOrder: "desc" as "asc" | "desc",
-  });
-  const [showFilters, setShowFilters] = useState(false);
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
 
-  // Handle search
-  const handleSearch = (query: string) => {
-    setSearchQuery(query);
-    onSearch({
-      search: query,
-      ...filters,
+  const [categories, setCategories] = useState<Category[]>(initialCategories);
+  const [pagination, setPagination] = useState(initialPagination);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [deleteDialog, setDeleteDialog] = useState<{
+    isOpen: boolean;
+    category: Category | null;
+  }>({
+    isOpen: false,
+    category: null,
+  });
+
+  const [filters, setFilters] = useState({
+    search: initialFilters.search || "",
+    isVisible: initialFilters.isVisible,
+    isFeatured: initialFilters.isFeatured,
+    sortBy: initialFilters.sortBy || "createdAt",
+    sortOrder: initialFilters.sortOrder || "desc",
+    showFilters: false,
+  });
+
+  // Update URL with new search parameters
+  const updateURL = (newFilters: any) => {
+    const params = new URLSearchParams(searchParams.toString());
+
+    // Update or remove params based on new filters
+    Object.entries(newFilters).forEach(([key, value]) => {
+      if (value !== undefined && value !== "" && value !== null) {
+        params.set(key, value.toString());
+      } else {
+        params.delete(key);
+      }
     });
+
+    // Always include page for pagination
+    if (!params.has("page")) {
+      params.set("page", "1");
+    }
+
+    router.push(`${pathname}?${params.toString()}`);
   };
 
-  // Handle filter changes
+  // Handle search and filters
+  const handleSearch = async (newFilters: any) => {
+    try {
+      setIsLoading(true);
+      setError("");
+
+      // const response = await new CategoryService().getCategories({
+      //         page: 1, // Reset to first page when searching
+      //   limit: pagination?.limit || 10,
+      //   ...newFilters,
+      // });
+
+      const response = await new CategoryService().getCategories({
+        page: 1,
+        limit: pagination?.limit || 10,
+        ...newFilters,
+      });
+
+      if (response.success) {
+        setCategories(response.data);
+        setPagination(response.pagination);
+        updateURL(newFilters);
+      } else {
+        setError(response.message || "Failed to load categories");
+      }
+    } catch (err: any) {
+      setError(err.message || "Failed to load categories");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // Handle individual filter changes
   const handleFilterChange = (key: string, value: any) => {
-    const newFilters = {
-      ...filters,
-      [key]: value,
-    };
+    const newFilters = { ...filters, [key]: value };
     setFilters(newFilters);
-    onSearch({
-      search: searchQuery,
-      ...newFilters,
-    });
+    handleSearch(newFilters);
+  };
+
+  // Toggle category visibility
+  const handleToggleVisibility = async (category: Category) => {
+    try {
+      const response = await new CategoryService().toggleVisibility(
+        category.id,
+        !category.isVisible,
+      );
+
+      if (response.success) {
+        // Update local state immediately for better UX
+        setCategories((prev) =>
+          prev.map((cat) =>
+            cat.id === category.id
+              ? { ...cat, isVisible: !category.isVisible }
+              : cat,
+          ),
+        );
+      } else {
+        setError(response.message || "Failed to update visibility");
+      }
+    } catch (err: any) {
+      setError(err.message || "Failed to update visibility");
+    }
+  };
+
+  // Toggle featured status
+  const handleToggleFeatured = async (category: Category) => {
+    try {
+      const response = await new CategoryService().toggleFeatured(
+        category.id,
+        !category.isFeatured,
+      );
+
+      if (response.success) {
+        // Update local state immediately for better UX
+        setCategories((prev) =>
+          prev.map((cat) =>
+            cat.id === category.id
+              ? { ...cat, isFeatured: !category.isFeatured }
+              : cat,
+          ),
+        );
+      } else {
+        setError(response.message || "Failed to update featured status");
+      }
+    } catch (err: any) {
+      setError(err.message || "Failed to update featured status");
+    }
+  };
+
+  // Handle delete category
+  const handleDelete = (category: Category) => {
+    setDeleteDialog({ isOpen: true, category });
+  };
+
+  // Confirm delete
+  const confirmDelete = async () => {
+    if (!deleteDialog.category) return;
+
+    try {
+      const response = await new CategoryService().delete(
+        deleteDialog.category.id,
+      );
+
+      if (response.success) {
+        setDeleteDialog({ isOpen: false, category: null });
+        // Reload the current page to reflect changes
+        router.refresh();
+      } else {
+        setError(response.message || "Failed to delete category");
+      }
+    } catch (err: any) {
+      setError(err.message || "Failed to delete category");
+    }
+  };
+
+  // Create new category
+  const handleCreateNew = () => {
+    router.push("/admin/categories/create");
+  };
+
+  // Edit category
+  const handleEdit = (category: Category) => {
+    router.push(`/admin/categories/${category.id}/edit`);
   };
 
   // Clear all filters
   const clearFilters = () => {
-    setFilters({
+    const newFilters = {
+      search: "",
       isVisible: undefined,
       isFeatured: undefined,
       sortBy: "createdAt",
       sortOrder: "desc",
-    });
-    onSearch({
-      search: searchQuery,
-      sortBy: "createdAt",
-      sortOrder: "desc",
-    });
+    };
+    setFilters(newFilters);
+    handleSearch(newFilters);
   };
 
+  // Format date for display
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString("en-US", {
       year: "numeric",
@@ -105,6 +227,7 @@ export const Table: React.FC<TableProps> = ({
     });
   };
 
+  // Get status badge
   const getStatusBadge = (category: Category) => {
     if (!category.isVisible) {
       return (
@@ -129,6 +252,19 @@ export const Table: React.FC<TableProps> = ({
 
   return (
     <div className="bg-white rounded-lg shadow-lg">
+      {/* Error Display */}
+      {error && (
+        <div className="m-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded">
+          {error}
+          <button
+            onClick={() => setError("")}
+            className="float-right font-bold"
+          >
+            ×
+          </button>
+        </div>
+      )}
+
       {/* Header with Search and Filters */}
       <div className="p-6 border-b border-gray-200">
         <div className="flex flex-col space-y-4">
@@ -138,16 +274,16 @@ export const Table: React.FC<TableProps> = ({
               <h2 className="text-2xl font-bold text-gray-900">Categories</h2>
               <p className="text-sm text-gray-600">
                 {pagination
-                  ? `Showing ${categories.length} of ${pagination.total} categories`
+                  ? `Showing ${categories?.length} of ${pagination.total} categories`
                   : "Manage your categories"}
               </p>
             </div>
 
             <button
-              onClick={onCreateNew}
+              onClick={handleCreateNew}
               className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 mt-4 sm:mt-0"
             >
-              <span className="mr-2">+</span>
+              <Plus size={16} className="mr-2" />
               New Category
             </button>
           </div>
@@ -160,15 +296,20 @@ export const Table: React.FC<TableProps> = ({
               <input
                 type="text"
                 placeholder="Search by name..."
-                value={searchQuery}
-                onChange={(e) => handleSearch(e.target.value)}
+                value={filters.search}
+                onChange={(e) => handleFilterChange("search", e.target.value)}
                 className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               />
             </div>
 
             {/* Filter Toggle Button */}
             <button
-              onClick={() => setShowFilters(!showFilters)}
+              onClick={() =>
+                setFilters((prev) => ({
+                  ...prev,
+                  showFilters: !prev.showFilters,
+                }))
+              }
               className="flex items-center px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
               <Filter size={16} className="mr-2" />
@@ -183,7 +324,7 @@ export const Table: React.FC<TableProps> = ({
           </div>
 
           {/* Expanded Filters */}
-          {showFilters && (
+          {filters.showFilters && (
             <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
               <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                 {/* Visibility Filter */}
@@ -296,7 +437,7 @@ export const Table: React.FC<TableProps> = ({
         </div>
       </div>
 
-      {/* Table */}
+      {/* Table Content */}
       <div className="overflow-x-auto">
         <table className="min-w-full divide-y divide-gray-200">
           <thead className="bg-gray-50">
@@ -333,7 +474,7 @@ export const Table: React.FC<TableProps> = ({
                   </p>
                 </td>
               </tr>
-            ) : categories.length === 0 ? (
+            ) : categories?.length === 0 ? (
               <tr>
                 <td colSpan={6} className="px-6 py-12 text-center">
                   <div className="text-gray-400">
@@ -342,27 +483,28 @@ export const Table: React.FC<TableProps> = ({
                       No categories found
                     </p>
                     <p className="text-gray-600">
-                      {searchQuery ||
+                      {filters.search ||
                       filters.isVisible !== undefined ||
                       filters.isFeatured !== undefined
                         ? "Try adjusting your search or filters"
                         : "Get started by creating your first category"}
                     </p>
-                    {!searchQuery &&
+                    {!filters.search &&
                       filters.isVisible === undefined &&
                       filters.isFeatured === undefined && (
                         <button
-                          onClick={onCreateNew}
+                          onClick={handleCreateNew}
                           className="mt-4 inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
                         >
-                          + Create Category
+                          <Plus size={16} className="mr-2" />
+                          Create Category
                         </button>
                       )}
                   </div>
                 </td>
               </tr>
             ) : (
-              categories.map((category) => (
+              categories?.map((category) => (
                 <tr key={category.id} className="hover:bg-gray-50">
                   {/* Image */}
                   <td className="px-6 py-4 whitespace-nowrap">
@@ -384,11 +526,8 @@ export const Table: React.FC<TableProps> = ({
                     <div className="text-sm font-medium text-gray-900">
                       {category.name.en}
                     </div>
-                    <div className="text-sm text-gray-500 text-right" dir="rtl">
-                      {category.name.ar}
-                    </div>
                     <div className="text-xs text-gray-400 mt-1">
-                      Slug: {category.slug.en}
+                      {/* Slug: {category.slug.en} */}
                     </div>
                   </td>
 
@@ -398,9 +537,7 @@ export const Table: React.FC<TableProps> = ({
                       {getStatusBadge(category)}
                       <div className="flex space-x-1">
                         <button
-                          onClick={() =>
-                            onToggleVisibility(category.id, !category.isVisible)
-                          }
+                          onClick={() => handleToggleVisibility(category)}
                           className={`p-1 rounded ${
                             category.isVisible
                               ? "text-green-600 hover:text-green-800"
@@ -416,9 +553,7 @@ export const Table: React.FC<TableProps> = ({
                         </button>
 
                         <button
-                          onClick={() =>
-                            onToggleFeatured(category.id, !category.isFeatured)
-                          }
+                          onClick={() => handleToggleFeatured(category)}
                           className={`p-1 rounded ${
                             category.isFeatured
                               ? "text-yellow-600 hover:text-yellow-800"
@@ -453,7 +588,7 @@ export const Table: React.FC<TableProps> = ({
                   <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                     <div className="flex justify-end space-x-2">
                       <button
-                        onClick={() => onEdit(category)}
+                        onClick={() => handleEdit(category)}
                         className="text-blue-600 hover:text-blue-900 p-1 rounded transition-colors"
                         title="Edit category"
                       >
@@ -461,7 +596,7 @@ export const Table: React.FC<TableProps> = ({
                       </button>
 
                       <button
-                        onClick={() => onDelete(category)}
+                        onClick={() => handleDelete(category)}
                         className="text-red-600 hover:text-red-900 p-1 rounded transition-colors"
                         title="Delete category"
                       >
@@ -489,11 +624,7 @@ export const Table: React.FC<TableProps> = ({
             <div className="flex space-x-2">
               <button
                 onClick={() =>
-                  onSearch({
-                    search: searchQuery,
-                    ...filters,
-                    page: pagination.page - 1,
-                  })
+                  handleSearch({ ...filters, page: pagination.page - 1 })
                 }
                 disabled={!pagination.hasPrev}
                 className="px-3 py-1 border border-gray-300 rounded-md text-sm disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
@@ -507,11 +638,7 @@ export const Table: React.FC<TableProps> = ({
 
               <button
                 onClick={() =>
-                  onSearch({
-                    search: searchQuery,
-                    ...filters,
-                    page: pagination.page + 1,
-                  })
+                  handleSearch({ ...filters, page: pagination.page + 1 })
                 }
                 disabled={!pagination.hasNext}
                 className="px-3 py-1 border border-gray-300 rounded-md text-sm disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
@@ -522,6 +649,18 @@ export const Table: React.FC<TableProps> = ({
           </div>
         </div>
       )}
+
+      {/* Delete Confirmation Dialog */}
+      <AlertDialog
+        isOpen={deleteDialog.isOpen}
+        title="Delete Category"
+        message={`Are you sure you want to delete "${deleteDialog.category?.name.en}"? This action cannot be undone.`}
+        onConfirm={confirmDelete}
+        onCancel={() => setDeleteDialog({ isOpen: false, category: null })}
+        confirmText="Delete"
+        cancelText="Cancel"
+        variant="danger"
+      />
     </div>
   );
 };

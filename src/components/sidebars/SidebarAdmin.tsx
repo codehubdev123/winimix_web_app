@@ -4,6 +4,7 @@ import MenuLink from "@/features/admin/shared/components/links/MenuLink";
 import MenuLinkDropdown from "@/features/admin/shared/components/links/MenuLinkDropdown";
 import MenuLinkDropdownItem from "@/features/admin/shared/components/links/MenuLinkDropdownItem";
 import {
+  route_admin_categories,
   route_admin_categories_create,
   route_admin_dashboard,
   route_categories_add,
@@ -65,6 +66,11 @@ const SidebarAdmin = () => {
             <MenuLinkDropdownItem
               name={"Add New"}
               href={route_admin_categories_create}
+            />
+
+            <MenuLinkDropdownItem
+              name={"Categories"}
+              href={route_admin_categories}
             />
           </MenuLinkDropdown>
           {/* Products Dropdown */}

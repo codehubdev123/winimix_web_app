@@ -1,6 +1,7 @@
 import apiClient from "@/lib/api-client";
 import { ApiResponse } from "@/lib/api-client";
 import { api_admin_category } from "../../shared/apiAdmin";
+import { route_admin_categories } from "@/routes/admin";
 
 // Type definitions for Category
 export interface Category {
@@ -44,23 +45,40 @@ export interface CategoryListParams {
 }
 
 export class CategoryService {
-  // Explanation: Get all categories with filtering and pagination
-  async getCategories(
-    params: CategoryListParams = {},
-  ): Promise<ApiResponse<Category[]>> {
-    const queryParams = new URLSearchParams();
-
-    // Explanation: Convert parameters to URL query string
-    Object.entries(params).forEach(([key, value]) => {
-      if (value !== undefined && value !== null) {
-        queryParams.append(key, value.toString());
-      }
-    });
-
-    return await apiClient.get<Category[]>(`/categories?${queryParams}`);
+  // Explanation: Create new category
+  async create(data: any): Promise<any> {
+    return await apiClient.post<any>(api_admin_category, data);
   }
 
-  // Explanation: Get single category by ID
+  // Explanation: Get all categories with filtering and pagination
+
+  // Get categories with search, filters, and pagination
+  async getCategories(params?: {
+    page?: number;
+    limit?: number;
+    search?: string;
+    isVisible?: boolean;
+    isFeatured?: boolean;
+    sortBy?: string;
+    sortOrder?: "asc" | "desc";
+  }) {
+    try {
+      // Clean up params - remove undefined values
+      const cleanParams: any = {};
+      Object.entries(params || {}).forEach(([key, value]) => {
+        if (value !== undefined && value !== null && value !== "") {
+          cleanParams[key] = value;
+        }
+      });
+      const response = await apiClient.get(api_admin_category, {
+        params: cleanParams,
+      });
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  }
+
   async getCategoryById(
     id: string,
     language: string = "en",
@@ -73,11 +91,6 @@ export class CategoryService {
     );
   }
 
-  // Explanation: Create new category
-  async create(data: any): Promise<any> {
-    return await apiClient.post<any>(api_admin_category, data);
-  }
-
   // Explanation: Update existing category
   async updateCategory(
     id: string,
@@ -87,7 +100,10 @@ export class CategoryService {
       throw new Error("Category ID is required for update");
     }
 
-    return await apiClient.put<Category>(`/categories/${id}`, categoryData);
+    return await apiClient.put<Category>(
+      `${route_admin_categories}/${id}`,
+      categoryData,
+    );
   }
 
   // Explanation: Delete category

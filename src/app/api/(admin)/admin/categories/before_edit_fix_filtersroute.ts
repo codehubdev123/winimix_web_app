@@ -2,6 +2,7 @@ import { CategoryCreateController } from "@/features/admin/categories/controller
 import { CategoryRepository } from "@/features/admin/categories/repositories/CategoryRepository";
 import { CheckIfNamesAlreadyExistsUseCase } from "@/features/admin/categories/useCases/CheckIfNamesAlreadyExistsUseCase";
 import { CreateUseCase } from "@/features/admin/categories/useCases/CreateUseCase";
+import { categoryCollection } from "@/features/admin/shared/collections/Collections";
 import { adminDb } from "@/lib/firebase-admin";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -27,27 +28,28 @@ export async function GET(request: NextRequest) {
     const offset = (page - 1) * limit;
     
     // Start building Firestore query
-    let query = adminDb.collection('categories');
+    let query =   adminDb.collection(categoryCollection)
+    // console.log('🔴🔴🔴🔴🔴🔴 query ' , query.docs.map((doc) =>doc.data()));
 
     // Apply search filter
     if (search) {
       query = query.where('name.en', '>=', search)
                    .where('name.en', '<=', search + '\uf8ff');
     }
-    
+   
     // Apply visibility filter
     if (isVisible !== null) {
       query = query.where('isVisible', '==', isVisible === 'true');
     }
-    
+ 
     // Apply featured filter
     if (isFeatured !== null) {
       query = query.where('isFeatured', '==', isFeatured === 'true');
     }
-    
+
     // Apply sorting
     query = query.orderBy(sortBy, sortOrder as 'asc' | 'desc');
-    
+   
     // Get total count for pagination
     const countSnapshot = await query.get();
     const total = countSnapshot.size;
@@ -58,13 +60,13 @@ export async function GET(request: NextRequest) {
       .offset(offset)
       .limit(limit)
       .get();
-    
+
     // Format categories data
     const categories = snapshot.docs.map(doc => ({
       id: doc.id,
       ...doc.data()
     }));
-    
+   
     console.log(`✅ Found ${categories.length} categories out of ${total} total`);
     
     // Return success response with pagination info
