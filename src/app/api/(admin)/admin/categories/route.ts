@@ -1,4 +1,5 @@
 import { CategoryCreateController } from "@/features/admin/categories/controllers/CategoryCreateController";
+import { CategoryListController } from "@/features/admin/categories/controllers/CategoryListController";
 import { CategoryRepository } from "@/features/admin/categories/repositories/CategoryRepository";
 import { CheckIfNamesAlreadyExistsUseCase } from "@/features/admin/categories/useCases/CheckIfNamesAlreadyExistsUseCase";
 import { CreateUseCase } from "@/features/admin/categories/useCases/CreateUseCase";
@@ -6,7 +7,10 @@ import { adminDb } from "@/lib/firebase-admin";
 import { NextRequest, NextResponse } from "next/server";
 
 // GET - Get categories with search, filters, and pagination
-export async function GET(request: NextRequest) {
+export async function GET(req: NextRequest) {
+    const app = new CategoryListController();
+  return await app.execute(req);
+
   try {
     const { searchParams } = new URL(request.url);
     

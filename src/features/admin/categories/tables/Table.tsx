@@ -14,6 +14,8 @@ import {
 } from "lucide-react";
 import { AlertDialog } from "@/components/alerts/AlertDialog";
 import { CategoryService } from "../services/CategoryService";
+import ImageModal from "@/components/models/ImageModal";
+import EnhancedImageModal from "@/components/models/EnhancedImageModal";
 
 interface TableProps {
   initialCategories: Category[];
@@ -35,6 +37,7 @@ export const Table: React.FC<TableProps> = ({
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
+  const [selectedImage, setSelectedImage] = useState(null);
 
   const [categories, setCategories] = useState<Category[]>(initialCategories);
   const [pagination, setPagination] = useState(initialPagination);
@@ -119,6 +122,7 @@ export const Table: React.FC<TableProps> = ({
 
   // Toggle category visibility
   const handleToggleVisibility = async (category: Category) => {
+    console.log("🔴🔴🔴🔴🔴🔴 category ", !category.isVisible);
     try {
       const response = await new CategoryService().toggleVisibility(
         category.id,
@@ -250,6 +254,11 @@ export const Table: React.FC<TableProps> = ({
     );
   };
 
+  // In your table row, update the image cell:
+  const handleImageClick = (imageUrl: string, alt: string) => {
+    setSelectedImage({ url: imageUrl, alt });
+  };
+
   return (
     <div className="bg-white rounded-lg shadow-lg">
       {/* Error Display */}
@@ -264,7 +273,6 @@ export const Table: React.FC<TableProps> = ({
           </button>
         </div>
       )}
-
       {/* Header with Search and Filters */}
       <div className="p-6 border-b border-gray-200">
         <div className="flex flex-col space-y-4">
@@ -436,7 +444,6 @@ export const Table: React.FC<TableProps> = ({
           )}
         </div>
       </div>
-
       {/* Table Content */}
       <div className="overflow-x-auto">
         <table className="min-w-full divide-y divide-gray-200">
@@ -509,11 +516,18 @@ export const Table: React.FC<TableProps> = ({
                   {/* Image */}
                   <td className="px-6 py-4 whitespace-nowrap">
                     {category.image ? (
-                      <img
-                        src={category.image}
-                        alt={category.name.en}
-                        className="h-12 w-12 rounded-lg object-cover border"
-                      />
+                      <div
+                        className="h-12 w-12 rounded-lg overflow-hidden border cursor-zoom-in hover:opacity-80 transition-opacity"
+                        onClick={() =>
+                          handleImageClick(category.image, category.name.en)
+                        }
+                      >
+                        <img
+                          src={category.image}
+                          alt={category.name.en}
+                          className="h-full w-full object-cover"
+                        />
+                      </div>
                     ) : (
                       <div className="h-12 w-12 rounded-lg bg-gray-200 border flex items-center justify-center">
                         <span className="text-gray-400 text-xs">No image</span>
@@ -610,7 +624,6 @@ export const Table: React.FC<TableProps> = ({
           </tbody>
         </table>
       </div>
-
       {/* Pagination */}
       {pagination && pagination.totalPages > 1 && (
         <div className="px-6 py-4 border-t border-gray-200">
@@ -649,7 +662,20 @@ export const Table: React.FC<TableProps> = ({
           </div>
         </div>
       )}
-
+      {/* Image Modal */}
+      <ImageModal
+        isOpen={!!selectedImage}
+        onClose={() => setSelectedImage(null)}
+        imageUrl={selectedImage?.url || ""}
+        alt={selectedImage?.alt}
+      />
+      {/* Or use EnhancedImageModal for more features */}
+      {/* <EnhancedImageModal */}
+      {/*   isOpen={!!selectedImage} */}
+      {/*   onClose={() => setSelectedImage(null)} */}
+      {/*   imageUrl={selectedImage?.url || ""} */}
+      {/*   alt={selectedImage?.alt} */}
+      {/* /> */}
       {/* Delete Confirmation Dialog */}
       <AlertDialog
         isOpen={deleteDialog.isOpen}

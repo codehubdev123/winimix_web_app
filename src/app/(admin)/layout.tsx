@@ -37,18 +37,16 @@ export default function AdminLayout({
         className={`antialiased bg-white dark:bg-primary-dark`}
         suppressHydrationWarning
       >
-        <LocaleProvider>
-          <div className="flex h-screen bg-gray-100">
-            {/* Sidebar */}
-            <SidebarAdmin />
-            {/* Main Content */}
-            <main className="flex-1 overflow-auto">
-              {/* Header */}
-              <HeaderAdmin />
-              <div className="p-6">{children}</div>
-            </main>
-          </div>
-        </LocaleProvider>
+        <div className="flex h-screen bg-gray-100">
+          {/* Sidebar */}
+          <SidebarAdmin />
+          {/* Main Content */}
+          <main className="flex-1 overflow-auto">
+            {/* Header */}
+            <HeaderAdmin />
+            <div className="p-6">{children}</div>
+          </main>
+        </div>
       </body>
     </html>
   );

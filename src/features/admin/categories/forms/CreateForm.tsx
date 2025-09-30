@@ -11,6 +11,7 @@ import { Checkbox } from "@/components/inputs/Checkbox";
 import { Save, X, Loader } from "lucide-react";
 import { CreateCategorySchema } from "../validations/CreateCategotySchema";
 import { CategoryService } from "../services/CategoryService";
+import { log } from "util";
 
 export const CreateForm = () => {
   const router = useRouter();
@@ -20,6 +21,7 @@ export const CreateForm = () => {
   const {
     register,
     handleSubmit,
+    reset,
     setValue,
     watch,
     formState: { errors, isSubmitting },
@@ -58,7 +60,6 @@ export const CreateForm = () => {
   };
 
   const onSubmit = async (data: CreateFormData) => {
-    alert("submitted");
     try {
       setIsLoading(true);
       // setError("");
@@ -76,7 +77,8 @@ export const CreateForm = () => {
       }
 
       const response = await new CategoryService().create(formData);
-      if (response.success) {
+      if (response.data.success) {
+        reset();
         router.push("/admin/categories?success=Category created successfully");
         router.refresh();
       } else {

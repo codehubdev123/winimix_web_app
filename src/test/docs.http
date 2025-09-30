@@ -1,0 +1,56 @@
+@host = http://localhost:3000
+
+
+### ADMIN
+
+
+### CREATE CATEGORY
+
+GET {
+ success: true, HTTP/1.1
+Message: "Data fetched successfully"
+Id: 1,
+
+
+### 
+
+GET 'Electronic'
+ image: 'image_url'
+ description: 'decription value',
+ isFeatured: true
+ }
+ ]
+ } HTTP/1.1
+
+POST {{host}}/api/admin/categories HTTP/1.1
+Content-Type: multipart/form-data; boundary=simple
+
+--simple
+Content-Disposition: form-data; name="name.en"
+
+Electronics
+--simple
+Content-Disposition: form-data; name="name.ar"
+
+إلكترونيات
+--simple
+Content-Disposition: form-data; name="isVisible"
+
+true
+--simple--
+
+
+{
+ success: true
+Message: "Data fetched successfully",status:200
+data : [
+{
+ Id: 1,
+name: 'Electronic',
+ image: 'image_url',
+ description: 'decription value',
+ isFeatured: true,
+
+}
+]
+}

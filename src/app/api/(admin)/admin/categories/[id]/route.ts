@@ -1,10 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import { adminDb } from "@/lib/firebase-admin";
-import {
-  categoryValidationSchema,
-  categoryUpdateSchema,
-} from "@/validations/category";
 import * as yup from "yup";
+import { categoryUpdateSchema } from "@/validations/categoryValidation";
+import { CheckIfNamesAlreadyExistsUseCase } from "@/features/admin/categories/useCases/CheckIfNamesAlreadyExistsUseCase";
+import { CategoryRepository } from "@/features/admin/categories/repositories/CategoryRepository";
+import { CreateUseCase } from "@/features/admin/categories/useCases/CreateUseCase";
+import { CategoryEditController } from "@/features/admin/categories/controllers/CategoryEditController";
 
 // Type definitions
 interface ApiResponse<T = any> {
@@ -94,10 +95,13 @@ export async function GET(
 }
 
 // PUT /api/categories/[id] - Update existing category
-export async function PUT(
-  request: NextRequest,
-  { params }: RouteParams,
-): Promise<NextResponse<ApiResponse>> {
+export async function PUT(req: NextRequest, { params }: RouteParams) {
+  const app = new CategoryEditController(
+    new CheckIfNamesAlreadyExistsUseCase(new CategoryRepository()),
+    new CreateUseCase(new CategoryRepository()),
+  );
+  return await app.execute(req, params);
+
   try {
     const { id } = params;
 

@@ -31,7 +31,7 @@ apiClient.interceptors.request.use(
 apiClient.interceptors.response.use(
   (response) => {
     console.log(`✅ Response received:`, response.data);
-    return response;
+    return response.data;
   },
   (error) => {
     console.error("❌ Response error:", error.response?.data || error.message);

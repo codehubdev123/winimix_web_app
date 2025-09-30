@@ -1,7 +1,9 @@
 import apiClient from "@/lib/api-client";
 import { ApiResponse } from "@/lib/api-client";
-import { api_admin_category } from "../../shared/apiAdmin";
-import { route_admin_categories } from "@/routes/admin";
+import {
+  api_admin_category,
+  api_admin_category_id,
+} from "../../shared/apiAdmin";
 
 // Type definitions for Category
 export interface Category {
@@ -96,12 +98,13 @@ export class CategoryService {
     id: string,
     categoryData: Partial<Category>,
   ): Promise<ApiResponse<Category>> {
+    console.log("🔴🔴🔴🔴🔴🔴 from updateCategory ", id, categoryData);
     if (!id) {
       throw new Error("Category ID is required for update");
     }
 
     return await apiClient.put<Category>(
-      `${route_admin_categories}/${id}`,
+      api_admin_category_id(id),
       categoryData,
     );
   }

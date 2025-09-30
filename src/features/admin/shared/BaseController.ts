@@ -49,12 +49,14 @@ export abstract class BaseController {
     status = 200,
     message = "Data has been saved",
     data = [],
+    ...rest
   }: PropsSuccess) {
     return NextResponse.json({
       success: success,
       status: status,
       message: message,
       data: data,
+      ...rest,
     });
   }
 
