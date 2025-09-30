@@ -113,7 +113,6 @@ export class CategoryCreateController extends BaseController {
     };
     // Step 10: Save to Firestore
     const docRef = await this.createUsecase.execute(categoryData);
-    console.log("🔵🔵🔵🔵🔵🔵 docRef ", docRef);
 
     return this.success({
       message: "Category created successfully ",

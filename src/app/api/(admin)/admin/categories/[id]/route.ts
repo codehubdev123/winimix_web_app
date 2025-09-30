@@ -6,6 +6,7 @@ import { CheckIfNamesAlreadyExistsUseCase } from "@/features/admin/categories/us
 import { CategoryRepository } from "@/features/admin/categories/repositories/CategoryRepository";
 import { CreateUseCase } from "@/features/admin/categories/useCases/CreateUseCase";
 import { CategoryEditController } from "@/features/admin/categories/controllers/CategoryEditController";
+import { EditUseCase } from "@/features/admin/categories/useCases/EditUseCase";
 
 // Type definitions
 interface ApiResponse<T = any> {
@@ -97,8 +98,7 @@ export async function GET(
 // PUT /api/categories/[id] - Update existing category
 export async function PUT(req: NextRequest, { params }: RouteParams) {
   const app = new CategoryEditController(
-    new CheckIfNamesAlreadyExistsUseCase(new CategoryRepository()),
-    new CreateUseCase(new CategoryRepository()),
+    new EditUseCase(new CategoryRepository()),
   );
   return await app.execute(req, params);
 

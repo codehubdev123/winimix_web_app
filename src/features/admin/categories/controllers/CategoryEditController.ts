@@ -17,17 +17,13 @@ import {
 import firebase from "firebase/compat/app";
 import { adminDb } from "@/lib/firebase-admin";
 import { categoryCollection } from "../../shared/collections/Collections";
+import { EditUseCase } from "../useCases/EditUseCase";
 
 export class CategoryEditController extends BaseController {
-  private readonly checkIfNamesAlreadyExistsUseCase: CheckIfNamesAlreadyExistsUseCase;
-  private readonly createUsecase: CreateUseCase;
-  constructor(
-    checkIfNamesAlreadyExistsUseCase: CheckIfNamesAlreadyExistsUseCase,
-    createUseCase: CreateUseCase,
-  ) {
+  private readonly editUsecase: EditUseCase;
+  constructor(editUseCase: EditUseCase) {
     super();
-    this.checkIfNamesAlreadyExistsUseCase = checkIfNamesAlreadyExistsUseCase;
-    this.createUsecase = createUseCase;
+    this.editUsecase = editUseCase;
   }
 
   public async execute(req: NextRequest, params: any) {
@@ -66,7 +62,8 @@ export class CategoryEditController extends BaseController {
     };
 
     // Explanation: Perform the update operation
-    await adminDb.collection(categoryCollection).doc(id).update(updateData);
+    //     await adminDb.collection(categoryCollection).doc(id).update(updateData);
+    const docRef = await this.editUsecase.execute(id, updateData);
     // Explanation: Fetch updated document to return complete data
     const updatedDoc = await adminDb
       .collection(categoryCollection)

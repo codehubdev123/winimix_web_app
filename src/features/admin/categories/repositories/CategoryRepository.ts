@@ -3,6 +3,13 @@ import ICategoryContract from "./contracts/ICategoryContract";
 import { categoryCollection } from "../../shared/collections/Collections";
 
 export class CategoryRepository implements ICategoryContract {
+  async update(id: any, data: any): Promise<any> {
+    const docRef = await adminDb
+      .collection(categoryCollection)
+      .doc(id)
+      .update(data);
+    return docRef;
+  }
   async create(data: any): Promise<any> {
     const docRef = await adminDb.collection(categoryCollection).add(data);
     return docRef;
