@@ -8,6 +8,8 @@ import { CreateUseCase } from "@/features/admin/categories/useCases/CreateUseCas
 import { CategoryEditController } from "@/features/admin/categories/controllers/CategoryEditController";
 import { EditUseCase } from "@/features/admin/categories/useCases/EditUseCase";
 import { CheckIfCategoryExistsUseCase } from "@/features/admin/categories/useCases/CheckIfCategoryExistsUseCase";
+import { CategoryDeleteController } from "@/features/admin/categories/controllers/CategoryDeleteController";
+import { DeleteUseCase } from "@/features/admin/categories/useCases/DeleteUseCase";
 
 // Type definitions
 interface ApiResponse<T = any> {
@@ -210,79 +212,85 @@ export async function PUT(req: NextRequest, { params }: RouteParams) {
 
 // DELETE /api/categories/[id] - Delete category by ID
 export async function DELETE(
-  request: NextRequest,
+  req: NextRequest,
   { params }: RouteParams,
-): Promise<NextResponse<ApiResponse>> {
-  try {
-    const { id } = params;
+): Promise<any> {
+  const app = new CategoryDeleteController(
+    new DeleteUseCase(new CategoryRepository()),
+    new CheckIfCategoryExistsUseCase(new CategoryRepository()),
+  );
+  return await app.execute(req, params);
 
-    // Explanation: Validate category ID
-    if (!id || typeof id !== "string") {
-      return NextResponse.json(
-        {
-          success: false,
-          message: "Invalid category ID",
-          errors: ["Category ID is required and must be a string"],
-        },
-        { status: 400 },
-      );
-    }
-
-    // Explanation: Check if category exists
-    const doc = await adminDb.collection("categories").doc(id).get();
-
-    if (!doc.exists) {
-      return NextResponse.json(
-        {
-          success: false,
-          message: "Category not found",
-          errors: [`Category with ID ${id} does not exist`],
-        },
-        { status: 404 },
-      );
-    }
-
-    // Explanation: Check if category has associated products (business logic)
-    const productsSnapshot = await adminDb
-      .collection("products")
-      .where("categoryId", "==", id)
-      .limit(1)
-      .get();
-
-    if (!productsSnapshot.empty) {
-      return NextResponse.json(
-        {
-          success: false,
-          message: "Cannot delete category with associated products",
-          errors: [
-            "Please remove or reassign products before deleting this category",
-          ],
-        },
-        { status: 400 },
-      );
-    }
-
-    // Explanation: Perform deletion
-    await adminDb.collection("categories").doc(id).delete();
-
-    return NextResponse.json(
-      {
-        success: true,
-        message: "Category deleted successfully",
-      },
-      { status: 200 },
-    );
-  } catch (error) {
-    console.error(`DELETE /api/categories/[id] Error:`, error);
-    return NextResponse.json(
-      {
-        success: false,
-        message: "Failed to delete category",
-        errors: [error instanceof Error ? error.message : "Unknown error"],
-      },
-      { status: 500 },
-    );
-  }
+  // try {
+  //   const { id } = params;
+  //
+  //   // Explanation: Validate category ID
+  //   if (!id || typeof id !== "string") {
+  //     return NextResponse.json(
+  //       {
+  //         success: false,
+  //         message: "Invalid category ID",
+  //         errors: ["Category ID is required and must be a string"],
+  //       },
+  //       { status: 400 },
+  //     );
+  //   }
+  //
+  //   // Explanation: Check if category exists
+  //   const doc = await adminDb.collection("categories").doc(id).get();
+  //
+  //   if (!doc.exists) {
+  //     return NextResponse.json(
+  //       {
+  //         success: false,
+  //         message: "Category not found",
+  //         errors: [`Category with ID ${id} does not exist`],
+  //       },
+  //       { status: 404 },
+  //     );
+  //   }
+  //
+  //   // Explanation: Check if category has associated products (business logic)
+  //   const productsSnapshot = await adminDb
+  //     .collection("products")
+  //     .where("categoryId", "==", id)
+  //     .limit(1)
+  //     .get();
+  //
+  //   if (!productsSnapshot.empty) {
+  //     return NextResponse.json(
+  //       {
+  //         success: false,
+  //         message: "Cannot delete category with associated products",
+  //         errors: [
+  //           "Please remove or reassign products before deleting this category",
+  //         ],
+  //       },
+  //       { status: 400 },
+  //     );
+  //   }
+  //
+  //   // Explanation: Perform deletion
+  //   await adminDb.collection("categories").doc(id).delete();
+  //
+  //   return NextResponse.json(
+  //     {
+  //       success: true,
+  //       message: "Category deleted successfully",
+  //     },
+  //     { status: 200 },
+  //   );
+  // // } catch (error) {
+  //   console.error(`DELETE /api/categories/[id] Error:`, error);
+  //   return NextResponse.json(
+  //     {
+  //       success: false,
+  //       message: "Failed to delete category",
+  //       errors: [error instanceof Error ? error.message : "Unknown error"],
+  //     },
+  //     { status: 500 },
+  //   );
+  // }
 }
 
 // OPTIONS handler for CORS

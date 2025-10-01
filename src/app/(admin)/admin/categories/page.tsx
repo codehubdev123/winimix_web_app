@@ -2,7 +2,7 @@ import { CategoryService } from "@/features/admin/categories/services/CategorySe
 import { Table } from "@/features/admin/categories/tables/Table";
 
 interface CategoriesPageProps {
-  searchParams: {
+  searchParams: Promise<{
     search?: string;
     page?: string;
     limit?: string;
@@ -10,28 +10,28 @@ interface CategoriesPageProps {
     isFeatured?: string;
     sortBy?: string;
     sortOrder?: "asc" | "desc";
-  };
+  }>;
 }
 
 export default async function CategoriesPage({
   searchParams,
 }: CategoriesPageProps) {
-  // Parse search params with defaults
-  const page = parseInt(searchParams.page || "1");
-  const limit = parseInt(searchParams.limit || "10");
-  const search = searchParams.search || "";
-  const isVisible = searchParams.isVisible
-    ? searchParams.isVisible === "true"
+  // AWAIT the searchParams Promise first
+  const params = await searchParams;
+
+  // Parse search params with defaults using the awaited params
+  const page = parseInt(params.page || "1");
+  const limit = parseInt(params.limit || "10");
+  const search = params.search || "";
+  const isVisible = params.isVisible ? params.isVisible === "true" : undefined;
+  const isFeatured = params.isFeatured
+    ? params.isFeatured === "true"
     : undefined;
-  const isFeatured = searchParams.isFeatured
-    ? searchParams.isFeatured === "true"
-    : undefined;
-  const sortBy = searchParams.sortBy || "createdAt";
-  const sortOrder = searchParams.sortOrder || "desc";
+  const sortBy = params.sortBy || "createdAt";
+  const sortOrder = params.sortOrder || "desc";
 
   try {
     // Fetch categories from the server
-    // const response = await new CategoryService().getCategories({
     const response = await new CategoryService().getCategories({
       page,
       limit,
@@ -41,6 +41,7 @@ export default async function CategoriesPage({
       sortBy,
       sortOrder,
     });
+
     if (!response.success) {
       // throw new Error(response.message || "Failed to load categories");
     }

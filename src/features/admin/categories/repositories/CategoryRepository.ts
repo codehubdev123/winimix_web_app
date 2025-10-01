@@ -3,6 +3,10 @@ import ICategoryContract from "./contracts/ICategoryContract";
 import { categoryCollection } from "../../shared/collections/Collections";
 
 export class CategoryRepository implements ICategoryContract {
+  async delete(id: any): Promise<any> {
+    const docRef = await adminDb.collection("categories").doc(id).delete();
+    return docRef;
+  }
   async getCategoryById(id: any): Promise<any> {
     const docRef = await adminDb.collection(categoryCollection).doc(id).get();
     return docRef;

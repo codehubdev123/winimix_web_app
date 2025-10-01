@@ -28,7 +28,6 @@ export class CategoryCreateController extends BaseController {
   public async execute(req: NextRequest) {
     // TODO: get the data from request
     const body = await req.formData();
-    console.log("🔴🔴🔴🔴🔴🔴 from create ", body);
     const validatedData = await validateFormData(CreateCategorySchema, body);
     // if using json use validations like that
     // const jsonData = await request.json();

@@ -87,6 +87,12 @@ export const Table: React.FC<TableProps> = ({
       setIsLoading(true);
       setError("");
 
+      // const response = await new CategoryService().getCategories({
+      //         page: 1, // Reset to first page when searching
+      //   limit: pagination?.limit || 10,
+      //   ...newFilters,
+      // });
+
       const response = await new CategoryService().getCategories({
         page: 1,
         limit: pagination?.limit || 10,
@@ -168,39 +174,8 @@ export const Table: React.FC<TableProps> = ({
     setDeleteDialog({ isOpen: true, category });
   };
 
-  // Confirm delete - UPDATED WITH WORKING REFRESH
+  // Confirm delete
   const confirmDelete = async () => {
-    if (!deleteDialog.category) return;
-
-    const categoryId = deleteDialog.category.id;
-
-    // OPTIMISTIC UPDATE: Remove from UI immediately
-    setCategories((prev) => prev.filter((cat) => cat.id !== categoryId));
-    setDeleteDialog({ isOpen: false, category: null });
-
-    try {
-      const response = await new CategoryService().deleteCategory(categoryId);
-
-      if (response.data.success) {
-        // SUCCESS: Use router.replace to refresh the page without adding to history
-        router.replace(`${pathname}?refresh=${Date.now()}`);
-
-        // Alternative: If you want to keep the same URL but force refresh
-        // router.push(pathname + '?t=' + Date.now());
-      } else {
-        // FAILED: Revert optimistic update
-        setCategories(initialCategories);
-        setError(response.message || "Failed to delete category");
-      }
-    } catch (err: any) {
-      // ERROR: Revert optimistic update
-      setCategories(initialCategories);
-      setError(err.message || "Failed to delete category");
-    }
-  };
-
-  // Alternative delete method using manual refetch - CHOOSE ONE
-  const confirmDeleteWithRefetch = async () => {
     if (!deleteDialog.category) return;
 
     try {
@@ -210,9 +185,7 @@ export const Table: React.FC<TableProps> = ({
 
       if (response.data.success) {
         setDeleteDialog({ isOpen: false, category: null });
-
-        // MANUAL REFETCH: Re-fetch the data using your existing handleSearch
-        await handleSearch(filters);
+        router.refresh();
       } else {
         setError(response.message || "Failed to delete category");
       }
@@ -693,12 +666,19 @@ export const Table: React.FC<TableProps> = ({
         imageUrl={selectedImage?.url || ""}
         alt={selectedImage?.alt}
       />
+      {/* Or use EnhancedImageModal for more features */}
+      {/* <EnhancedImageModal */}
+      {/*   isOpen={!!selectedImage} */}
+      {/*   onClose={() => setSelectedImage(null)} */}
+      {/*   imageUrl={selectedImage?.url || ""} */}
+      {/*   alt={selectedImage?.alt} */}
+      {/* /> */}
       {/* Delete Confirmation Dialog */}
       <AlertDialog
         isOpen={deleteDialog.isOpen}
         title="Delete Category"
         message={`Are you sure you want to delete "${deleteDialog.category?.name.en}"? This action cannot be undone.`}
-        onConfirm={confirmDelete} // Use the optimistic update version
+        onConfirm={confirmDelete}
         onCancel={() => setDeleteDialog({ isOpen: false, category: null })}
         confirmText="Delete"
         cancelText="Cancel"

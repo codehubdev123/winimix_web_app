@@ -4,4 +4,5 @@ export default interface ICategoryContract {
   getCategoryByNames(data: any): Promise<any>;
   create(data: any): Promise<any>;
   update(id: any, data: any): Promise<any>;
+  delete(data: any): Promise<any>;
 }

@@ -11,7 +11,6 @@ import { Checkbox } from "@/components/inputs/Checkbox";
 import { Save, X, Loader } from "lucide-react";
 import { CreateCategorySchema } from "../validations/CreateCategotySchema";
 import { CategoryService } from "../services/CategoryService";
-import { log } from "util";
 
 export const CreateForm = () => {
   const router = useRouter();

@@ -33,7 +33,7 @@ export class CategoryEditController extends BaseController {
   }
 
   public async execute(req: NextRequest, params: any) {
-    const { id } = params;
+    const { id } = await params;
     const body = await req.formData();
     // Explanation: Parse and validate update data
     const validatedData = await validateFormData(EditCategorySchema, body);

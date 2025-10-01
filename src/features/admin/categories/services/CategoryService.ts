@@ -2,7 +2,8 @@ import apiClient from "@/lib/api-client";
 import { ApiResponse } from "@/lib/api-client";
 import {
   api_admin_category,
-  api_admin_category_id,
+  api_admin_category_delete,
+  api_admin_category_edit,
 } from "../../shared/apiAdmin";
 import { categoryUpdateSchema } from "@/validations/categoryValidation";
 
@@ -96,13 +97,11 @@ export class CategoryService {
 
   // Explanation: Update existing category
   async updateCategory(id: string, categoryData: any): Promise<any> {
-    console.log("🔴🔴🔴🔴🔴🔴 from updateCategory ", id, categoryData);
     if (!id) {
       throw new Error("Category ID is required for update");
     }
 
-    return await apiClient.put<any>(api_admin_category_id(id), categoryData);
-    return await apiClient.post<any>(api_admin_category, data);
+    return await apiClient.put<any>(api_admin_category_edit(id), categoryData);
   }
 
   // Explanation: Delete category
@@ -111,7 +110,7 @@ export class CategoryService {
       throw new Error("Category ID is required for deletion");
     }
 
-    return await apiClient.delete<void>(`/categories/${id}`);
+    return await apiClient.delete<any>(api_admin_category_delete(id));
   }
 
   // Explanation: Toggle category visibility
