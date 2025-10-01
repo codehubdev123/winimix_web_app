@@ -137,11 +137,22 @@ export class CategoryService {
   }
 
   // Explanation: Toggle featured status
-  async toggleFeatured(
-    id: string,
-    isFeatured: boolean,
-  ): Promise<ApiResponse<Category>> {
-    return await this.updateCategory(id, { isFeatured });
+  async toggleFeatured(id: string, categoryData): Promise<any> {
+    const toggleValue = !categoryData.isFeatured;
+    const formData = new FormData();
+    formData.append("name.en", categoryData["name"]["en"]);
+    formData.append("name.ar", categoryData["name"]["ar"]);
+    formData.append("description.en", categoryData["description"]["en"]);
+    formData.append("description.ar", categoryData["description"]["ar"]);
+    (formData.append("isFeatured", toggleValue.toString()),
+      formData.append("isVisible", categoryData.isVisible.toString()));
+    formData.append("sortOrder", categoryData.sortOrder.toString());
+
+    if (categoryData.image instanceof File) {
+      formData.append("image", categoryData.image);
+    }
+
+    return await this.updateCategory(id, formData);
   }
 }
 

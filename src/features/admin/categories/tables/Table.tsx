@@ -127,7 +127,6 @@ export const Table: React.FC<TableProps> = ({
         category.id,
         category,
       );
-      console.log("🔴🔴🔴🔴🔴🔴 response ", response.data.success);
       if (response.data.success) {
         // Update local state immediately for better UX
         setCategories((prev) =>
@@ -150,10 +149,10 @@ export const Table: React.FC<TableProps> = ({
     try {
       const response = await new CategoryService().toggleFeatured(
         category.id,
-        !category.isFeatured,
+        category,
       );
 
-      if (response.success) {
+      if (response.data.success) {
         // Update local state immediately for better UX
         setCategories((prev) =>
           prev.map((cat) =>
