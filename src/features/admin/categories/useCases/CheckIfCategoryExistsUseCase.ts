@@ -1,7 +1,7 @@
 import UseCase from "../../shared/UseCase";
 import ICategoryContract from "../repositories/contracts/ICategoryContract";
 
-export class CheckIfNamesAlreadyExistsUseCase
+export class CheckIfCategoryExistsUseCase
   implements UseCase<any, Promise<any>>
 {
   private repo: ICategoryContract;
@@ -9,8 +9,8 @@ export class CheckIfNamesAlreadyExistsUseCase
   constructor(repo: ICategoryContract) {
     this.repo = repo;
   }
-  async execute(data: any): Promise<any> {
-    const category = await this.repo.getCategoryByNames(data);
-    return category._size == 1 ? true : false;
+  async execute(id: any): Promise<any> {
+    const docRef = await this.repo.getCategoryById(id);
+    return docRef.exists ? true : false;
   }
 }

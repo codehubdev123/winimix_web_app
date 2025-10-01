@@ -7,6 +7,7 @@ import { CategoryRepository } from "@/features/admin/categories/repositories/Cat
 import { CreateUseCase } from "@/features/admin/categories/useCases/CreateUseCase";
 import { CategoryEditController } from "@/features/admin/categories/controllers/CategoryEditController";
 import { EditUseCase } from "@/features/admin/categories/useCases/EditUseCase";
+import { CheckIfCategoryExistsUseCase } from "@/features/admin/categories/useCases/CheckIfCategoryExistsUseCase";
 
 // Type definitions
 interface ApiResponse<T = any> {
@@ -99,6 +100,7 @@ export async function GET(
 export async function PUT(req: NextRequest, { params }: RouteParams) {
   const app = new CategoryEditController(
     new EditUseCase(new CategoryRepository()),
+    new CheckIfCategoryExistsUseCase(new CategoryRepository()),
   );
   return await app.execute(req, params);
 

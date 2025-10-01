@@ -18,12 +18,18 @@ import firebase from "firebase/compat/app";
 import { adminDb } from "@/lib/firebase-admin";
 import { categoryCollection } from "../../shared/collections/Collections";
 import { EditUseCase } from "../useCases/EditUseCase";
+import { CheckIfCategoryExistsUseCase } from "../useCases/CheckIfCategoryExistsUseCase";
 
 export class CategoryEditController extends BaseController {
   private readonly editUsecase: EditUseCase;
-  constructor(editUseCase: EditUseCase) {
+  private readonly checkIfCategoryExistsUseCase: CheckIfCategoryExistsUseCase;
+  constructor(
+    editUseCase: EditUseCase,
+    checkIfCategoryExistsUseCase: CheckIfCategoryExistsUseCase,
+  ) {
     super();
     this.editUsecase = editUseCase;
+    this.checkIfCategoryExistsUseCase = checkIfCategoryExistsUseCase;
   }
 
   public async execute(req: NextRequest, params: any) {
@@ -50,8 +56,9 @@ export class CategoryEditController extends BaseController {
       );
     }
     // Explanation: Check if category exists before updating
-    const doc = await adminDb.collection(categoryCollection).doc(id).get();
-    if (!doc.exists) {
+    // const doc = await adminDb.collection(categoryCollection).doc(id).get();
+    const doc = await this.checkIfCategoryExistsUseCase.execute(id);
+    if (!doc) {
       return this.error({ message: "category not found", status: 404 });
     }
 
