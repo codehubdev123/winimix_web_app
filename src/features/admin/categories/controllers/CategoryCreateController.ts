@@ -100,8 +100,8 @@ export class CategoryCreateController extends BaseController {
       //     ar: validatedData["slug.ar"],
       //   },
       description: {
-        en: validatedData.data.name.en,
-        ar: validatedData.data.name.ar,
+        en: validatedData.data.description.en,
+        ar: validatedData.data.description.ar,
       },
       image: imageUrl, // url after uploaded to Firebase
       isVisible: validatedData.data.isVisible,
