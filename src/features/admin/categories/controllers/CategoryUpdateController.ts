@@ -20,7 +20,7 @@ import { categoryCollection } from "../../shared/collections/Collections";
 import { EditUseCase } from "../useCases/EditUseCase";
 import { CheckIfCategoryExistsUseCase } from "../useCases/CheckIfCategoryExistsUseCase";
 
-export class CategoryEditController extends BaseController {
+export class CategoryUpdateController extends BaseController {
   private readonly editUsecase: EditUseCase;
   private readonly checkIfCategoryExistsUseCase: CheckIfCategoryExistsUseCase;
   constructor(

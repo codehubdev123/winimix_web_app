@@ -10,6 +10,7 @@ import { Textarea } from "@/components/inputs/Textarea";
 import { FileInput } from "@/components/inputs/FileInput";
 import { Checkbox } from "@/components/inputs/Checkbox";
 import { Save, X, Loader } from "lucide-react";
+import { CategoryService } from "../services/CategoryService";
 
 const editCategorySchema = yup.object({
   "name.en": yup.string().required("English name is required").min(2),
@@ -67,14 +68,16 @@ export const EditForm: React.FC = () => {
 
   const loadCategory = async () => {
     try {
-      const response = await categoryService.getCategoryById(categoryId);
-      if (response.success) {
-        setCategory(response.data!);
+      const response = await new CategoryService().getCategoryById(categoryId);
+      if (response.data.success) {
+        setCategory(response.data.data);
+        console.log(
+          "🔴🔴🔴🔴🔴🔴 from EditForm response",
+          response.data.data.id,
+        );
         reset({
           "name.en": response.data!.name.en,
           "name.ar": response.data!.name.ar,
-          "slug.en": response.data!.slug.en,
-          "slug.ar": response.data!.slug.ar,
           "description.en": response.data!.description?.en || "",
           "description.ar": response.data!.description?.ar || "",
           image: response.data!.image || null,
@@ -84,7 +87,7 @@ export const EditForm: React.FC = () => {
         });
       }
     } catch (err: any) {
-      setError("Failed to load category");
+      // setError("Failed to load category");
     }
   };
 
@@ -152,73 +155,86 @@ export const EditForm: React.FC = () => {
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <Input
-            label="English Name *"
+            label="English Name"
             name="name.en"
             register={register}
-            error={errors["name.en"]}
+            errors={errors}
           />
           <Input
-            label="Arabic Name *"
+            label="Arabic Name"
             name="name.ar"
             register={register}
-            error={errors["name.ar"]}
-            dir="rtl"
+            errors={errors}
           />
-          <Input
-            label="English Slug *"
-            name="slug.en"
-            register={register}
-            error={errors["slug.en"]}
-          />
-          <Input
-            label="Arabic Slug *"
-            name="slug.ar"
-            register={register}
-            error={errors["slug.ar"]}
-            dir="rtl"
-          />
-          <Textarea
-            label="English Description"
-            name="description.en"
-            register={register}
-            error={errors["description.en"]}
-          />
-          <Textarea
-            label="Arabic Description"
-            name="description.ar"
-            register={register}
-            error={errors["description.ar"]}
-            dir="rtl"
-          />
+
+          {/* <Input */}
+          {/*   label="English Name *" */}
+          {/*   name="name.en" */}
+          {/*   register={register} */}
+          {/*   error={errors["name.en"]} */}
+          {/* /> */}
+          {/* <Input */}
+          {/*   label="Arabic Name *" */}
+          {/*   name="name.ar" */}
+          {/*   register={register} */}
+          {/*   error={errors["name.ar"]} */}
+          {/*   dir="rtl" */}
+          {/* /> */}
+          {/* <Input */}
+          {/*   label="English Slug *" */}
+          {/*   name="slug.en" */}
+          {/*   register={register} */}
+          {/*   error={errors["slug.en"]} */}
+          {/* /> */}
+          {/* <Input */}
+          {/*   label="Arabic Slug *" */}
+          {/*   name="slug.ar" */}
+          {/*   register={register} */}
+          {/*   error={errors["slug.ar"]} */}
+          {/*   dir="rtl" */}
+          {/* /> */}
+          {/* <Textarea */}
+          {/*   label="English Description" */}
+          {/*   name="description.en" */}
+          {/*   register={register} */}
+          {/*   error={errors["description.en"]} */}
+          {/* /> */}
+          {/* <Textarea */}
+          {/*   label="Arabic Description" */}
+          {/*   name="description.ar" */}
+          {/*   register={register} */}
+          {/*   error={errors["description.ar"]} */}
+          {/*   dir="rtl" */}
+          {/* /> */}
         </div>
 
-        <FileInput
-          label="Category Image"
-          name="image"
-          register={register}
-          setValue={setValue}
-          watch={watch}
-          error={errors.image}
-        />
+        {/* <FileInput */}
+        {/*   label="Category Image" */}
+        {/*   name="image" */}
+        {/*   register={register} */}
+        {/*   setValue={setValue} */}
+        {/*   watch={watch} */}
+        {/*   error={errors.image} */}
+        {/* /> */}
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <Checkbox
-            label="Visible to customers"
-            name="isVisible"
-            register={register}
-          />
-          <Checkbox
-            label="Featured category"
-            name="isFeatured"
-            register={register}
-          />
-          <Input
-            label="Sort Order"
-            name="sortOrder"
-            type="number"
-            register={register}
-            error={errors.sortOrder}
-          />
+          {/* <Checkbox */}
+          {/*   label="Visible to customers" */}
+          {/*   name="isVisible" */}
+          {/*   register={register} */}
+          {/* /> */}
+          {/* <Checkbox */}
+          {/*   label="Featured category" */}
+          {/*   name="isFeatured" */}
+          {/*   register={register} */}
+          {/* /> */}
+          {/* <Input */}
+          {/*   label="Sort Order" */}
+          {/*   name="sortOrder" */}
+          {/*   type="number" */}
+          {/*   register={register} */}
+          {/*   error={errors.sortOrder} */}
+          {/* /> */}
         </div>
 
         <div className="flex justify-end space-x-3 pt-6 border-t">

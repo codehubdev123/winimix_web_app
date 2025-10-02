@@ -4,6 +4,7 @@ import {
   api_admin_category,
   api_admin_category_delete,
   api_admin_category_edit,
+  api_admin_category_show,
 } from "../../shared/apiAdmin";
 import { categoryUpdateSchema } from "@/validations/categoryValidation";
 
@@ -90,9 +91,7 @@ export class CategoryService {
     if (!id) {
       throw new Error("Category ID is required");
     }
-    return await apiClient.get<Category>(
-      `/categories/${id}?language=${language}`,
-    );
+    return await apiClient.get<any>(api_admin_category_show(id));
   }
 
   // Explanation: Update existing category
