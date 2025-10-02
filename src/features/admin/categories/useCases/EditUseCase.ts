@@ -8,6 +8,7 @@ export class EditUseCase implements UseCase<any, Promise<any>> {
     this.repo = repo;
   }
   async execute(id: any, data?: any): Promise<any> {
+    console.log("🔵🔵🔵🔵🔵🔵 from  inside usecase ", id, data);
     const docRef = this.repo.update(id, data);
     return docRef;
   }

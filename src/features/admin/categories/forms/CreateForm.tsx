@@ -195,7 +195,7 @@ export const CreateForm = () => {
           maxSize={5 * 1024 * 1024}
         />
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-center">
           {/* Visibility Toggle */}
           <Checkbox
             label="Visible to customers"

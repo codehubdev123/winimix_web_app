@@ -154,6 +154,5 @@ export class CategoryService {
   }
 }
 
-// Explanation: Export singleton instance
-export const categoryService = new CategoryService();
-export default categoryService;
+// export const categoryService = new CategoryService();
+// export default categoryService;

@@ -67,10 +67,11 @@ export class CategoryUpdateController extends BaseController {
       ...validatedData.data,
       updatedAt: new Date(),
     };
-
     // Explanation: Perform the update operation
     //     await adminDb.collection(categoryCollection).doc(id).update(updateData);
     const docRef = await this.editUsecase.execute(id, updateData);
+    console.log("🔴🔴🔴🔴🔴🔴 touched where 2", updateData);
+    return this.success({ message: "TOUCHED HERE 2" });
     // Explanation: Fetch updated document to return complete data
     const updatedDoc = await adminDb
       .collection(categoryCollection)

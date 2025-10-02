@@ -7,10 +7,10 @@ import { useRouter, useParams } from "next/navigation";
 import { categoryService, Category } from "@/services/categoryService";
 import { Input } from "@/components/inputs/Input";
 import { Textarea } from "@/components/inputs/Textarea";
-import { FileInput } from "@/components/inputs/FileInput";
 import { Checkbox } from "@/components/inputs/Checkbox";
 import { Save, X, Loader } from "lucide-react";
 import { CategoryService } from "../services/CategoryService";
+import { FileInput } from "@/components/inputs/FileInput";
 
 const editCategorySchema = yup.object({
   "name.en": yup.string().required("English name is required").min(2),
@@ -71,19 +71,17 @@ export const EditForm: React.FC = () => {
       const response = await new CategoryService().getCategoryById(categoryId);
       if (response.data.success) {
         setCategory(response.data.data);
-        console.log(
-          "🔴🔴🔴🔴🔴🔴 from EditForm response",
-          response.data.data.id,
-        );
+        let data = response.data.data;
+        console.log("🔴🔴🔴🔴🔴🔴 from EditForm response", data);
         reset({
-          "name.en": response.data!.name.en,
-          "name.ar": response.data!.name.ar,
-          "description.en": response.data!.description?.en || "",
-          "description.ar": response.data!.description?.ar || "",
-          image: response.data!.image || null,
-          isVisible: response.data!.isVisible,
-          isFeatured: response.data!.isFeatured,
-          sortOrder: response.data!.sortOrder,
+          "name.en": data.name.en,
+          "name.ar": data.name.ar,
+          "description.en": data.description.en,
+          "description.ar": data.description.ar,
+          image: data!.image || null,
+          isVisible: data!.isVisible,
+          isFeatured: data!.isFeatured,
+          sortOrder: data!.sortOrder,
         });
       }
     } catch (err: any) {
@@ -91,18 +89,16 @@ export const EditForm: React.FC = () => {
     }
   };
 
-  const onSubmit = async (data: EditFormData) => {
+  const onSubmit = async (data: any) => {
     try {
       setIsLoading(true);
       setError("");
 
       const formData = new FormData();
-      formData.append("name.en", data["name.en"]);
-      formData.append("name.ar", data["name.ar"]);
-      formData.append("slug.en", data["slug.en"]);
-      formData.append("slug.ar", data["slug.ar"]);
-      formData.append("description.en", data["description.en"]);
-      formData.append("description.ar", data["description.ar"]);
+      formData.append("name.en", data["name"]["en"]);
+      formData.append("name.ar", data["name"]["ar"]);
+      formData.append("description.en", data["description"]["en"]);
+      formData.append("description.ar", data["description"]["ar"]);
       formData.append("isVisible", data.isVisible.toString());
       formData.append("isFeatured", data.isFeatured.toString());
       formData.append("sortOrder", data.sortOrder.toString());
@@ -113,10 +109,14 @@ export const EditForm: React.FC = () => {
         formData.append("removeImage", "true");
       }
 
-      const response = await categoryService.updateCategory(
+      const response = await new CategoryService().updateCategory(
         categoryId,
         formData,
       );
+      // const response = await categoryService.updateCategory(
+      //   categoryId,
+      //   formData,
+      // );
 
       if (response.success) {
         router.push("/admin/categories?success=Category updated successfully");
@@ -135,7 +135,7 @@ export const EditForm: React.FC = () => {
   if (!category) return <div>Loading...</div>;
 
   return (
-    <div className="bg-white rounded-lg shadow-lg p-6 max-w-4xl mx-auto">
+    <div className="bg-white rounded-lg shadow-lg p-6 x-max-w-4xl mx-auto">
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-2xl font-bold text-gray-900">Edit Category</h1>
         <button
@@ -166,75 +166,63 @@ export const EditForm: React.FC = () => {
             register={register}
             errors={errors}
           />
-
-          {/* <Input */}
-          {/*   label="English Name *" */}
-          {/*   name="name.en" */}
-          {/*   register={register} */}
-          {/*   error={errors["name.en"]} */}
-          {/* /> */}
-          {/* <Input */}
-          {/*   label="Arabic Name *" */}
-          {/*   name="name.ar" */}
-          {/*   register={register} */}
-          {/*   error={errors["name.ar"]} */}
-          {/*   dir="rtl" */}
-          {/* /> */}
-          {/* <Input */}
-          {/*   label="English Slug *" */}
-          {/*   name="slug.en" */}
-          {/*   register={register} */}
-          {/*   error={errors["slug.en"]} */}
-          {/* /> */}
-          {/* <Input */}
-          {/*   label="Arabic Slug *" */}
-          {/*   name="slug.ar" */}
-          {/*   register={register} */}
-          {/*   error={errors["slug.ar"]} */}
-          {/*   dir="rtl" */}
-          {/* /> */}
-          {/* <Textarea */}
-          {/*   label="English Description" */}
-          {/*   name="description.en" */}
-          {/*   register={register} */}
-          {/*   error={errors["description.en"]} */}
-          {/* /> */}
-          {/* <Textarea */}
-          {/*   label="Arabic Description" */}
-          {/*   name="description.ar" */}
-          {/*   register={register} */}
-          {/*   error={errors["description.ar"]} */}
-          {/*   dir="rtl" */}
-          {/* /> */}
+          <Textarea
+            label="English Description"
+            name="description.en"
+            register={register}
+            errors={errors}
+            placeholder=""
+            rows={3}
+            isNestable
+          />
+          <Textarea
+            label="Arabic Description"
+            name="description.ar"
+            register={register}
+            errors={errors}
+            placeholder=""
+            rows={3}
+            isNestable
+          />
         </div>
 
-        {/* <FileInput */}
-        {/*   label="Category Image" */}
-        {/*   name="image" */}
-        {/*   register={register} */}
-        {/*   setValue={setValue} */}
-        {/*   watch={watch} */}
-        {/*   error={errors.image} */}
-        {/* /> */}
+        {/* File Input */}
+        <FileInput
+          label="Image"
+          name="image"
+          register={register}
+          setValue={setValue}
+          watch={watch}
+          errors={errors}
+          accept="image/*"
+          maxSize={5 * 1024 * 1024}
+        />
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6  items-center">
+          {/* Visibility Toggle */}
+          <Checkbox
+            label="Visible to customers"
+            name="isVisible"
+            register={register}
+            errors={errors}
+          />
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {/* <Checkbox */}
-          {/*   label="Visible to customers" */}
-          {/*   name="isVisible" */}
-          {/*   register={register} */}
-          {/* /> */}
-          {/* <Checkbox */}
-          {/*   label="Featured category" */}
-          {/*   name="isFeatured" */}
-          {/*   register={register} */}
-          {/* /> */}
-          {/* <Input */}
-          {/*   label="Sort Order" */}
-          {/*   name="sortOrder" */}
-          {/*   type="number" */}
-          {/*   register={register} */}
-          {/*   error={errors.sortOrder} */}
-          {/* /> */}
+          {/* Featured Toggle */}
+          <Checkbox
+            label="Featured category"
+            name="isFeatured"
+            register={register}
+            errors={errors}
+          />
+
+          {/* Sort Order */}
+          <Input
+            label="Sort Order"
+            name="sortOrder"
+            type="number"
+            register={register}
+            errors={errors}
+            placeholder="0"
+          />
         </div>
 
         <div className="flex justify-end space-x-3 pt-6 border-t">
