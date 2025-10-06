@@ -10,7 +10,7 @@ export class CheckIfNamesAlreadyExistsUseCase
     this.repo = repo;
   }
   async execute(data: any): Promise<any> {
-    const category = await this.repo.getBrandByNames(data);
+    const category = await this.repo.findByNames(data);
     return category._size == 1 ? true : false;
   }
 }

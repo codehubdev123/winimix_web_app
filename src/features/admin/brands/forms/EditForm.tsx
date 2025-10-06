@@ -47,7 +47,7 @@ export const EditForm: React.FC = () => {
 
   const loadBrand = async () => {
     try {
-      const response = await new BrandService().findById(brandId);
+      const response = await new BrandService().getBrandById(brandId);
       if (response.data.success) {
         setBrand(response.data.data);
         let data = response.data.data;

@@ -13,8 +13,6 @@ export class BrandRepository implements IBrandContract {
   }
 
   async update(id: any, data: any): Promise<any> {
-    console.log("🔴🔴🔴🔴🔴🔴 #1 inside repo updateData ", data);
-
     // Always update the updatedAt timestamp
     // updateData.updatedAt = new Date().toISOString();
     const docRef = await adminDb
@@ -29,7 +27,7 @@ export class BrandRepository implements IBrandContract {
     return docRef;
   }
   // get by name en or ar
-  async getBrandByNames(data: any): Promise<any> {
+  async findByNames(data: any): Promise<any> {
     // Step 7: Check if brand with same slug already exists
     return await adminDb
       .collection(brandCollection)
