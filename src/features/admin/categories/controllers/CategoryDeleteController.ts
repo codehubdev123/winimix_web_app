@@ -91,7 +91,6 @@ export class CategoryDeleteController extends BaseController {
     await deleteImageFromFirebase(existingData.image);
     console.log("✅ Old image deleted from Firebase Storage");
     await this.deleteUseCase.execute(id);
-    revalidatePath("/admin/categories");
 
     return this.success({
       message: "Category deleted successfully",

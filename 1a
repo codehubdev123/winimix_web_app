@@ -2,10 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { BaseController } from "../../shared/BaseController";
 import { validateFormData } from "@/utils/validateFormData";
 import { EditCategorySchema } from "../validations/CreateCategotySchema";
-import {
-  deleteImageFromFirebase,
-  uploadImageToFirebase,
-} from "../../shared/firebaseStorage";
+import { deleteImageFromFirebase } from "../../shared/firebaseStorage";
 import { adminDb } from "@/lib/firebase-admin";
 import { categoryCollection } from "../../shared/collections/Collections";
 import { EditUseCase } from "../useCases/EditUseCase";
@@ -58,53 +55,42 @@ export class CategoryUpdateController extends BaseController {
     const imageFile = body.get("image") as File;
     const removeImage = body.get("removeImage") === "true";
     let imageUrl = existingData.image; // Start with existing image
-    console.log("🔴🔴🔴🔴🔴🔴 #touched here ", validatedData.data, {
+    console.log("🖼️ Image handling:", {
       hasImageFile: !!imageFile,
       removeImageFlag: removeImage,
       existingImage: existingData.image,
     });
+
     if (imageFile && imageFile.size > 0) {
-      console.log("🖼️ New image detected, starting upload...");
+      console.log("🖼️ Starting image upload...");
       // Upload image to Firebase Storage
       try {
-        // Delete old image ONLY if it exists
-        if (existingData.image) {
-          console.log("🗑️ Deleting old image:", existingData.image);
-          await deleteImageFromFirebase(existingData.image);
-          console.log("✅ Old image deleted successfully");
-        } else {
-          console.log(" No existing image to delete");
-        }
-        // Upload new image
-        imageUrl = await uploadImageToFirebase(imageFile, "categories");
-        console.log("✅ New image uploaded successfully:", imageUrl);
-        // // Delete old image
-        // // Explanation: Perform deletion
-        // await deleteImageFromFirebase(existingData.image);
-        // console.log("✅ Old image deleted from Firebase Storage");
-        // console.log("🔴🔴🔴🔴🔴🔴 HERE FROM TRY ");
-        // // imageUrl = await uploadImageToFirebase(imageFile, "categories");
-        // console.log("✅ Image uploaded successfully:", imageUrl);
+        // Delete old image
+        // Explanation: Perform deletion
+        await deleteImageFromFirebase(existingData.image);
+        console.log("✅ Old image deleted from Firebase Storage");
+        console.log("🔴🔴🔴🔴🔴🔴 HERE FROM TRY ");
+        // imageUrl = await uploadImageToFirebase(imageFile, "categories");
+        console.log("✅ Image uploaded successfully:", imageUrl);
       } catch (uploadError) {
         console.error("❌ Image upload failed:", uploadError);
         return this.error({
           message: "Field to upload image",
         });
       }
-    } else {
-      imageUrl = existingData.image;
     }
-    // Prepare update data
+    // return this.success({ message: "Message is here" });
+
+    // Explanation: Prepare update data with new timestamp
     const updateData = {
       ...validatedData.data,
-      image: imageUrl, // This will be either: new URL, null, or existing URL
       updatedAt: new Date(),
+      image: imageUrl, // url after uploaded to Firebase
     };
-    console.log("📤 Final update data:", updateData);
-    // Perform the update
+    // Explanation: Perform the update operation
+    //     await adminDb.collection(categoryCollection).doc(id).update(updateData);
     const docRef = await this.editUsecase.execute(id, updateData);
-
-    // Fetch updated document
+    // Explanation: Fetch updated document to return complete data
     const updatedDoc = await adminDb
       .collection(categoryCollection)
       .doc(id)

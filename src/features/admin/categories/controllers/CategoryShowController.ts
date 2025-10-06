@@ -20,6 +20,7 @@ import { categoryCollection } from "../../shared/collections/Collections";
 import { EditUseCase } from "../useCases/EditUseCase";
 import { CheckIfCategoryExistsUseCase } from "../useCases/CheckIfCategoryExistsUseCase";
 import { GetCategoryByIdUseCase } from "../useCases/GetCategoryByIdUseCase";
+import validationUtils from "../../shared/utils/ValidationUtils";
 
 export class CategoryShowController extends BaseController {
   private readonly getCategoryByIdUseCase: GetCategoryByIdUseCase;
@@ -37,18 +38,15 @@ export class CategoryShowController extends BaseController {
     // Explanation: Get language preference from query parameters
     const { searchParams } = new URL(req.url);
     // const language = searchParams.get("language") || "en";
-    const { id } = params;
+    const { id } = await params;
 
     // Explanation: Validate category ID format
-    if (!id || typeof id !== "string") {
-      return NextResponse.json(
-        {
-          success: false,
-          message: "Invalid category ID",
-          errors: ["Category ID is required and must be a string"],
-        },
-        { status: 400 },
-      );
+    const isValidId = validationUtils.validateId(id);
+    if (!isValidId) {
+      return this.error({
+        message: "Invalid category ID",
+        errors: ["Category ID is required and must be a string"],
+      });
     }
     //   // Explanation: Fetch category document from Firestore
     //   const doc = await adminDb.collection("categories").doc(id).get();

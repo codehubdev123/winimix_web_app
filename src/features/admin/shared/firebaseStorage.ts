@@ -56,34 +56,88 @@ export async function uploadImageToFirebase(
   }
 }
 
-/**
- * Delete image from Firebase Storage
- */
-export async function deleteImageFromFirebase(imageUrl: string): Promise<void> {
+export async function deleteImageFromFirebase(
+  imageUrl: string | null,
+): Promise<void> {
   try {
+    // Check if imageUrl is valid
+    if (!imageUrl) {
+      console.log("ℹ️ No image URL provided, skipping deletion");
+      return;
+    }
+
+    // Check if it's a valid Firebase Storage URL
+    if (!imageUrl.includes("storage.googleapis.com")) {
+      console.log(
+        "ℹ️ Not a Firebase Storage URL, skipping deletion:",
+        imageUrl,
+      );
+      return;
+    }
+
     console.log("🗑️ Deleting image from Firebase Storage:", imageUrl);
 
     const bucket = admin.storage().bucket();
 
-    // Extract file path from URL
+    // Extract file path from URL safely
     const urlParts = imageUrl.split("/");
     const fileName = urlParts[urlParts.length - 1];
     const folder = urlParts[urlParts.length - 2];
-    const filePath = `${folder}/${fileName}`;
 
+    // Validate extracted parts
+    if (!folder || !fileName) {
+      console.warn("⚠️ Could not extract valid file path from URL:", imageUrl);
+      return;
+    }
+
+    const filePath = `${folder}/${fileName}`;
     console.log(`📁 File path to delete: ${filePath}`);
+
+    // Check if file exists before deleting
+    const [exists] = await bucket.file(filePath).exists();
+    if (!exists) {
+      console.log("ℹ️ File does not exist in storage, skipping deletion");
+      return;
+    }
 
     // Delete file from storage
     await bucket.file(filePath).delete();
-
     console.log("✅ Image deleted successfully from Firebase Storage");
   } catch (error) {
     console.error("❌ Firebase Storage deletion error:", error);
-    throw new Error(
-      `Failed to delete image: ${error instanceof Error ? error.message : "Unknown error"}`,
-    );
+    // Don't throw error - just log it and continue
+    console.log("⚠️ Image deletion failed, but continuing with update");
   }
 }
+
+/**
+ * Delete image from Firebase Storage
+ */
+// export async function deleteImageFromFirebase(imageUrl: string): Promise<void> {
+//   try {
+//     console.log("🗑️ Deleting image from Firebase Storage:", imageUrl);
+//
+//     const bucket = admin.storage().bucket();
+//
+//     // Extract file path from URL
+//     const urlParts = imageUrl.split("/");
+//     const fileName = urlParts[urlParts.length - 1];
+//     const folder = urlParts[urlParts.length - 2];
+//     const filePath = `${folder}/${fileName}`;
+//
+//     console.log(`📁 File path to delete: ${filePath}`);
+//
+//     // Delete file from storage
+//     await bucket.file(filePath).delete();
+//
+//     console.log("✅ Image deleted successfully from Firebase Storage");
+//   } catch (error) {
+//     console.error("❌ Firebase Storage deletion error:", error);
+//     throw new Error(
+//       `Failed to delete image: ${error instanceof Error ? error.message : "Unknown error"}`,
+//     );
+//   }
+// }
 
 /**
  * Validate image file before upload

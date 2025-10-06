@@ -11,6 +11,7 @@ import { Checkbox } from "@/components/inputs/Checkbox";
 import { Save, X, Loader } from "lucide-react";
 import { CategoryService } from "../services/CategoryService";
 import { FileInput } from "@/components/inputs/FileInput";
+import { ElegantPageLoader } from "@/components/loaders/ElegantPageLoader";
 
 const editCategorySchema = yup.object({
   "name.en": yup.string().required("English name is required").min(2),
@@ -113,13 +114,17 @@ export const EditForm: React.FC = () => {
         categoryId,
         formData,
       );
-      // const response = await categoryService.updateCategory(
-      //   categoryId,
-      //   formData,
-      // );
 
-      if (response.success) {
-        router.push("/admin/categories?success=Category updated successfully");
+      if (response.data.success) {
+        // Use encodeURIComponent to handle special characters in messages
+        const successMessage = encodeURIComponent(
+          "Category updated successfully",
+        );
+        router.push(`/admin/categories?success=${successMessage}`);
+        router.refresh();
+
+        // router.push("/admin/categories?success=Category updated successfully");
+        // router.refresh(); // Add this to refresh the page
       } else {
         setError(response.message || "Failed to update category");
       }
@@ -131,6 +136,9 @@ export const EditForm: React.FC = () => {
       setIsLoading(false);
     }
   };
+  if (isLoading) {
+    return <ElegantPageLoader text="Creating ..." subtitle="Redirecting ..." />;
+  }
 
   if (!category) return <div>Loading...</div>;
 

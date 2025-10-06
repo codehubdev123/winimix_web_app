@@ -11,6 +11,7 @@ import { Checkbox } from "@/components/inputs/Checkbox";
 import { Save, X, Loader } from "lucide-react";
 import { CreateCategorySchema } from "../validations/CreateCategotySchema";
 import { CategoryService } from "../services/CategoryService";
+import { ElegantPageLoader } from "@/components/loaders/ElegantPageLoader";
 
 export const CreateForm = () => {
   const router = useRouter();
@@ -102,6 +103,15 @@ export const CreateForm = () => {
       setIsLoading(false);
     }
   };
+
+  if (isLoading) {
+    return (
+      <ElegantPageLoader
+        text="Creating Category"
+        subtitle="Redirecting to categories page..."
+      />
+    );
+  }
 
   const onError = (errors: any) => {
     console.log("❌ Form validation errors:", errors);

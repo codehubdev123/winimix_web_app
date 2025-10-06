@@ -1,17 +1,11 @@
 import { NextRequest } from "next/server";
 import { BaseController } from "../../shared/BaseController";
-import { validateYup } from "@/utils/validateYupUtils";
-import { formDataToJson, formDataToObject } from "@/utils/formDataUtils";
 import { validateFormData } from "@/utils/validateFormData";
 import { CheckIfNamesAlreadyExistsUseCase } from "../useCases/CheckIfNamesAlreadyExists";
 import { STATUS_EXISTS } from "../../shared/Statuses";
 import { CreateUseCase } from "../useCases/CreateUseCase";
 import { CreateCategorySchema } from "../validations/CreateCategotySchema";
-import {
-  uploadImageToFirebase,
-  validateImageFile,
-} from "../../shared/firebaseStorage";
-import firebase from "firebase/compat/app";
+import { uploadImageToFirebase } from "../../shared/firebaseStorage";
 
 export class CategoryCreateController extends BaseController {
   private readonly checkIfNamesAlreadyExistsUseCase: CheckIfNamesAlreadyExistsUseCase;
@@ -30,9 +24,6 @@ export class CategoryCreateController extends BaseController {
     const body = await req.formData();
     const validatedData = await validateFormData(CreateCategorySchema, body);
     // if using json use validations like that
-    // const jsonData = await request.json();
-    // validatedData = await validateFormData(categoryFormDataSchema, jsonData as any);
-    // const formData = formDataToObject(body);
     // check validations status
     if (!validatedData.success) {
       return this.error({
@@ -54,23 +45,6 @@ export class CategoryCreateController extends BaseController {
       });
     }
     // Step 8: Handle file upload if image is a File object
-    // if (validatedData.files?.image) {
-    //   const imageFile = validatedData.files.image;
-    //   console.log("🖼️ Processing image file:", imageFile.name);
-    //   // Here you would upload to Firebase Storage
-    //   // For now, we'll just store the file name
-    //   validatedData.image = imageFile.name;
-    // }
-    // Handle image upload if provided
-    // Validate image file before upload
-    // const validation = validateImageFile(validatedData.image);
-    // if (!validation.isValid) {
-    //   console.log("🔴🔴🔴🔴🔴🔴 errors upload ", validation.error);
-    //   return this.error({
-    //     message: validation.error,
-    //   });
-    // }
-
     // Upload image to Firebase Storage
     let imageUrl = "";
 
@@ -95,10 +69,6 @@ export class CategoryCreateController extends BaseController {
         en: validatedData.data.name.en,
         ar: validatedData.data.name.ar,
       },
-      //   slug: {
-      //     en: validatedData["slug.en"],
-      //     ar: validatedData["slug.ar"],
-      //   },
       description: {
         en: validatedData.data.description.en,
         ar: validatedData.data.description.ar,

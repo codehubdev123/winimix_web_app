@@ -1,3 +1,4 @@
+import { SuccessMessage } from "@/components/alerts/SuccessMessage";
 import { CategoryService } from "@/features/admin/categories/services/CategoryService";
 import { Table } from "@/features/admin/categories/tables/Table";
 
@@ -10,6 +11,8 @@ interface CategoriesPageProps {
     isFeatured?: string;
     sortBy?: string;
     sortOrder?: "asc" | "desc";
+    success?: string; // Add success parameter
+    error?: string; // Add error parameter if needed
   }>;
 }
 
@@ -29,6 +32,8 @@ export default async function CategoriesPage({
     : undefined;
   const sortBy = params.sortBy || "createdAt";
   const sortOrder = params.sortOrder || "desc";
+  const successMessage = params.success; // Get success message
+  const errorMessage = params.error; // Get error message
 
   try {
     // Fetch categories from the server
@@ -48,6 +53,13 @@ export default async function CategoriesPage({
 
     return (
       <div className="space-y-6">
+        {/* Success Message */}
+        {successMessage && (
+          <SuccessMessage
+            message={successMessage}
+            duration={5000} // Auto dismiss after 5 seconds
+          />
+        )}
         <Table
           initialCategories={response.data}
           initialPagination={response.pagination}

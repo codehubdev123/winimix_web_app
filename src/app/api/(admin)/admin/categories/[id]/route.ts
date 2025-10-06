@@ -108,7 +108,7 @@ export async function GET(
 export async function PUT(req: NextRequest, { params }: RouteParams) {
   const app = new CategoryUpdateController(
     new EditUseCase(new CategoryRepository()),
-    new CheckIfCategoryExistsUseCase(new CategoryRepository()),
+    new GetCategoryByIdUseCase(new CategoryRepository()),
   );
   return await app.execute(req, params);
 
