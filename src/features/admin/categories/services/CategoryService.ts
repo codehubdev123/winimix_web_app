@@ -6,7 +6,6 @@ import {
   api_admin_category_edit,
   api_admin_category_show,
 } from "../../shared/apiAdmin";
-import { categoryUpdateSchema } from "@/validations/categoryValidation";
 
 // Type definitions for Category
 export interface Category {

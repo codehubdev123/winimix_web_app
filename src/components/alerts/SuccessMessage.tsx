@@ -128,7 +128,7 @@ export const SuccessMessage: React.FC<BeautifulSuccessMessageProps> = ({
 
       {/* Progress bar for auto-dismiss */}
       {duration > 0 && (
-        <div className="mt-3 w-full bg-gray-200 rounded-full h-1">
+        <div className="mt-3 w-full bg-green-200 rounded-full h-1">
           <div
             className={`h-1 rounded-full ${type === "success" ? "bg-green-500" : type === "info" ? "bg-blue-500" : "bg-amber-500"} transition-all duration-${duration} ease-linear`}
             style={{

@@ -12,11 +12,11 @@ import {
   Plus,
 } from "lucide-react";
 import { AlertDialog } from "@/components/alerts/AlertDialog";
+import { BrandService } from "../services/BrandService";
 import ImageModal from "@/components/models/ImageModal";
-import { CategoryService } from "../services/CategoryService";
 
 interface TableProps {
-  initialCategories: [];
+  initialBrands: [];
   initialPagination?: any;
   initialFilters?: {
     search?: string;
@@ -28,7 +28,7 @@ interface TableProps {
 }
 
 export const Table: React.FC<TableProps> = ({
-  initialCategories,
+  initialBrands,
   initialPagination,
   initialFilters = {},
 }) => {
@@ -37,16 +37,16 @@ export const Table: React.FC<TableProps> = ({
   const searchParams = useSearchParams();
   const [selectedImage, setSelectedImage] = useState(null);
 
-  const [categories, setCategories] = useState<Category[]>(initialCategories);
+  const [brands, setBrands] = useState<[]>(initialBrands);
   const [pagination, setPagination] = useState(initialPagination);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const [deleteDialog, setDeleteDialog] = useState<{
     isOpen: boolean;
-    category: Category | null;
+    brand: [] | null;
   }>({
     isOpen: false,
-    category: null,
+    brand: null,
   });
 
   const [filters, setFilters] = useState({
@@ -85,21 +85,21 @@ export const Table: React.FC<TableProps> = ({
       setIsLoading(true);
       setError("");
 
-      const response = await new CategoryService().getCategories({
+      const response = await new BrandService().getBrands({
         page: 1,
         limit: pagination?.limit || 10,
         ...newFilters,
       });
 
       if (response.success) {
-        setCategories(response.data);
+        setBrands(response.data);
         setPagination(response.pagination);
         updateURL(newFilters);
       } else {
-        setError(response.message || "Failed to load categories");
+        setError(response.message || "Failed to load brands");
       }
     } catch (err: any) {
-      setError(err.message || "Failed to load categories");
+      setError(err.message || "Failed to load brands");
     } finally {
       setIsLoading(false);
     }
@@ -112,20 +112,18 @@ export const Table: React.FC<TableProps> = ({
     handleSearch(newFilters);
   };
 
-  // Toggle category visibility
-  const handleToggleVisibility = async (category: any) => {
+  // Toggle brand visibility
+  const handleToggleVisibility = async (brand: any) => {
     try {
-      const response = await new CategoryService().toggleVisibility(
-        category.id,
-        category,
+      const response = await new BrandService().toggleVisibility(
+        brand.id,
+        brand,
       );
       if (response.data.success) {
         // Update local state immediately for better UX
-        setCategories((prev) =>
-          prev.map((cat) =>
-            cat.id === category.id
-              ? { ...cat, isVisible: !category.isVisible }
-              : cat,
+        setBrands((prev: any) =>
+          prev.map((cat: any) =>
+            cat.id === brand.id ? { ...cat, isVisible: !brand.isVisible } : cat,
           ),
         );
       } else {
@@ -137,19 +135,16 @@ export const Table: React.FC<TableProps> = ({
   };
 
   // Toggle featured status
-  const handleToggleFeatured = async (category: any) => {
+  const handleToggleFeatured = async (brand: {}) => {
     try {
-      const response = await new CategoryService().toggleFeatured(
-        category.id,
-        category,
-      );
+      const response = await new BrandService().toggleFeatured(brand.id, brand);
 
       if (response.data.success) {
         // Update local state immediately for better UX
-        setCategories((prev) =>
+        setBrands((prev) =>
           prev.map((cat) =>
-            cat.id === category.id
-              ? { ...cat, isFeatured: !category.isFeatured }
+            cat.id === brand.id
+              ? { ...cat, isFeatured: !brand.isFeatured }
               : cat,
           ),
         );
@@ -161,23 +156,23 @@ export const Table: React.FC<TableProps> = ({
     }
   };
 
-  // Handle delete category
-  const handleDelete = (category: any) => {
-    setDeleteDialog({ isOpen: true, category });
+  // Handle delete brand
+  const handleDelete = (brand: {}) => {
+    setDeleteDialog({ isOpen: true, brand });
   };
 
   // Confirm delete - UPDATED WITH WORKING REFRESH
   const confirmDelete = async () => {
-    if (!deleteDialog.category) return;
+    if (!deleteDialog.brand) return;
 
-    const categoryId = deleteDialog.category.id;
+    const brandId = deleteDialog.brand.id;
 
     // OPTIMISTIC UPDATE: Remove from UI immediately
-    setCategories((prev) => prev.filter((cat) => cat.id !== categoryId));
-    setDeleteDialog({ isOpen: false, category: null });
+    setBrands((prev) => prev.filter((cat) => cat.id !== brandId));
+    setDeleteDialog({ isOpen: false, brand: null });
 
     try {
-      const response = await new CategoryService().deleteCategory(categoryId);
+      const response = await new BrandService().deleteBrand(brandId);
 
       if (response.data.success) {
         // SUCCESS: Use router.replace to refresh the page without adding to history
@@ -187,46 +182,46 @@ export const Table: React.FC<TableProps> = ({
         // router.push(pathname + '?t=' + Date.now());
       } else {
         // FAILED: Revert optimistic update
-        setCategories(initialCategories);
-        setError(response.message || "Failed to delete category");
+        setBrands(initialBrands);
+        setError(response.message || "Failed to delete brand");
       }
     } catch (err: any) {
       // ERROR: Revert optimistic update
-      setCategories(initialCategories);
-      setError(err.message || "Failed to delete category");
+      setBrands(initialBrands);
+      setError(err.message || "Failed to delete brand");
     }
   };
 
   // Alternative delete method using manual refetch - CHOOSE ONE
   const confirmDeleteWithRefetch = async () => {
-    if (!deleteDialog.category) return;
+    if (!deleteDialog.brand) return;
 
     try {
-      const response = await new CategoryService().deleteCategory(
-        deleteDialog.category.id,
+      const response = await new BrandService().deleteBrand(
+        deleteDialog.brand.id,
       );
 
       if (response.data.success) {
-        setDeleteDialog({ isOpen: false, category: null });
+        setDeleteDialog({ isOpen: false, brand: null });
 
         // MANUAL REFETCH: Re-fetch the data using your existing handleSearch
         await handleSearch(filters);
       } else {
-        setError(response.message || "Failed to delete category");
+        setError(response.message || "Failed to delete brand");
       }
     } catch (err: any) {
-      setError(err.message || "Failed to delete category");
+      setError(err.message || "Failed to delete brand");
     }
   };
 
-  // Create new category
+  // Create new brand
   const handleCreateNew = () => {
-    router.push("/admin/categories/create");
+    router.push("/admin/brands/create");
   };
 
-  // Edit category
-  const handleEdit = (category: any) => {
-    router.push(`/admin/categories/${category.id}/edit`);
+  // Edit brand
+  const handleEdit = (brand: {}) => {
+    router.push(`/admin/brands/${brand.id}/edit`);
   };
 
   // Clear all filters
@@ -254,15 +249,15 @@ export const Table: React.FC<TableProps> = ({
   };
 
   // Get status badge
-  const getStatusBadge = (category: any) => {
-    if (!category.isVisible) {
+  const getStatusBadge = (brand: {}) => {
+    if (!brand.isVisible) {
       return (
         <span className="px-2 py-1 bg-red-100 text-red-800 text-xs rounded-full">
           Hidden
         </span>
       );
     }
-    if (category.isFeatured) {
+    if (brand.isFeatured) {
       return (
         <span className="px-2 py-1 bg-yellow-100 text-yellow-800 text-xs rounded-full">
           Featured
@@ -301,11 +296,11 @@ export const Table: React.FC<TableProps> = ({
           {/* Title and Create Button */}
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center">
             <div>
-              <h2 className="text-2xl font-bold text-gray-900">Categories</h2>
+              <h2 className="text-2xl font-bold text-gray-900">Brands</h2>
               <p className="text-sm text-gray-600">
                 {pagination
-                  ? `Showing ${categories?.length} of ${pagination.total} categories`
-                  : "Manage your categories"}
+                  ? `Showing ${brands?.length} of ${pagination.total} brands`
+                  : "Manage your brands"}
               </p>
             </div>
 
@@ -314,7 +309,7 @@ export const Table: React.FC<TableProps> = ({
               className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 mt-4 sm:mt-0"
             >
               <Plus size={16} className="mr-2" />
-              New Category
+              New Brand
             </button>
           </div>
 
@@ -496,24 +491,24 @@ export const Table: React.FC<TableProps> = ({
                     <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
                   </div>
                   <p className="mt-2 text-sm text-gray-600">
-                    Loading categories...
+                    Loading brands...
                   </p>
                 </td>
               </tr>
-            ) : categories?.length === 0 ? (
+            ) : brands?.length === 0 ? (
               <tr>
                 <td colSpan={6} className="px-6 py-12 text-center">
                   <div className="text-gray-400">
                     <Search size={48} className="mx-auto mb-4" />
                     <p className="text-lg font-medium text-gray-900">
-                      No categories found
+                      No brands found
                     </p>
                     <p className="text-gray-600">
                       {filters.search ||
                       filters.isVisible !== undefined ||
                       filters.isFeatured !== undefined
                         ? "Try adjusting your search or filters"
-                        : "Get started by creating your first category"}
+                        : "Get started by creating your first brand"}
                     </p>
                     {!filters.search &&
                       filters.isVisible === undefined &&
@@ -523,27 +518,27 @@ export const Table: React.FC<TableProps> = ({
                           className="mt-4 inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
                         >
                           <Plus size={16} className="mr-2" />
-                          Create Category
+                          Create Brand
                         </button>
                       )}
                   </div>
                 </td>
               </tr>
             ) : (
-              categories?.map((category) => (
-                <tr key={category.id} className="hover:bg-gray-50">
+              brands?.map((brand) => (
+                <tr key={brand.id} className="hover:bg-gray-50">
                   {/* Image */}
                   <td className="px-6 py-4 whitespace-nowrap">
-                    {category.image ? (
+                    {brand.image ? (
                       <div
                         className="h-12 w-12 rounded-lg overflow-hidden border cursor-zoom-in hover:opacity-80 transition-opacity"
                         onClick={() =>
-                          handleImageClick(category.image, category.name.en)
+                          handleImageClick(brand.image, brand.name.en)
                         }
                       >
                         <img
-                          src={category.image}
-                          alt={category.name.en}
+                          src={brand.image}
+                          alt={brand.name.en}
                           className="h-full w-full object-cover"
                         />
                       </div>
@@ -557,28 +552,28 @@ export const Table: React.FC<TableProps> = ({
                   {/* Name */}
                   <td className="px-6 py-4">
                     <div className="text-sm font-medium text-gray-900">
-                      {category.name.en}
+                      {brand.name.en}
                     </div>
                     <div className="text-xs text-gray-400 mt-1">
-                      {/* Slug: {category.slug.en} */}
+                      {/* Slug: {brand.slug.en} */}
                     </div>
                   </td>
 
                   {/* Status */}
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="flex items-center space-x-2">
-                      {getStatusBadge(category)}
+                      {getStatusBadge(brand)}
                       <div className="flex space-x-1">
                         <button
-                          onClick={() => handleToggleVisibility(category)}
+                          onClick={() => handleToggleVisibility(brand)}
                           className={`p-1 rounded ${
-                            category.isVisible
+                            brand.isVisible
                               ? "text-green-600 hover:text-green-800"
                               : "text-gray-400 hover:text-gray-600"
                           }`}
-                          title={category.isVisible ? "Hide" : "Show"}
+                          title={brand.isVisible ? "Hide" : "Show"}
                         >
-                          {category.isVisible ? (
+                          {brand.isVisible ? (
                             <Eye size={16} />
                           ) : (
                             <EyeOff size={16} />
@@ -586,21 +581,21 @@ export const Table: React.FC<TableProps> = ({
                         </button>
 
                         <button
-                          onClick={() => handleToggleFeatured(category)}
+                          onClick={() => handleToggleFeatured(brand)}
                           className={`p-1 rounded ${
-                            category.isFeatured
+                            brand.isFeatured
                               ? "text-yellow-600 hover:text-yellow-800"
                               : "text-gray-400 hover:text-gray-600"
                           }`}
                           title={
-                            category.isFeatured
+                            brand.isFeatured
                               ? "Remove featured"
                               : "Make featured"
                           }
                         >
                           <Star
                             size={16}
-                            fill={category.isFeatured ? "currentColor" : "none"}
+                            fill={brand.isFeatured ? "currentColor" : "none"}
                           />
                         </button>
                       </div>
@@ -609,24 +604,24 @@ export const Table: React.FC<TableProps> = ({
 
                   {/* Sort Order */}
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                    {category.sortOrder}
+                    {brand.sortOrder}
                   </td>
 
                   {/* Actions */}
                   <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                     <div className="flex justify-end space-x-2">
                       <button
-                        onClick={() => handleEdit(category)}
+                        onClick={() => handleEdit(brand)}
                         className="text-blue-600 hover:text-blue-900 p-1 rounded transition-colors cursor-pointer"
-                        title="Edit category"
+                        title="Edit brand"
                       >
                         <Edit2 size={16} />
                       </button>
 
                       <button
-                        onClick={() => handleDelete(category)}
+                        onClick={() => handleDelete(brand)}
                         className="text-red-600 hover:text-red-900 p-1 rounded transition-colors cursor-pointer"
-                        title="Delete category"
+                        title="Delete brand"
                       >
                         <Trash2 size={16} />
                       </button>
@@ -686,10 +681,10 @@ export const Table: React.FC<TableProps> = ({
       {/* Delete Confirmation Dialog */}
       <AlertDialog
         isOpen={deleteDialog.isOpen}
-        title="Delete Category"
-        message={`Are you sure you want to delete "${deleteDialog.category?.name.en}"? This action cannot be undone.`}
+        title="Delete Brand"
+        message={`Are you sure you want to delete "${deleteDialog.brand?.name.en}"? This action cannot be undone.`}
         onConfirm={confirmDelete} // Use the optimistic update version
-        onCancel={() => setDeleteDialog({ isOpen: false, category: null })}
+        onCancel={() => setDeleteDialog({ isOpen: false, brand: null })}
         confirmText="Delete"
         cancelText="Cancel"
         variant="danger"

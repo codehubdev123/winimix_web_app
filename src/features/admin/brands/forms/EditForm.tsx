@@ -1,42 +1,20 @@
 "use client";
 import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
 import { useRouter, useParams } from "next/navigation";
-import { categoryService, Category } from "@/services/categoryService";
+import { Brand } from "@/services/brandService";
 import { Input } from "@/components/inputs/Input";
 import { Textarea } from "@/components/inputs/Textarea";
 import { Checkbox } from "@/components/inputs/Checkbox";
 import { Save, X, Loader } from "lucide-react";
-import { CategoryService } from "../services/CategoryService";
+import { BrandService } from "../services/BrandService";
 import { FileInput } from "@/components/inputs/FileInput";
 import { ElegantPageLoader } from "@/components/loaders/ElegantPageLoader";
-
-const editCategorySchema = yup.object({
-  "name.en": yup.string().required("English name is required").min(2),
-  "name.ar": yup.string().required("Arabic name is required").min(2),
-  "slug.en": yup
-    .string()
-    .required("English slug is required")
-    .matches(/^[a-z0-9-]+$/),
-  "slug.ar": yup
-    .string()
-    .required("Arabic slug is required")
-    .matches(/^[a-z0-9-]+$/),
-  "description.en": yup.string().optional().max(500),
-  "description.ar": yup.string().optional().max(500),
-  image: yup.mixed().nullable(),
-  isVisible: yup.boolean().default(true),
-  isFeatured: yup.boolean().default(false),
-  sortOrder: yup.number().min(0).default(0),
-});
+import { route_admin_brands } from "@/routes/admin";
 
 type EditFormData = {
   "name.en": string;
   "name.ar": string;
-  "slug.en": string;
-  "slug.ar": string;
   "description.en": string;
   "description.ar": string;
   image: File | string | null;
@@ -48,10 +26,10 @@ type EditFormData = {
 export const EditForm: React.FC = () => {
   const router = useRouter();
   const params = useParams();
-  const categoryId = params.id as string;
+  const brandId = params.id as string;
 
   const [isLoading, setIsLoading] = React.useState(false);
-  const [category, setCategory] = React.useState<Category | null>(null);
+  const [brand, setBrand] = React.useState<Brand | null>(null);
   const [error, setError] = React.useState("");
 
   const {
@@ -64,14 +42,14 @@ export const EditForm: React.FC = () => {
   } = useForm<EditFormData>();
 
   useEffect(() => {
-    loadCategory();
-  }, [categoryId]);
+    loadBrand();
+  }, [brandId]);
 
-  const loadCategory = async () => {
+  const loadBrand = async () => {
     try {
-      const response = await new CategoryService().getCategoryById(categoryId);
+      const response = await new BrandService().findById(brandId);
       if (response.data.success) {
-        setCategory(response.data.data);
+        setBrand(response.data.data);
         let data = response.data.data;
         reset({
           "name.en": data.name.en,
@@ -85,7 +63,7 @@ export const EditForm: React.FC = () => {
         });
       }
     } catch (err: any) {
-      // setError("Failed to load category");
+      // setError("Failed to load brand");
     }
   };
 
@@ -105,27 +83,19 @@ export const EditForm: React.FC = () => {
 
       if (data.image instanceof File) {
         formData.append("image", data.image);
-      } else if (!data.image && category?.image) {
+      } else if (!data.image && brand?.image) {
         formData.append("removeImage", "true");
       }
 
-      const response = await new CategoryService().updateCategory(
-        categoryId,
-        formData,
-      );
+      const response = await new BrandService().updateBrand(brandId, formData);
 
       if (response.data.success) {
         // Use encodeURIComponent to handle special characters in messages
-        const successMessage = encodeURIComponent(
-          "Category updated successfully",
-        );
-        router.push(`/admin/categories?success=${successMessage}`);
+        const successMessage = encodeURIComponent("Brand updated successfully");
+        router.push(`/admin/brands?success=${successMessage}`);
         router.refresh();
-
-        // router.push("/admin/categories?success=Category updated successfully");
-        // router.refresh(); // Add this to refresh the page
       } else {
-        setError(response.message || "Failed to update category");
+        setError(response.message || "Failed to update brand");
       }
     } catch (err: any) {
       setError(
@@ -139,14 +109,14 @@ export const EditForm: React.FC = () => {
     return <ElegantPageLoader text="Creating ..." subtitle="Redirecting ..." />;
   }
 
-  if (!category) return <div>Loading...</div>;
+  if (!brand) return <div>Loading...</div>;
 
   return (
     <div className="bg-white rounded-lg shadow-lg p-6 x-max-w-4xl mx-auto">
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold text-gray-900">Edit Category</h1>
+        <h1 className="text-2xl font-bold text-gray-900">Edit Brand</h1>
         <button
-          onClick={() => router.push("/admin/categories")}
+          onClick={() => router.push(route_admin_brands)}
           className="p-2 hover:bg-gray-100 rounded-full"
         >
           <X size={20} />
@@ -215,7 +185,7 @@ export const EditForm: React.FC = () => {
 
           {/* Featured Toggle */}
           <Checkbox
-            label="Featured category"
+            label="Featured brand"
             name="isFeatured"
             register={register}
             errors={errors}
@@ -235,7 +205,7 @@ export const EditForm: React.FC = () => {
         <div className="flex justify-end space-x-3 pt-6 border-t">
           <button
             type="button"
-            onClick={() => router.push("/admin/categories")}
+            onClick={() => router.push(route_admin_brands)}
             disabled={isLoading}
             className="px-6 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50"
           >
@@ -251,7 +221,7 @@ export const EditForm: React.FC = () => {
             ) : (
               <Save size={16} className="mr-2" />
             )}
-            {isLoading ? "Updating..." : "Update Category"}
+            {isLoading ? "Updating..." : "Update Brand"}
           </button>
         </div>
       </form>

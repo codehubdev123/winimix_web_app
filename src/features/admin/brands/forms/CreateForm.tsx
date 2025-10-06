@@ -1,99 +1,68 @@
 "use client";
-import React, { useEffect } from "react";
+import React from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
-import { useRouter, useParams } from "next/navigation";
-import { categoryService, Category } from "@/services/categoryService";
+import { useRouter } from "next/navigation";
 import { Input } from "@/components/inputs/Input";
 import { Textarea } from "@/components/inputs/Textarea";
+import { FileInput } from "@/components/inputs/FileInput";
 import { Checkbox } from "@/components/inputs/Checkbox";
 import { Save, X, Loader } from "lucide-react";
-import { CategoryService } from "../services/CategoryService";
-import { FileInput } from "@/components/inputs/FileInput";
+import { CreateBrandSchema } from "../validations/CreateBrandSchema";
+import { BrandService } from "../services/BrandService";
 import { ElegantPageLoader } from "@/components/loaders/ElegantPageLoader";
+import { route_admin_brands } from "@/routes/admin";
 
-const editCategorySchema = yup.object({
-  "name.en": yup.string().required("English name is required").min(2),
-  "name.ar": yup.string().required("Arabic name is required").min(2),
-  "slug.en": yup
-    .string()
-    .required("English slug is required")
-    .matches(/^[a-z0-9-]+$/),
-  "slug.ar": yup
-    .string()
-    .required("Arabic slug is required")
-    .matches(/^[a-z0-9-]+$/),
-  "description.en": yup.string().optional().max(500),
-  "description.ar": yup.string().optional().max(500),
-  image: yup.mixed().nullable(),
-  isVisible: yup.boolean().default(true),
-  isFeatured: yup.boolean().default(false),
-  sortOrder: yup.number().min(0).default(0),
-});
-
-type EditFormData = {
-  "name.en": string;
-  "name.ar": string;
-  "slug.en": string;
-  "slug.ar": string;
-  "description.en": string;
-  "description.ar": string;
-  image: File | string | null;
-  isVisible: boolean;
-  isFeatured: boolean;
-  sortOrder: number;
-};
-
-export const EditForm: React.FC = () => {
+export const CreateForm = () => {
   const router = useRouter();
-  const params = useParams();
-  const categoryId = params.id as string;
-
   const [isLoading, setIsLoading] = React.useState(false);
-  const [category, setCategory] = React.useState<Category | null>(null);
   const [error, setError] = React.useState("");
 
   const {
     register,
     handleSubmit,
+    reset,
     setValue,
     watch,
-    reset,
-    formState: { errors },
-  } = useForm<EditFormData>();
+    formState: { errors, isSubmitting },
+    trigger,
+  } = useForm<any>({
+    mode: "onSubmit",
+    resolver: yupResolver(CreateBrandSchema as any),
+    defaultValues: {
+      name: {
+        en: "",
+        ar: "",
+      },
+      description: {
+        en: "",
+        ar: "",
+      },
+      image: null,
+      isVisible: true,
+      isFeatured: false,
+      sortOrder: 0,
+    },
+  });
 
-  useEffect(() => {
-    loadCategory();
-  }, [categoryId]);
+  const generateSlug = (text: string, field: "en" | "ar") => {
+    if (!text) return;
 
-  const loadCategory = async () => {
-    try {
-      const response = await new CategoryService().getCategoryById(categoryId);
-      if (response.data.success) {
-        setCategory(response.data.data);
-        let data = response.data.data;
-        reset({
-          "name.en": data.name.en,
-          "name.ar": data.name.ar,
-          "description.en": data.description.en,
-          "description.ar": data.description.ar,
-          image: data!.image || null,
-          isVisible: data!.isVisible,
-          isFeatured: data!.isFeatured,
-          sortOrder: data!.sortOrder,
-        });
-      }
-    } catch (err: any) {
-      // setError("Failed to load category");
-    }
+    const slug = text
+      .toLowerCase()
+      .replace(/[^a-z0-9 -]/g, "")
+      .replace(/\s+/g, "-")
+      .replace(/-+/g, "-")
+      .trim();
+
+    setValue(`slug.${field}`, slug);
+    trigger(`slug.${field}`);
   };
 
-  const onSubmit = async (data: any) => {
+  const onSubmit = async (data: CreateFormData) => {
     try {
       setIsLoading(true);
-      setError("");
-
+      // setError("");
       const formData = new FormData();
       formData.append("name.en", data["name"]["en"]);
       formData.append("name.ar", data["name"]["ar"]);
@@ -105,89 +74,118 @@ export const EditForm: React.FC = () => {
 
       if (data.image instanceof File) {
         formData.append("image", data.image);
-      } else if (!data.image && category?.image) {
-        formData.append("removeImage", "true");
       }
 
-      const response = await new CategoryService().updateCategory(
-        categoryId,
-        formData,
-      );
-
+      const response = await new BrandService().create(formData);
       if (response.data.success) {
-        // Use encodeURIComponent to handle special characters in messages
-        const successMessage = encodeURIComponent(
-          "Category updated successfully",
-        );
-        router.push(`/admin/categories?success=${successMessage}`);
+        reset();
+        router.push("/admin/brands?success=Brand created successfully");
         router.refresh();
-
-        // router.push("/admin/categories?success=Category updated successfully");
-        // router.refresh(); // Add this to refresh the page
       } else {
-        setError(response.message || "Failed to update category");
+        // setError(response.message || "Failed to create brand");
       }
     } catch (err: any) {
-      setError(
-        err.response?.data?.message || err.message || "Something went wrong",
-      );
+      console.error("❌ Form submission error:", err);
+
+      if (err.response?.data) {
+        const apiError = err.response.data;
+        if (apiError.errors && Array.isArray(apiError.errors)) {
+          setError(apiError.errors.join(", "));
+        } else {
+          setError(apiError.message || "API error occurred");
+        }
+      } else if (err.message) {
+        setError(err.message);
+      } else {
+        setError("Something went wrong. Please try again.");
+      }
     } finally {
       setIsLoading(false);
     }
   };
+
   if (isLoading) {
-    return <ElegantPageLoader text="Creating ..." subtitle="Redirecting ..." />;
+    return (
+      <ElegantPageLoader
+        text="Creating Brand"
+        subtitle="Redirecting to brands page..."
+      />
+    );
   }
 
-  if (!category) return <div>Loading...</div>;
+  const onError = (errors: any) => {
+    console.log("❌ Form validation errors:", errors);
+    // setError("Please fix the validation errors above.");
+  };
 
   return (
     <div className="bg-white rounded-lg shadow-lg p-6 x-max-w-4xl mx-auto">
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold text-gray-900">Edit Category</h1>
+        <h1 className="text-2xl font-bold text-gray-900">Create New Brand</h1>
         <button
-          onClick={() => router.push("/admin/categories")}
-          className="p-2 hover:bg-gray-100 rounded-full"
+          onClick={() => router.push(route_admin_brands)}
+          className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+          type="button"
         >
           <X size={20} />
         </button>
       </div>
 
+      {/* Global error message */}
       {error && (
         <div className="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded">
           {error}
         </div>
       )}
 
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+      <form onSubmit={handleSubmit(onSubmit, onError)} className="space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {/* English Name - Now shows error below input */}
           <Input
-            label="English Name"
+            label="English Name *"
             name="name.en"
+            type="text"
             register={register}
-            errors={errors}
+            errors={errors} // Pass the entire errors object
+            required
+            placeholder="Electronics"
+            onBlur={(e) => generateSlug(e.target.value, "en")}
+            isNestable
           />
+
+          {/* Arabic Name */}
           <Input
-            label="Arabic Name"
+            label="Arabic Name *"
             name="name.ar"
+            type="text"
             register={register}
             errors={errors}
+            required
+            placeholder="إلكترونيات"
+            dir="rtl"
+            onBlur={(e) => generateSlug(e.target.value, "ar")}
+            isNestable
           />
+
+          {/* English Description */}
           <Textarea
             label="English Description"
             name="description.en"
             register={register}
             errors={errors}
-            placeholder=""
+            placeholder="Latest electronic devices and gadgets"
             rows={3}
             isNestable
           />
+
+          {/* Arabic Description */}
           <Textarea
             label="Arabic Description"
             name="description.ar"
             register={register}
             errors={errors}
-            placeholder=""
+            placeholder="أحدث الأجهزة الإلكترونية والأدوات"
+            dir="rtl"
             rows={3}
             isNestable
           />
@@ -204,7 +202,8 @@ export const EditForm: React.FC = () => {
           accept="image/*"
           maxSize={5 * 1024 * 1024}
         />
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6  items-center">
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-center">
           {/* Visibility Toggle */}
           <Checkbox
             label="Visible to customers"
@@ -215,7 +214,7 @@ export const EditForm: React.FC = () => {
 
           {/* Featured Toggle */}
           <Checkbox
-            label="Featured category"
+            label="Featured brand"
             name="isFeatured"
             register={register}
             errors={errors}
@@ -232,10 +231,11 @@ export const EditForm: React.FC = () => {
           />
         </div>
 
+        {/* Form Actions */}
         <div className="flex justify-end space-x-3 pt-6 border-t">
           <button
             type="button"
-            onClick={() => router.push("/admin/categories")}
+            onClick={() => router.push(route_admin_brands)}
             disabled={isLoading}
             className="px-6 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50"
           >
@@ -244,14 +244,14 @@ export const EditForm: React.FC = () => {
           <button
             type="submit"
             disabled={isLoading}
-            className="flex items-center px-6 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 disabled:opacity-50"
+            className="flex items-center px-6 py-2 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-md hover:bg-blue-700 disabled:opacity-50"
           >
             {isLoading ? (
               <Loader size={16} className="animate-spin mr-2" />
             ) : (
               <Save size={16} className="mr-2" />
             )}
-            {isLoading ? "Updating..." : "Update Category"}
+            {isLoading ? "Creating..." : "Create Brand"}
           </button>
         </div>
       </form>

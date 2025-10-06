@@ -4,6 +4,8 @@ import MenuLink from "@/features/admin/shared/components/links/MenuLink";
 import MenuLinkDropdown from "@/features/admin/shared/components/links/MenuLinkDropdown";
 import MenuLinkDropdownItem from "@/features/admin/shared/components/links/MenuLinkDropdownItem";
 import {
+  route_admin_brands,
+  route_admin_brands_create,
   route_admin_categories,
   route_admin_categories_create,
   route_admin_dashboard,
@@ -69,8 +71,19 @@ const SidebarAdmin = () => {
             />
 
             <MenuLinkDropdownItem
-              name={"Categories"}
+              name={"All Categories"}
               href={route_admin_categories}
+            />
+          </MenuLinkDropdown>
+          <MenuLinkDropdown name={"Brands"} iconName="box" menuId={"brands"}>
+            <MenuLinkDropdownItem
+              name={"Add New"}
+              href={route_admin_brands_create}
+            />
+
+            <MenuLinkDropdownItem
+              name={"All Brands"}
+              href={route_admin_brands}
             />
           </MenuLinkDropdown>
           {/* Products Dropdown */}
