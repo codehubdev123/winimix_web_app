@@ -13,7 +13,6 @@ export default async function ShowBrand({ params }: BrandShowPageProps) {
 
   try {
     const response = await new BrandService().getBrandById(id);
-    console.log("🔴🔴🔴🔴🔴🔴 response ShowBrand ", response);
 
     if (!response.data.success || !response.data.data) {
       return notFound();
