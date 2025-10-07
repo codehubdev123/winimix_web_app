@@ -229,6 +229,11 @@ export const Table: React.FC<TableProps> = ({
     router.push(`/admin/categories/${category.id}/edit`);
   };
 
+  // show category
+  const handleShow = (category: any) => {
+    router.push(`/admin/categories/${category.id}`);
+  };
+
   // Clear all filters
   const clearFilters = () => {
     const newFilters = {
@@ -571,7 +576,7 @@ export const Table: React.FC<TableProps> = ({
                       <div className="flex space-x-1">
                         <button
                           onClick={() => handleToggleVisibility(category)}
-                          className={`p-1 rounded ${
+                          className={`p-1 rounded cursor-pointer ${
                             category.isVisible
                               ? "text-green-600 hover:text-green-800"
                               : "text-gray-400 hover:text-gray-600"
@@ -615,6 +620,14 @@ export const Table: React.FC<TableProps> = ({
                   {/* Actions */}
                   <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                     <div className="flex justify-end space-x-2">
+                      {/* View Button */}
+                      <button
+                        onClick={() => handleShow(category)}
+                        className="text-green-600 hover:text-green-900 p-1 rounded transition-colors"
+                        title="View category details"
+                      >
+                        <Eye size={16} />
+                      </button>
                       <button
                         onClick={() => handleEdit(category)}
                         className="text-blue-600 hover:text-blue-900 p-1 rounded transition-colors cursor-pointer"

@@ -79,6 +79,11 @@ export const Table: React.FC<TableProps> = ({
     router.push(`${pathname}?${params.toString()}`);
   };
 
+  // show category
+  const handleShow = (brand: any) => {
+    router.push(`/admin/brands/${brand.id}`);
+  };
+
   // Handle search and filters
   const handleSearch = async (newFilters: any) => {
     try {
@@ -566,7 +571,7 @@ export const Table: React.FC<TableProps> = ({
                       <div className="flex space-x-1">
                         <button
                           onClick={() => handleToggleVisibility(brand)}
-                          className={`p-1 rounded ${
+                          className={`p-1 rounded cursor-pointer ${
                             brand.isVisible
                               ? "text-green-600 hover:text-green-800"
                               : "text-gray-400 hover:text-gray-600"
@@ -610,6 +615,13 @@ export const Table: React.FC<TableProps> = ({
                   {/* Actions */}
                   <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                     <div className="flex justify-end space-x-2">
+                      <button
+                        onClick={() => handleShow(brand)}
+                        className="text-green-600 hover:text-green-900 p-1 rounded transition-colors cursor-pointer"
+                        title="View category details"
+                      >
+                        <Eye size={16} />
+                      </button>
                       <button
                         onClick={() => handleEdit(brand)}
                         className="text-blue-600 hover:text-blue-900 p-1 rounded transition-colors cursor-pointer"
